@@ -35,49 +35,6 @@ class _ButtonNavigatorBarState extends State<ButtonNavigatorBar> {
               ),
             ),
             child: Column(children: <Widget>[Center(child: Text('mdss aaa'))]),
-            // child: SimpleDialog(
-            //   //title: const Text('Select assignment'),
-            //   children: <Widget>[
-            //     SimpleDialogOption(
-            //       onPressed: () {
-            //         debugPrint('1');
-            //       },
-            //       child: const Text('criar lista'),
-            //     ),
-            //     SimpleDialogOption(
-            //       onPressed: () {
-            //         {
-            //           debugPrint('2');
-            //         }
-            //       },
-            //       child: const Text('criar tarefa'),
-            //     ),
-            //     SimpleDialogOption(
-            //       onPressed: () {
-            //         {
-            //           debugPrint('2');
-            //         }
-            //       },
-            //       child: const Text('criar hábito'),
-            //     ),
-            //     SimpleDialogOption(
-            //       onPressed: () {
-            //         {
-            //           debugPrint('2');
-            //         }
-            //       },
-            //       child: const Text('criar projeto'),
-            //     ),
-            //     SimpleDialogOption(
-            //       onPressed: () {
-            //         {
-            //           debugPrint('2');
-            //         }
-            //       },
-            //       child: const Text('criar lembrete'),
-            //     ),
-            //   ],
-            // ),
           );
         })) {
     }
@@ -110,7 +67,7 @@ class _ButtonNavigatorBarState extends State<ButtonNavigatorBar> {
                 ),
                 //width: 100,
                 child: Visibility(
-                  visible: true, //addIcone,
+                  visible: addIcone,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     mainAxisAlignment: MainAxisAlignment.center,
