@@ -87,89 +87,163 @@ class _ButtonNavigatorBarState extends State<ButtonNavigatorBar> {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(top: 8.0, left: 8.0, right: 8.0),
-      child: Container(
-        decoration: BoxDecoration(
-          borderRadius: const BorderRadius.all(
-            Radius.circular(24.0),
-          ),
-          border: Border.all(
-            width: 3,
-            color: Colors.black,
-            style: BorderStyle.solid,
-          ),
-          color: Color(0xFFE9E9E9),
-        ),
-        padding: const EdgeInsets.all(16),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: <Widget>[
-            IconButton(
-              icon: Icon(Icons.home_outlined),
-              onPressed: () {},
-            ),
-            IconButton(
-              icon: Icon(Icons.bar_chart_outlined),
-              onPressed: () {},
-            ),
-            DropdownButton<String>(
-              items: <String>['A', 'B', 'C', 'D'].map((String value) {
-                return DropdownMenuItem<String>(
-                  value: value,
-                  child: Text(value),
-                );
-              }).toList(),
-              onChanged: (_) {},
-            ),
-            Container(
-              child: PopupMenuButton(
-                child: IconButton(
-                  icon: _retornarIconeAdd(), onPressed: () {},
-                  //   onPressed: () {
-                  //     setState(() {
-                  //       addIcone = !addIcone;
-                  //     });
-
-                  //     //_askedToLead();
-                  //   },
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisSize: MainAxisSize.max,
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: <Widget>[
+          Stack(
+            alignment: Alignment.bottomCenter,
+            children: <Widget>[
+              Container(
+                padding: EdgeInsets.only(bottom: 100),
+                decoration: BoxDecoration(
+                  borderRadius: const BorderRadius.all(
+                    Radius.circular(24.0),
+                  ),
+                  border: Border.all(
+                    width: 3,
+                    color: Colors.black,
+                    style: BorderStyle.solid,
+                  ),
+                  color: Color(0xFFF7BC36),
                 ),
-                itemBuilder: (context) {
-                  return <PopupMenuItem>[
-                    new PopupMenuItem(child: Text('Delete'))
-                  ];
-                },
-              ),
-              // child: IconButton(
-              //   icon: _retornarIconeAdd(),
-              //   onPressed: () {
-              //     setState(() {
-              //       addIcone = !addIcone;
-              //     });
-
-              //     //_askedToLead();
-              //   },
-              // ),
-              width: 60,
-              height: 60,
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                color: Color(0xFFF7BC36),
-                border: Border.all(
-                  width: 3,
-                  color: Colors.black,
-                  style: BorderStyle.solid,
+                //width: 100,
+                child: Visibility(
+                  visible: true, //addIcone,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          Text(
+                            'criar lista',
+                            style: TextStyle(fontSize: 24.0),
+                          ),
+                        ],
+                      ),
+                      Divider(
+                        thickness: 3,
+                        color: Colors.black,
+                      ),
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          Text(
+                            'criar tarefa',
+                            style: TextStyle(fontSize: 24.0),
+                          ),
+                        ],
+                      ),
+                      Divider(
+                        thickness: 3,
+                        color: Colors.black,
+                      ),
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          Text(
+                            'criar hábito',
+                            style: TextStyle(fontSize: 24.0),
+                          ),
+                        ],
+                      ),
+                      Divider(
+                        thickness: 3,
+                        color: Colors.black,
+                      ),
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          Text(
+                            'criar projeto',
+                            style: TextStyle(fontSize: 24.0),
+                          ),
+                        ],
+                      ),
+                      Divider(
+                        thickness: 3,
+                        color: Colors.black,
+                      ),
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          Text(
+                            'criar lembrete',
+                            style: TextStyle(fontSize: 24.0),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
                 ),
               ),
-            ),
-            IconButton(
-              icon: Icon(Icons.list_outlined),
-              onPressed: () {},
-            ),
-            IconButton(
-              icon: Icon(Icons.folder_outlined),
-              onPressed: () {},
-            ),
-          ],
-        ),
+              Container(
+                decoration: BoxDecoration(
+                  borderRadius: const BorderRadius.all(
+                    Radius.circular(24.0),
+                  ),
+                  border: Border.all(
+                    width: 3,
+                    color: Colors.black,
+                    style: BorderStyle.solid,
+                  ),
+                  color: Color(0xFFE9E9E9),
+                ),
+                padding: const EdgeInsets.all(16),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: <Widget>[
+                    IconButton(
+                      icon: Icon(Icons.home_outlined),
+                      onPressed: () {},
+                    ),
+                    IconButton(
+                      icon: Icon(Icons.bar_chart_outlined),
+                      onPressed: () {},
+                    ),
+                    Container(
+                      child: IconButton(
+                        icon: _retornarIconeAdd(),
+                        onPressed: () {
+                          setState(() {
+                            addIcone = !addIcone;
+                          });
+                        },
+                      ),
+                      width: 60,
+                      height: 60,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: Color(0xFFF7BC36),
+                        border: Border.all(
+                          width: 3,
+                          color: Colors.black,
+                          style: BorderStyle.solid,
+                        ),
+                      ),
+                    ),
+                    IconButton(
+                      icon: Icon(Icons.list_outlined),
+                      onPressed: () {},
+                    ),
+                    IconButton(
+                      icon: Icon(Icons.folder_outlined),
+                      onPressed: () {},
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ],
       ),
     );
   }

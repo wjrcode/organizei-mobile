@@ -35,46 +35,48 @@ class cardItem extends StatelessWidget {
           ),
           child: ClipRRect(
             borderRadius: BorderRadius.all(Radius.circular(21)),
-            child: Row(
-              children: [
-                Container(
-                  width: 90,
-                  //height: 90,
-                  height: double.infinity,
-                  decoration: BoxDecoration(
-                    //borderRadius: BorderRadius.all(Radius.circular(16)),
-                    color: cor,
-                  ),
-                ),
-                Expanded(
-                  child: ListTile(
-                    title: TextoContornado(
-                      texto: formatarNome(),
-                      tamanho: 24,
-                      cor: cor,
+            child: GestureDetector(
+              onTap: () {
+                debugPrint(nome);
+              },
+              child: Row(
+                children: [
+                  Container(
+                    width: 90,
+                    //height: 90,
+                    height: double.infinity,
+                    decoration: BoxDecoration(
+                      //borderRadius: BorderRadius.all(Radius.circular(16)),
+                      color: cor,
                     ),
-                    subtitle: Text(
-                      horario!,
-                      style: TextStyle(fontSize: 16.0),
-                    ),
-                    onTap: () {
-                      () {};
-                    },
                   ),
-                ),
-                // Row(
-                //   children: <Widget>[
-                //     GestureDetector(
-                //       onTap: () {},
-                //       child: Padding(
-                //         padding: const EdgeInsets.all(8.0),
-                //         child: Icon(Icons.close,
-                //             color: Colors.green[900], size: 24),
-                //       ),
-                //     )
-                //   ],
-                // ),
-              ],
+                  Expanded(
+                    child: ListTile(
+                      title: TextoContornado(
+                        texto: formatarNome(),
+                        tamanho: 24,
+                        cor: cor,
+                      ),
+                      subtitle: Text(
+                        horario!,
+                        style: TextStyle(fontSize: 16.0),
+                      ),
+                    ),
+                  ),
+                  // Row(
+                  //   children: <Widget>[
+                  //     GestureDetector(
+                  //       onTap: () {},
+                  //       child: Padding(
+                  //         padding: const EdgeInsets.all(8.0),
+                  //         child: Icon(Icons.close,
+                  //             color: Colors.green[900], size: 24),
+                  //       ),
+                  //     )
+                  //   ],
+                  // ),
+                ],
+              ),
             ),
           )),
     );

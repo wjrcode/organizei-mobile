@@ -199,6 +199,8 @@ class _HomePageState extends State<HomePage> {
         //   tooltip: 'Increment',
         //   child: const Icon(Icons.add),
         // ),
-        floatingActionButton: ButtonNavigatorBar());
+        floatingActionButton: ButtonNavigatorBar()
+        //
+        );
   }
 }
