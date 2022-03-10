@@ -22,7 +22,6 @@ class _ButtonNavigatorBarState extends State<ButtonNavigatorBar> {
         context: context,
         builder: (BuildContext context) {
           return Container(
-            //margin: EdgeInsets.all(32),
             height: 100.0, // Change as per your requirement
             width: 100.0,
             decoration: BoxDecoration(
@@ -53,7 +52,7 @@ class _ButtonNavigatorBarState extends State<ButtonNavigatorBar> {
             alignment: Alignment.bottomCenter,
             children: <Widget>[
               Container(
-                padding: EdgeInsets.only(bottom: 100),
+                padding: EdgeInsets.only(bottom: 90),
                 decoration: BoxDecoration(
                   borderRadius: const BorderRadius.all(
                     Radius.circular(24.0),
