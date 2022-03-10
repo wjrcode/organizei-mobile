@@ -107,8 +107,10 @@ class _HomePageState extends State<HomePage> {
                       ),
                     ),
                     Container(
+                      //height: MediaQuery.of(context).size.height,
                       //color: Colors.white,
-                      // padding: EdgeInsets.only(bottom: 120),
+                      //padding: EdgeInsets.only(
+                      // bottom: MediaQuery.of(context).size.height),
                       decoration: BoxDecoration(
                         color: Colors.black,
                         borderRadius: BorderRadius.only(
@@ -117,6 +119,9 @@ class _HomePageState extends State<HomePage> {
                         ),
                       ),
                       child: Container(
+                        constraints: BoxConstraints(
+                          minHeight: MediaQuery.of(context).size.height * 0.808,
+                        ),
                         margin: EdgeInsets.only(top: 3, left: 3, right: 3),
                         padding: EdgeInsets.only(bottom: 110),
                         decoration: BoxDecoration(
