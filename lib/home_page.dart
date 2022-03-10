@@ -3,7 +3,8 @@ import 'package:intl/date_symbol_data_local.dart';
 import 'package:organizei/components/card_item.dart';
 import 'package:intl/intl.dart';
 
-import 'components/bottom_navigation_bar.dart';
+import 'components/box.dart';
+import 'components/navigation/bottom_navigation_bar.dart';
 import 'components/texto_contornado.dart';
 
 String getSaudacao() {
@@ -35,19 +36,10 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    debugPrint(getDia());
-    setState(() {
-      _counter++;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
         extendBody: true,
         backgroundColor: Color(0xFF6BC8E4),
         // appBar: AppBar(
@@ -106,90 +98,89 @@ class _HomePageState extends State<HomePage> {
                         ],
                       ),
                     ),
-                    Container(
-                      //height: MediaQuery.of(context).size.height,
-                      //color: Colors.white,
-                      //padding: EdgeInsets.only(
-                      // bottom: MediaQuery.of(context).size.height),
-                      decoration: BoxDecoration(
-                        color: Colors.black,
-                        borderRadius: BorderRadius.only(
-                          topRight: Radius.circular(47),
-                          topLeft: Radius.circular(47),
-                        ),
-                      ),
-                      child: Container(
-                        constraints: BoxConstraints(
-                          minHeight: MediaQuery.of(context).size.height * 0.808,
-                        ),
-                        margin: EdgeInsets.only(top: 3, left: 3, right: 3),
-                        padding: EdgeInsets.only(bottom: 110),
-                        decoration: BoxDecoration(
-                          color: Color(0xFFE9E9E9),
-                          borderRadius: BorderRadius.only(
-                            topRight: Radius.circular(47),
-                            topLeft: Radius.circular(47),
-                          ),
-                        ),
-                        child: Padding(
-                          padding:
-                              const EdgeInsets.fromLTRB(16.0, 32.0, 16.0, 0.0),
-                          child: Column(
-                            children: <Widget>[
-                              Padding(
-                                padding: EdgeInsets.all(8.0),
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: <Widget>[
-                                    TextoContornado(
-                                      texto: 'Hoje ',
-                                      tamanho: 32,
-                                      cor: Color(0xFF6385C3),
+                    // Container(
+                    //   decoration: BoxDecoration(
+                    //     color: Colors.black,
+                    //     borderRadius: BorderRadius.only(
+                    //       topRight: Radius.circular(47),
+                    //       topLeft: Radius.circular(47),
+                    //     ),
+                    //   ),
+                    //   child: Container(
+                    //     constraints: BoxConstraints(
+                    //       minHeight: MediaQuery.of(context).size.height * 0.808,
+                    //     ),
+                    //     margin: EdgeInsets.only(top: 3, left: 3, right: 3),
+                    //     padding: EdgeInsets.only(bottom: 110),
+                    //     decoration: BoxDecoration(
+                    //       color: Color(0xFFE9E9E9),
+                    //       borderRadius: BorderRadius.only(
+                    //         topRight: Radius.circular(47),
+                    //         topLeft: Radius.circular(47),
+                    //       ),
+                    //     ),
+                    Box(
+                      radius: 47,
+                      padding: 110,
+                      minHeight: MediaQuery.of(context).size.height * 0.808,
+                      child: Padding(
+                        padding:
+                            const EdgeInsets.fromLTRB(16.0, 32.0, 16.0, 0.0),
+                        child: Column(
+                          children: <Widget>[
+                            Padding(
+                              padding: EdgeInsets.all(8.0),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: <Widget>[
+                                  TextoContornado(
+                                    texto: 'Hoje ',
+                                    tamanho: 32,
+                                    cor: Color(0xFF6385C3),
+                                  ),
+                                  Text(
+                                    ' ' + getDia(),
+                                    style: TextStyle(
+                                      color: Colors.black,
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w300,
                                     ),
-                                    Text(
-                                      ' ' + getDia(),
-                                      style: TextStyle(
-                                        color: Colors.black,
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.w300,
-                                      ),
-                                    ),
-                                  ],
-                                ),
+                                  ),
+                                ],
                               ),
-                              cardItem(
-                                cor: Color(0xFF6385C3),
-                                nome: 'Correr',
-                                horario: '09:30 até às 10:00',
-                              ),
-                              cardItem(
-                                cor: Color(0xFFEF7E69),
-                                nome: 'Estudar inglês',
-                                horario: '13:00 até às 15:00',
-                              ),
-                              cardItem(
-                                cor: Color(0xFF6BC8E4),
-                                nome: 'Tomar vitamina D e vitamna F',
-                                horario: '15:00',
-                              ),
-                              cardItem(
-                                cor: Color(0xFFF7BC36),
-                                nome: 'Pular corda',
-                                horario: '07:30 até às 09:00',
-                              ),
-                              cardItem(
-                                cor: Color(0xFF74C198),
-                                nome: 'Pular corda',
-                                horario: '07:30 até às 09:00',
-                              ),
-                              cardItem(
-                                cor: Color(0xFF6385C3),
-                                nome: 'Pular corda',
-                                horario: '07:30 até às 09:00',
-                              ),
-                            ],
-                          ),
+                            ),
+                            cardItem(
+                              cor: Color(0xFF6385C3),
+                              nome: 'Correr',
+                              horario: '09:30 até às 10:00',
+                            ),
+                            cardItem(
+                              cor: Color(0xFFEF7E69),
+                              nome: 'Estudar inglês',
+                              horario: '13:00 até às 15:00',
+                            ),
+                            cardItem(
+                              cor: Color(0xFF6BC8E4),
+                              nome: 'Tomar vitamina D e vitamna F',
+                              horario: '15:00',
+                            ),
+                            cardItem(
+                              cor: Color(0xFFF7BC36),
+                              nome: 'Pular corda',
+                              horario: '07:30 até às 09:00',
+                            ),
+                            cardItem(
+                              cor: Color(0xFF74C198),
+                              nome: 'Pular corda',
+                              horario: '07:30 até às 09:00',
+                            ),
+                            cardItem(
+                              cor: Color(0xFF6385C3),
+                              nome: 'Pular corda',
+                              horario: '07:30 até às 09:00',
+                            ),
+                          ],
                         ),
                       ),
                     ),
