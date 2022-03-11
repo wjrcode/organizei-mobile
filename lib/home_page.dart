@@ -39,6 +39,7 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        resizeToAvoidBottomInset: false,
         floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
         extendBody: true,
         backgroundColor: Color(0xFF6BC8E4),
@@ -98,27 +99,6 @@ class _HomePageState extends State<HomePage> {
                         ],
                       ),
                     ),
-                    // Container(
-                    //   decoration: BoxDecoration(
-                    //     color: Colors.black,
-                    //     borderRadius: BorderRadius.only(
-                    //       topRight: Radius.circular(47),
-                    //       topLeft: Radius.circular(47),
-                    //     ),
-                    //   ),
-                    //   child: Container(
-                    //     constraints: BoxConstraints(
-                    //       minHeight: MediaQuery.of(context).size.height * 0.808,
-                    //     ),
-                    //     margin: EdgeInsets.only(top: 3, left: 3, right: 3),
-                    //     padding: EdgeInsets.only(bottom: 110),
-                    //     decoration: BoxDecoration(
-                    //       color: Color(0xFFE9E9E9),
-                    //       borderRadius: BorderRadius.only(
-                    //         topRight: Radius.circular(47),
-                    //         topLeft: Radius.circular(47),
-                    //       ),
-                    //     ),
                     Box(
                       radius: 47,
                       padding: 110,

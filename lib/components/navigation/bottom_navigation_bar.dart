@@ -25,6 +25,7 @@ class _ButtonNavigatorBarState extends State<ButtonNavigatorBar>
 
   void _slideDown() {
     setState(() {
+      addIcone = false;
       offset = const Offset(0, 2);
     });
   }
@@ -47,9 +48,9 @@ class _ButtonNavigatorBarState extends State<ButtonNavigatorBar>
           children: <Widget>[
             AnimatedSlide(
               offset: offset,
-              duration: const Duration(milliseconds: 400),
+              duration: const Duration(milliseconds: 250),
               curve: Curves.easeInOut,
-              child: Menu(),
+              child: Container(child: Menu(customFunction: _slideDown)),
             ),
             Box(
               radius: 30,

@@ -1,8 +1,14 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:organizei/components/box.dart';
+import 'package:organizei/components/dialog_personalizado.dart';
+import 'package:organizei/components/texto_contornado.dart';
+import 'package:organizei/home_page.dart';
 
 class Menu extends StatefulWidget {
-  const Menu({Key? key}) : super(key: key);
+  const Menu({Key? key, this.customFunction}) : super(key: key);
+
+  final customFunction;
 
   @override
   State<Menu> createState() => _MenuState();
@@ -34,15 +40,131 @@ class _MenuState extends State<Menu> {
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  Text(
-                    'criar lista',
-                    style: TextStyle(fontSize: 24.0),
+              GestureDetector(
+                onTap: () {
+                  widget.customFunction();
+                  showDialog(
+                      barrierDismissible: false,
+                      barrierColor: Colors.white.withOpacity(0),
+                      context: context,
+                      builder: (context) {
+                        return Container(
+                          margin: EdgeInsets.only(top: 24),
+                          child: DialogPersonalizado(
+                            nome: 'Lista',
+                            //minHeight: MediaQuery.of(context).size.height * 0.8,
+                            child: <Widget>[
+                              Text(
+                                'nome',
+                                style: const TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w400,
+                                ),
+                              ),
+                              Material(
+                                color: Colors.white.withOpacity(0),
+                                child: TextField(
+                                  decoration: InputDecoration(
+                                    fillColor: Colors.white,
+                                    filled: true,
+                                    enabledBorder: OutlineInputBorder(
+                                      borderSide: const BorderSide(
+                                        color: Colors.black,
+                                        width: 3.0,
+                                      ),
+                                      borderRadius: BorderRadius.circular(16.0),
+                                    ),
+                                    focusedBorder: OutlineInputBorder(
+                                      borderSide: const BorderSide(
+                                        color: Colors.black,
+                                        width: 3.0,
+                                      ),
+                                      borderRadius: BorderRadius.circular(16.0),
+                                    ),
+
+                                    //labelText: 'Password',
+                                  ),
+                                ),
+                              ),
+                              Text(
+                                'item',
+                                style: const TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w400,
+                                ),
+                              ),
+                              Material(
+                                color: Colors.white.withOpacity(0),
+                                child: TextField(
+                                  decoration: InputDecoration(
+                                    fillColor: Colors.white,
+                                    filled: true,
+                                    enabledBorder: OutlineInputBorder(
+                                      borderSide: const BorderSide(
+                                        color: Colors.black,
+                                        width: 3.0,
+                                      ),
+                                      borderRadius: BorderRadius.circular(16.0),
+                                    ),
+                                    focusedBorder: OutlineInputBorder(
+                                      borderSide: const BorderSide(
+                                        color: Colors.black,
+                                        width: 3.0,
+                                      ),
+                                      borderRadius: BorderRadius.circular(16.0),
+                                    ),
+
+                                    //labelText: 'Password',
+                                  ),
+                                ),
+                              ),
+                              SizedBox(
+                                width: double.maxFinite,
+                                height: 60,
+                                child: ElevatedButton(
+                                    style: ButtonStyle(
+                                      shape: MaterialStateProperty.all<
+                                              RoundedRectangleBorder>(
+                                          RoundedRectangleBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(16.0),
+                                        // side: BorderSide(color: Colors.red)
+                                      )),
+                                      side: MaterialStateProperty.all(
+                                          BorderSide(
+                                              width: 3, color: Colors.black)),
+                                      backgroundColor:
+                                          MaterialStateProperty.all(
+                                              Color(0xFF6385C3)),
+                                    ),
+                                    child: Text(
+                                      'SALVAR',
+                                      style: TextStyle(
+                                          fontSize: 18,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                    onPressed: () {}),
+                              ),
+                            ],
+                          ),
+                        );
+                      });
+                },
+                child: AbsorbPointer(
+                  //width: MediaQuery.of(context).size.width,
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      Text(
+                        'criar lista',
+                        style: TextStyle(fontSize: 24.0),
+                      ),
+                    ],
                   ),
-                ],
+                ),
               ),
               Divider(
                 thickness: 3,
