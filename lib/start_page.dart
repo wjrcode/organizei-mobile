@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:organizei/Controller/LoginController.dart';
+import 'package:organizei/Repository/LoginRepository.dart';
+import 'package:organizei/components/TextField.dart';
 import 'package:organizei/components/botao.dart';
 import 'package:organizei/components/dialog_personalizado.dart';
 import 'package:organizei/components/input.dart';
@@ -12,6 +15,17 @@ class StartPage extends StatefulWidget {
 }
 
 class _StartPageState extends State<StartPage> {
+  late LoginController controller;
+
+  @override
+  initState() {
+    controller = LoginController(LoginRepository(), context);
+
+    //controller.controllerSenha.text = 'fafadfadf';
+    debugPrint('iniciou');
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -55,36 +69,53 @@ class _StartPageState extends State<StartPage> {
         builder: (context) {
           return Material(
             type: MaterialType.transparency,
-            child: Container(
-              margin: const EdgeInsets.only(top: 24),
-              child: DialogPersonalizado(
-                nome: 'Login',
-                //minHeight: MediaQuery.of(context).size.height * 0.8,
-                child: <Widget>[
-                  const Padding(
-                    padding: EdgeInsets.only(bottom: 16),
-                    child: Input(label: 'e-mail'),
-                  ),
-                  const Padding(
-                    padding: EdgeInsets.only(bottom: 16),
-                    child: Input(label: 'senha'),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(0, 0, 0, 16.0),
-                    child: Botao(
-                      texto: 'Entrar',
-                      cor: const Color(0xFF6BC8E4),
-                      clicar: () {
-                        Navigator.of(context).push<void>(
-                          MaterialPageRoute<void>(
-                            builder: (BuildContext context) => const HomePage(),
-                          ),
-                        );
-                        ;
-                      },
+            child: Form(
+              key: controller.formKey,
+              child: Container(
+                margin: const EdgeInsets.only(top: 24),
+                child: DialogPersonalizado(
+                  nome: 'Login',
+                  //minHeight: MediaQuery.of(context).size.height * 0.8,
+                  child: <Widget>[
+                    Padding(
+                      padding: EdgeInsets.only(bottom: 16),
+                      child: input(
+                        controller.loginUsuario,
+                        controller.controllerUsuario,
+                        'e-mail',
+                      ),
                     ),
-                  )
-                ],
+                    Padding(
+                      padding: EdgeInsets.only(bottom: 16),
+                      child: input(
+                        controller.loginSenha,
+                        controller.controllerSenha,
+                        'senha',
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(0, 0, 0, 16.0),
+                      child: Botao(
+                        texto: 'Entrar',
+                        cor: const Color(0xFF6BC8E4),
+                        clicar: () async {
+                          debugPrint('pls');
+                          bool succes = await controller.autentica();
+
+                          if (succes) {
+                            Navigator.of(context).push<void>(
+                              MaterialPageRoute<void>(
+                                builder: (BuildContext context) =>
+                                    const HomePage(),
+                              ),
+                            );
+                          }
+                          ;
+                        },
+                      ),
+                    )
+                  ],
+                ),
               ),
             ),
           );
@@ -107,19 +138,19 @@ class _StartPageState extends State<StartPage> {
                 child: <Widget>[
                   const Padding(
                     padding: EdgeInsets.only(bottom: 16),
-                    child: Input(label: 'nome'),
+                    //child: Input(label: 'nome'),
                   ),
                   const Padding(
                     padding: EdgeInsets.only(bottom: 16),
-                    child: Input(label: 'apelido'),
+                    //child: Input(label: 'apelido'),
                   ),
                   const Padding(
                     padding: EdgeInsets.only(bottom: 16),
-                    child: Input(label: 'e-mail'),
+                    //child: Input(label: 'e-mail'),
                   ),
                   const Padding(
                     padding: EdgeInsets.only(bottom: 16),
-                    child: Input(label: 'senha'),
+                    //child: Input(label: 'senha'),
                   ),
                   Padding(
                     padding: const EdgeInsets.fromLTRB(0, 0, 0, 16.0),
