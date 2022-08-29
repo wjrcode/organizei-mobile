@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:organizei/components/card_item.dart';
 import 'package:intl/intl.dart';
+import 'package:organizei/start_page.dart';
 
-import 'home_page.dart';
+//import 'home_page.dart';
 
 void main() {
   runApp(MyApp());
@@ -20,7 +21,8 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: HomePage(),
+      home: StartPage(),
+      //HomePage(),
       debugShowCheckedModeBanner: false,
     );
   }
