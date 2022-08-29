@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:organizei/Controller/LoginController.dart';
+import 'package:organizei/Controller/UsuarioController.dart';
 import 'package:organizei/Repository/LoginRepository.dart';
+import 'package:organizei/Repository/UsuarioRepository.dart';
 import 'package:organizei/components/TextField.dart';
 import 'package:organizei/components/botao.dart';
 import 'package:organizei/components/dialog_personalizado.dart';
@@ -16,10 +18,12 @@ class StartPage extends StatefulWidget {
 
 class _StartPageState extends State<StartPage> {
   late LoginController controller;
+  late UsuarioController usuarioController;
 
   @override
   initState() {
     controller = LoginController(LoginRepository(), context);
+    usuarioController = UsuarioController(UsuarioRepository(), context);
 
     //controller.controllerSenha.text = 'fafadfadf';
     debugPrint('iniciou');
@@ -100,7 +104,6 @@ class _StartPageState extends State<StartPage> {
                         texto: 'Entrar',
                         cor: const Color(0xFF6BC8E4),
                         clicar: () async {
-                          debugPrint('pls');
                           bool succes = await controller.autentica();
 
                           if (succes) {
@@ -131,45 +134,71 @@ class _StartPageState extends State<StartPage> {
         builder: (context) {
           return Material(
             type: MaterialType.transparency,
-            child: Container(
-              margin: const EdgeInsets.only(top: 24),
-              child: DialogPersonalizado(
-                nome: 'Cadastro',
-                //minHeight: MediaQuery.of(context).size.height * 0.8,
-                child: <Widget>[
-                  const Padding(
-                    padding: EdgeInsets.only(bottom: 16),
-                    //child: Input(label: 'nome'),
-                  ),
-                  const Padding(
-                    padding: EdgeInsets.only(bottom: 16),
-                    //child: Input(label: 'apelido'),
-                  ),
-                  const Padding(
-                    padding: EdgeInsets.only(bottom: 16),
-                    //child: Input(label: 'e-mail'),
-                  ),
-                  const Padding(
-                    padding: EdgeInsets.only(bottom: 16),
-                    //child: Input(label: 'senha'),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(0, 0, 0, 16.0),
-                    child: Botao(
-                      texto: 'Cadastrar',
-                      cor: const Color(0xFF6BC8E4),
-                      clicar: () {
-                        Navigator.of(context).push<void>(
-                          MaterialPageRoute<void>(
-                            builder: (BuildContext context) =>
-                                const StartPage(),
-                          ),
-                        );
-                        ;
-                      },
+            child: Form(
+              key: usuarioController.formKey,
+              child: Container(
+                margin: const EdgeInsets.only(top: 24),
+                child: DialogPersonalizado(
+                  nome: 'Cadastro',
+                  //minHeight: MediaQuery.of(context).size.height * 0.8,
+                  child: <Widget>[
+                    Padding(
+                      padding: EdgeInsets.only(bottom: 16),
+                      child: input(
+                        usuarioController.usuarioNome,
+                        usuarioController.controllerNome,
+                        'nome',
+                      ),
                     ),
-                  )
-                ],
+                    Padding(
+                      padding: EdgeInsets.only(bottom: 16),
+                      child: input(
+                        usuarioController.usuarioApelido,
+                        usuarioController.controllerApelido,
+                        'apelido',
+                      ),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.only(bottom: 16),
+                      child: input(
+                        usuarioController.usuarioEmail,
+                        usuarioController.controllerEmail,
+                        'e-mail',
+                      ),
+                      //child: Input(label: 'e-mail'),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.only(bottom: 16),
+                      child: input(
+                        usuarioController.usuarioSenha,
+                        usuarioController.controllerSenha,
+                        'senha',
+                      ),
+                      //child: Input(label: 'senha'),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(0, 0, 0, 16.0),
+                      child: Botao(
+                        texto: 'Cadastrar',
+                        cor: const Color(0xFF6BC8E4),
+                        clicar: () async {
+                          debugPrint('pls');
+                          await usuarioController.saveProduto();
+
+                          /*if (succes) {
+                            Navigator.of(context).push<void>(
+                              MaterialPageRoute<void>(
+                                builder: (BuildContext context) =>
+                                    const HomePage(),
+                              ),
+                            );
+                          }
+                          ;*/
+                        },
+                      ),
+                    )
+                  ],
+                ),
               ),
             ),
           );

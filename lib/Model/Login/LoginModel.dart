@@ -1,16 +1,16 @@
 import 'package:organizei/Model/API/ResponseAPIModel.dart';
 
-class Login {
+class LoginModel {
   String? usuario;
   String? senha;
   ResponseAPIModel? responseAPIModel;
 
-  Login({
+  LoginModel({
     this.usuario,
     this.senha,
   });
 
-  Login.fromJson(Map<String, dynamic> json) {
+  LoginModel.fromJson(Map<String, dynamic> json) {
     usuario = json['usuario'];
     senha = json['senha'];
   }

@@ -4,10 +4,10 @@ import 'package:crypto/crypto.dart';
 import 'package:organizei/Model/API/APIModel.dart';
 
 import 'package:http/http.dart' as http;
-import 'package:organizei/Model/Login/Login.dart';
+import 'package:organizei/Model/Login/LoginModel.dart';
 
 class LoginRepository {
-  Future<bool> autenticar(Login model) async {
+  Future<bool> autenticar(LoginModel model) async {
     var _url = Uri.parse(ApiModel.ApiUrl + '/signin');
     var json = {
       "email": model.usuario.toString().toLowerCase(),

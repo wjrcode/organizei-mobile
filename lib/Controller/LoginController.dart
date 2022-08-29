@@ -3,7 +3,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:organizei/Controller/Base/Base.dart';
 import 'package:organizei/Controller/DeviceDetailsController.dart';
 import 'package:organizei/Model/API/ResponseAPIModel.dart';
-import 'package:organizei/Model/Login/Login.dart';
+import 'package:organizei/Model/Login/LoginModel.dart';
 import 'package:organizei/Repository/LoginRepository.dart';
 import 'package:organizei/services/persistencia/login.configuracoes.dart';
 
@@ -13,7 +13,7 @@ class LoginController extends Base {
   final BuildContext context;
   final LoginRepository repository;
   final formKey = GlobalKey<FormState>();
-  var model = Login();
+  var model = LoginModel();
   var loginConfiguracoes = LoginConfiguracoes();
 
   loginUsuario(String? value) => model.usuario = value.toString().toUpperCase();
@@ -87,8 +87,8 @@ class LoginController extends Base {
     return '$_versaoApp.$_buildApp';
   }
 
-  salvarLogin(Login login) async {
-    List<Login?> listaLogins = await loginConfiguracoes.getListLogins();
+  salvarLogin(LoginModel login) async {
+    List<LoginModel?> listaLogins = await loginConfiguracoes.getListLogins();
 
     listaLogins.add(login);
     await loginConfiguracoes.salvarArquivo(listaLogins);
@@ -102,11 +102,11 @@ class LoginController extends Base {
     return false;
   }
 
-  Future<List<Login>?> getLogins() {
+  Future<List<LoginModel>?> getLogins() {
     return loginConfiguracoes.getListLogins();
   }
 
-  deleteLogin(Login login) async {
+  deleteLogin(LoginModel login) async {
     showReloadDialog(context, 'Excluindo, aguarde...');
     bool exists = await loginConfiguracoes.loginExists(login);
 
@@ -118,7 +118,7 @@ class LoginController extends Base {
     closeAlertDialog(context);
   }
 
-  _limpaPreferencesLogin(Login login) async {
+  _limpaPreferencesLogin(LoginModel login) async {
     var prefs = await SharedPreferences.getInstance();
 
     prefs.setString('usuario', '');

@@ -1,17 +1,17 @@
 import 'dart:convert';
 import 'dart:io';
 import 'package:path_provider/path_provider.dart';
-import 'package:organizei/Model/Login/Login.dart';
+import 'package:organizei/Model/Login/LoginModel.dart';
 
 class LoginConfiguracoes {
-  salvarArquivo(List<Login?> login) async {
+  salvarArquivo(List<LoginModel?> login) async {
     var list = login;
     final arquivo = await _getFile();
     arquivo.exists().then((value) {
       if (value) {
         arquivo.readAsString().then((value) {
           final jsonLogins = ((json.decode(value) as List)
-              .map((i) => Login.fromJson(i))
+              .map((i) => LoginModel.fromJson(i))
               .toList());
           jsonLogins.forEach((element) {
             list.add(element);
@@ -26,7 +26,7 @@ class LoginConfiguracoes {
     });
   }
 
-  deleteLogin(Login login) async {
+  deleteLogin(LoginModel login) async {
     var logins = await getListLogins();
     //logins.removeWhere((e) => e.chaveCentralizador == login.chaveCentralizador);
 
@@ -48,12 +48,12 @@ class LoginConfiguracoes {
     }
   }
 
-  Future<List<Login>> getListLogins() async {
-    List<Login> emptyList = [];
+  Future<List<LoginModel>> getListLogins() async {
+    List<LoginModel> emptyList = [];
     var archive = await lerArquivo();
     if (archive.isNotEmpty) {
-      List<Login> logins = ((json.decode(archive) as List)
-          .map((i) => Login.fromJson(i))
+      List<LoginModel> logins = ((json.decode(archive) as List)
+          .map((i) => LoginModel.fromJson(i))
           .toList());
       return logins;
     }
@@ -65,7 +65,7 @@ class LoginConfiguracoes {
     return logins.length;
   }
 
-  Future<bool> loginExists(Login login) async {
+  Future<bool> loginExists(LoginModel login) async {
     var logins = await getListLogins();
     bool ret = true;
 
