@@ -29,6 +29,7 @@ class _StartPageState extends State<StartPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       backgroundColor: Color.fromARGB(255, 239, 125, 105),
       body: Center(
           child: Padding(
