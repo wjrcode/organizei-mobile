@@ -1,6 +1,4 @@
 import 'dart:convert';
-
-import 'package:crypto/crypto.dart';
 import 'package:organizei/Model/API/APIModel.dart';
 
 import 'package:http/http.dart' as http;
@@ -20,7 +18,6 @@ class LoginRepository {
     final response = await http.post(_url,
         headers: ApiModel.headers, body: jsonEncode(json));
 
-    print(response.statusCode.toString());
     if (response.statusCode == 200) {
       return true;
     }

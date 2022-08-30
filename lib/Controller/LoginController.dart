@@ -37,6 +37,26 @@ class LoginController extends Base {
 
       //model.chaveCentralizador = prefs.getString('EmpresaChaveCentralizador');
       bool ret = await repository.autenticar(model);
+
+      if (!ret) {
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          elevation: 6.0,
+          behavior: SnackBarBehavior.floating,
+          shape: RoundedRectangleBorder(
+            side: const BorderSide(color: Colors.black, width: 3),
+            borderRadius: BorderRadius.circular(16),
+          ),
+          content: const Text(
+            'E-mail/Senha inválidos!',
+            style: TextStyle(
+              color: Colors.black,
+              fontWeight: FontWeight.w400,
+            ),
+          ),
+          backgroundColor: const Color(0xFFEF7E69),
+        ));
+      }
+
       /*if (ret) {
         prefs.setString('UsuarioLogado', model.usuario.toString());
         salvarLogin(model);

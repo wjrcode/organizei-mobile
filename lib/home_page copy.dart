@@ -37,7 +37,6 @@ class _HomePageState extends State<HomePage> {
   int _counter = 0;
 
   void _incrementCounter() {
-    debugPrint(getDia());
     setState(() {
       _counter++;
     });

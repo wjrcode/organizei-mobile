@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:organizei/components/box.dart';
 import 'package:organizei/components/texto_contornado.dart';
 
@@ -39,7 +38,7 @@ class _DialogPersonalizadoState extends State<DialogPersonalizado>
   void initState() {
     //offset = const Offset(0, 2);
     super.initState();
-    WidgetsBinding.instance!.addPostFrameCallback((_) => _slideUp());
+    WidgetsBinding.instance.addPostFrameCallback((_) => _slideUp());
     //offset = const Offset(0, 2);
   }
 
@@ -67,9 +66,7 @@ class _DialogPersonalizadoState extends State<DialogPersonalizado>
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: <Widget>[
                       GestureDetector(
-                        child: Container(
-                          child: Icon(Icons.close),
-                        ),
+                        child: const Icon(Icons.close),
                         onTap: () {
                           _slideDown();
                           Future.delayed(Duration(milliseconds: 500))
@@ -86,7 +83,7 @@ class _DialogPersonalizadoState extends State<DialogPersonalizado>
                     TextoContornado(
                       texto: widget.nome,
                       tamanho: 32,
-                      cor: Color(0xFF6385C3),
+                      cor: const Color(0xFF6385C3),
                     ),
                   ],
                 ),

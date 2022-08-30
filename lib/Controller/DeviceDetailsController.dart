@@ -1,8 +1,8 @@
 import 'dart:io';
 
 import 'package:device_info/device_info.dart';
-import 'package:flutter_udid/flutter_udid.dart';
-import 'package:package_info/package_info.dart';
+//import 'package:flutter_udid/flutter_udid.dart';
+//import 'package:package_info/package_info.dart';
 import 'package:organizei/Model/DeviceDetails/DeviceDetails.dart';
 
 class DeviceDetailsController {
@@ -46,23 +46,23 @@ class DeviceDetailsController {
       type = "";
     }
 
-    var packageInfo = await PackageInfo.fromPlatform();
-    identifier = await FlutterUdid.udid;
+    // var packageInfo = await PackageInfo.fromPlatform();
+    //identifier = await FlutterUdid.udid;
 
     return new DeviceDetails(
       devicePlatform: devicePlatform,
       deviceVersion: deviceVersion,
-      identifier: identifier,
+      //identifier: identifier,
       version: version,
       id: id,
       manufacturer: manufacturer,
       model: model,
       product: product,
       type: type,
-      appName: packageInfo.appName,
-      appPackageName: packageInfo.appName,
-      appVersion: packageInfo.version,
-      appBuildNumber: packageInfo.buildNumber,
+      // appName: packageInfo.appName,
+      //appPackageName: packageInfo.appName,
+      // appVersion: packageInfo.version,
+      // appBuildNumber: packageInfo.buildNumber,
     );
   }
 }

@@ -23,8 +23,7 @@ class UsuarioController extends Base {
   var controllerEmail = TextEditingController();
   var controllerSenha = TextEditingController();
 
-  Future<bool> saveProduto() async {
-    print('entreo');
+  Future<bool> saveUsuario() async {
     if (!formKey.currentState!.validate()) {
       return false;
     }
@@ -32,14 +31,25 @@ class UsuarioController extends Base {
     formKey.currentState!.save();
 
     try {
-      print(model.nome);
-      if (model.id == '' || model.id == null) {
-        print('coração vou cadastrar');
+      if (model.id == null) {
         return await repository.addUsuario(model).then((value) {
           ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-            content: Text(value.msg!),
-            backgroundColor: value.valido! ? Colors.green : Colors.red,
+            elevation: 6.0,
+            behavior: SnackBarBehavior.floating,
+            shape: RoundedRectangleBorder(
+              side: const BorderSide(color: Colors.black, width: 3),
+              borderRadius: BorderRadius.circular(16),
+            ),
+            content: Text(value.msg!,
+                style: const TextStyle(
+                  color: Colors.black,
+                  fontWeight: FontWeight.w500,
+                )),
+            backgroundColor: value.valido!
+                ? const Color(0xFF74C198)
+                : const Color(0xFFEF7E69),
           ));
+
           if (value.valido!) {
             return value.valido!;
           } else {
@@ -58,6 +68,7 @@ class UsuarioController extends Base {
       }
     } catch (e) {
       print(e);
+      print(('puta q pari'));
       return false;
     }
   }

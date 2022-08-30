@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 
 Widget input(
-  dynamic onSaved,
-  TextEditingController textController,
-  String label,
-) {
+    {dynamic onSaved,
+    TextEditingController? textController,
+    String? label,
+    bool senha = false}) {
   return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
         Text(
-          label,
+          label!,
           style: const TextStyle(
             color: Colors.black,
             fontSize: 16,
@@ -20,6 +20,7 @@ Widget input(
         Material(
           color: Colors.white.withOpacity(0),
           child: TextFormField(
+            obscureText: senha,
             onSaved: onSaved,
             controller: textController,
             decoration: InputDecoration(
