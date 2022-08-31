@@ -7,6 +7,7 @@ import 'package:organizei/components/botao.dart';
 import 'package:organizei/components/dialog_personalizado.dart';
 import 'package:organizei/components/input.dart';
 import 'package:organizei/home_page.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class StartPage extends StatefulWidget {
   const StartPage({Key? key}) : super(key: key);
@@ -23,9 +24,20 @@ class _StartPageState extends State<StartPage> {
   initState() {
     controller = LoginController(LoginRepository(), context);
     usuarioController = UsuarioController(UsuarioRepository(), context);
-
-    //controller.controllerSenha.text = 'fafadfadf';
+    _logar();
     super.initState();
+  }
+
+  _logar() async {
+    await controller.getLogin().then((value) async {
+      if (value != null) {
+        String teste = await controller.getUsuarioLogado();
+        String senha = await controller.getSenhaUsuarioLogado();
+
+        controller.controllerUsuario.text = teste.toString();
+        controller.controllerSenha.text = senha.toString();
+      }
+    });
   }
 
   @override
@@ -65,6 +77,7 @@ class _StartPageState extends State<StartPage> {
   }
 
   Future<dynamic> entrar(BuildContext context) {
+    setState(() {});
     return showDialog(
         barrierDismissible: false,
         barrierColor: Colors.white.withOpacity(0),
@@ -111,7 +124,7 @@ class _StartPageState extends State<StartPage> {
                                 clicar: () async {
                                   bool succes = await controller.autentica();
 
-                                  if (succes) {
+                                  /*if (succes) {
                                     Navigator.of(context).push<void>(
                                       MaterialPageRoute<void>(
                                         builder: (BuildContext context) =>
@@ -119,7 +132,7 @@ class _StartPageState extends State<StartPage> {
                                       ),
                                     );
                                   }
-                                  ;
+                                  ;*/
                                 },
                               ),
                             )
@@ -134,6 +147,9 @@ class _StartPageState extends State<StartPage> {
   }
 
   Future<dynamic> cadastrar(BuildContext context) {
+    setState(() {
+      usuarioController = UsuarioController(UsuarioRepository(), context);
+    });
     return showDialog(
         barrierDismissible: false,
         barrierColor: Colors.white.withOpacity(0),

@@ -4,34 +4,31 @@ import 'package:path_provider/path_provider.dart';
 import 'package:organizei/Model/Login/LoginModel.dart';
 
 class LoginConfiguracoes {
-  salvarArquivo(List<LoginModel?> login) async {
-    var list = login;
+  salvarArquivo(LoginModel login) async {
+    var novoLogin = login;
     final arquivo = await _getFile();
     arquivo.exists().then((value) {
-      if (value) {
-        arquivo.readAsString().then((value) {
-          final jsonLogins = ((json.decode(value) as List)
-              .map((i) => LoginModel.fromJson(i))
-              .toList());
-          jsonLogins.forEach((element) {
-            list.add(element);
-          });
-
-          arquivo.writeAsString(json.encode(list));
-        });
-      } else {
-        var dados = json.encode(login);
-        arquivo.writeAsString(dados);
-      }
+      arquivo.writeAsString(json.encode(novoLogin));
     });
   }
 
+  Future<bool> existeLogin() async {
+    var login = await getLogin();
+    bool ret = false;
+
+    if (login != null) {
+      ret = true;
+    }
+
+    return ret;
+  }
+
   deleteLogin(LoginModel login) async {
-    var logins = await getListLogins();
+    var logins = await getLogin();
     //logins.removeWhere((e) => e.chaveCentralizador == login.chaveCentralizador);
 
     excluirArquivo();
-    salvarArquivo(logins);
+    // salvarArquivo(logins);
   }
 
   Future<String> lerArquivo() async {
@@ -48,34 +45,18 @@ class LoginConfiguracoes {
     }
   }
 
-  Future<List<LoginModel>> getListLogins() async {
-    List<LoginModel> emptyList = [];
+  Future<LoginModel?> getLogin() async {
     var archive = await lerArquivo();
     if (archive.isNotEmpty) {
-      List<LoginModel> logins = ((json.decode(archive) as List)
-          .map((i) => LoginModel.fromJson(i))
-          .toList());
-      return logins;
+      // final List<dynamic> decodedJson = jsonDecode(archive);
+
+      //decodedJson.map((dynamic json) => LoginModel.fromJson(json)).toList();
+
+      LoginModel login = LoginModel.fromJson(jsonDecode(archive));
+
+      return login;
     }
-    return emptyList;
-  }
-
-  Future<int> getQuantidadeLogins() async {
-    var logins = await getListLogins();
-    return logins.length;
-  }
-
-  Future<bool> loginExists(LoginModel login) async {
-    var logins = await getListLogins();
-    bool ret = true;
-
-    logins.forEach((e) {
-      if (e.usuario == login.usuario) {
-        ret = true;
-      }
-    });
-
-    return ret;
+    return null;
   }
 
   Future<File> _getFile() async {

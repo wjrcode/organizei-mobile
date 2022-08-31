@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/date_symbol_data_local.dart';
+import 'package:organizei/SplashView.dart';
 import 'package:organizei/components/card_item.dart';
 import 'package:intl/intl.dart';
 import 'package:organizei/start_page.dart';
@@ -21,7 +22,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: StartPage(),
+      home: SplashView(),
       //HomePage(),
       debugShowCheckedModeBanner: false,
     );

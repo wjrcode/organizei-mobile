@@ -16,20 +16,20 @@ class LoginController extends Base {
   var model = LoginModel();
   var loginConfiguracoes = LoginConfiguracoes();
 
-  loginUsuario(String? value) => model.usuario = value.toString().toUpperCase();
+  loginUsuario(String? value) => model.usuario = value.toString().toLowerCase();
   loginSenha(String? value) => model.senha = value.toString().toLowerCase();
 
   var controllerUsuario = TextEditingController();
   var controllerSenha = TextEditingController();
 
   Future<bool> autentica() async {
-    /*if (!formKey.currentState!.validate()) {
+    /* if (!formKey.currentState!.validate()) {
       return false;
     }*/
 
     formKey.currentState!.save();
 
-    //SharedPreferences prefs = await SharedPreferences.getInstance();
+    SharedPreferences prefs = await SharedPreferences.getInstance();
 
     try {
       //showReloadDialog(context, 'Realizando login, aguarde...');
@@ -56,6 +56,8 @@ class LoginController extends Base {
           backgroundColor: const Color(0xFFEF7E69),
         ));
       }
+      prefs.setString('UsuarioLogado', model.usuario.toString());
+      salvarLogin(model);
 
       /*if (ret) {
         prefs.setString('UsuarioLogado', model.usuario.toString());
@@ -70,48 +72,10 @@ class LoginController extends Base {
     }
   }
 
-  Future<bool> validaDispositivo() async {
-    var deviceDetailsController = DeviceDetailsController();
-    var deviceDetails = await deviceDetailsController.getDeviceDetails();
-
-    String _id = deviceDetails.identifier.toString();
-
-    try {
-      showReloadDialog(context, 'Validando dispositivo, aguarde...');
-
-      bool ret = await repository.validarDispositivo(_id);
-
-      return ret;
-    } catch (e) {
-      return false;
-    } finally {
-      closeAlertDialog(context);
-    }
-  }
-
-  Future<String> getBottomText() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    var nome = prefs.getString('EmpresaNome');
-    var cpfcnpj = prefs.getString('EmpresaCpfcnpj');
-
-    return '$nome - $cpfcnpj';
-  }
-
-  Future<String> getVersao() async {
-    var deviceDetailsController = DeviceDetailsController();
-    var deviceDetails = await deviceDetailsController.getDeviceDetails();
-
-    String _versaoApp = deviceDetails.appVersion.toString();
-    String _buildApp = deviceDetails.appBuildNumber.toString();
-
-    return '$_versaoApp.$_buildApp';
-  }
-
   salvarLogin(LoginModel login) async {
-    List<LoginModel?> listaLogins = await loginConfiguracoes.getListLogins();
+    //LoginModel? login = await loginConfiguracoes.getLogin();
 
-    listaLogins.add(login);
-    await loginConfiguracoes.salvarArquivo(listaLogins);
+    await loginConfiguracoes.salvarArquivo(login);
   }
 
   bool existeLogin() {
@@ -122,20 +86,8 @@ class LoginController extends Base {
     return false;
   }
 
-  Future<List<LoginModel>?> getLogins() {
-    return loginConfiguracoes.getListLogins();
-  }
-
-  deleteLogin(LoginModel login) async {
-    showReloadDialog(context, 'Excluindo, aguarde...');
-    bool exists = await loginConfiguracoes.loginExists(login);
-
-    if (exists) {
-      await loginConfiguracoes.deleteLogin(login);
-      await _limpaPreferencesLogin(login);
-    }
-
-    closeAlertDialog(context);
+  Future<LoginModel?> getLogin() {
+    return loginConfiguracoes.getLogin();
   }
 
   _limpaPreferencesLogin(LoginModel login) async {
@@ -143,5 +95,27 @@ class LoginController extends Base {
 
     prefs.setString('usuario', '');
     prefs.setString('senha', '');
+  }
+
+  Future<String> getUsuarioLogado() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    LoginModel? login = await getLogin();
+
+    String usuario = login!.usuario.toString();
+
+    return '$usuario';
+  }
+
+  Future<String> getSenhaUsuarioLogado() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    String? chaveCentralizador = prefs.getString('EmpresaChaveCentralizador');
+
+    LoginModel? login = await getLogin();
+
+    String senha = login!.senha.toString();
+
+    return '$senha';
   }
 }

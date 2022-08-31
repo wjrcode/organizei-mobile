@@ -68,7 +68,6 @@ class UsuarioController extends Base {
       }
     } catch (e) {
       print(e);
-      print(('puta q pari'));
       return false;
     }
   }

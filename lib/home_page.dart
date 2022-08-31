@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:organizei/components/card_item.dart';
 import 'package:intl/intl.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'components/box.dart';
 import 'components/navigation/bottom_navigation_bar.dart';
@@ -29,7 +30,8 @@ String getDia() {
 }
 
 class HomePage extends StatefulWidget {
-  const HomePage({Key? key}) : super(key: key);
+  const HomePage({Key? key, required this.apelido}) : super(key: key);
+  final String? apelido;
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -72,7 +74,7 @@ class _HomePageState extends State<HomePage> {
                                 ),
                               ),
                               TextoContornado(
-                                texto: 'Willian!',
+                                texto: widget.apelido!,
                                 tamanho: 32,
                                 cor: Color(0xFFF7BC36),
                               )
