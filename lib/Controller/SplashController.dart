@@ -13,7 +13,7 @@ class SplashController extends Base {
     LoginModel? login = await _configuracoes.getLogin();
     SharedPreferences prefs = await SharedPreferences.getInstance();
 
-    String? apelido = prefs.getString('UsuarioLogado');
+    String? apelido = prefs.getString('UsuarioApelido');
 
     if (login != null) {
       return HomePage(apelido: apelido);

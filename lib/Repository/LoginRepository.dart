@@ -2,7 +2,9 @@ import 'dart:convert';
 import 'package:organizei/Model/API/APIModel.dart';
 
 import 'package:http/http.dart' as http;
+import 'package:organizei/Model/API/ResponseAPIModel.dart';
 import 'package:organizei/Model/Login/LoginModel.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginRepository {
   Future<bool> autenticar(LoginModel model) async {
@@ -19,6 +21,12 @@ class LoginRepository {
         headers: ApiModel.headers, body: jsonEncode(json));
 
     if (response.statusCode == 200) {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+
+      final dadosLogin = ResponseAPIModel.fromJson(jsonDecode(response.body));
+
+      prefs.setString('UsuarioApelido', dadosLogin.msg.toString());
+      print(dadosLogin.msg.toString());
       return true;
     }
 

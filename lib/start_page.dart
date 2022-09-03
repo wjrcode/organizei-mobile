@@ -19,6 +19,7 @@ class StartPage extends StatefulWidget {
 class _StartPageState extends State<StartPage> {
   late LoginController controller;
   late UsuarioController usuarioController;
+  late String? apelido;
 
   @override
   initState() {
@@ -33,6 +34,10 @@ class _StartPageState extends State<StartPage> {
       if (value != null) {
         String teste = await controller.getUsuarioLogado();
         String senha = await controller.getSenhaUsuarioLogado();
+
+        SharedPreferences prefs = await SharedPreferences.getInstance();
+
+        apelido = prefs.getString('UsuarioApelido');
 
         controller.controllerUsuario.text = teste.toString();
         controller.controllerSenha.text = senha.toString();
@@ -123,16 +128,22 @@ class _StartPageState extends State<StartPage> {
                                 cor: const Color(0xFF6BC8E4),
                                 clicar: () async {
                                   bool succes = await controller.autentica();
+                                  SharedPreferences prefs =
+                                      await SharedPreferences.getInstance();
 
-                                  /*if (succes) {
+                                  apelido = prefs.getString('UsuarioApelido');
+
+                                  print('thats gossip');
+
+                                  if (succes) {
                                     Navigator.of(context).push<void>(
                                       MaterialPageRoute<void>(
                                         builder: (BuildContext context) =>
-                                            const HomePage(),
+                                            HomePage(apelido: apelido),
                                       ),
                                     );
                                   }
-                                  ;*/
+                                  ;
                                 },
                               ),
                             )
