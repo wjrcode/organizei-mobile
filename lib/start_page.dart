@@ -133,8 +133,6 @@ class _StartPageState extends State<StartPage> {
 
                                   apelido = prefs.getString('UsuarioApelido');
 
-                                  print('thats gossip');
-
                                   if (succes) {
                                     Navigator.of(context).push<void>(
                                       MaterialPageRoute<void>(

@@ -1,9 +1,14 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:organizei/Repository/TarefaRepository.dart';
+import 'package:organizei/components/botao.dart';
 import 'package:organizei/components/box.dart';
 import 'package:organizei/components/dialog_personalizado.dart';
+import 'package:organizei/components/input.dart';
 import 'package:organizei/components/texto_contornado.dart';
 import 'package:organizei/home_page.dart';
+
+import '../../Controller/TarefaController.dart';
 
 class Menu extends StatefulWidget {
   const Menu({Key? key, this.customFunction}) : super(key: key);
@@ -15,6 +20,8 @@ class Menu extends StatefulWidget {
 }
 
 class _MenuState extends State<Menu> {
+  late TarefaController tarefaController;
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -170,15 +177,22 @@ class _MenuState extends State<Menu> {
                 thickness: 3,
                 color: Colors.black,
               ),
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  Text(
-                    'criar tarefa',
-                    style: TextStyle(fontSize: 24.0),
+              GestureDetector(
+                onTap: () {
+                  criarTarefa(context);
+                },
+                child: AbsorbPointer(
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      Text(
+                        'criar tarefa',
+                        style: TextStyle(fontSize: 24.0),
+                      ),
+                    ],
                   ),
-                ],
+                ),
               ),
               Divider(
                 thickness: 3,
@@ -227,5 +241,88 @@ class _MenuState extends State<Menu> {
         ),
       ],
     );
+  }
+
+  Future<dynamic> criarTarefa(BuildContext context) {
+    setState(() {
+      tarefaController = TarefaController(TarefaRepository(), context);
+    });
+    return showDialog(
+        barrierDismissible: false,
+        barrierColor: Colors.white.withOpacity(0),
+        context: context,
+        builder: (context) {
+          return Scaffold(
+            backgroundColor: Colors.transparent,
+            body: SingleChildScrollView(
+              scrollDirection: Axis.vertical,
+              child: Material(
+                type: MaterialType.transparency,
+                child: Form(
+                  key: tarefaController.formKey,
+                  child: Container(
+                    height: MediaQuery.of(context).size.height,
+                    margin: const EdgeInsets.only(top: 24),
+                    child: DialogPersonalizado(
+                      nome: 'Tarefa',
+                      //minHeight: MediaQuery.of(context).size.height * 0.8,
+                      child: <Widget>[
+                        Padding(
+                          padding: const EdgeInsets.only(bottom: 16),
+                          child: input(
+                            onSaved: tarefaController.tarefaNome,
+                            textController: tarefaController.controllerNome,
+                            label: 'nome',
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(bottom: 16),
+                          child: input(
+                            onSaved: tarefaController.tarefaDataehora,
+                            textController:
+                                tarefaController.controllerDataehora,
+                            label: 'data e hora',
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(bottom: 16),
+                          child: input(
+                            onSaved: tarefaController.tarefaObservacao,
+                            textController:
+                                tarefaController.controllerObservacao,
+                            label: 'observação',
+                          ),
+                          //child: Input(label: 'observação'),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(bottom: 16),
+                          child: input(
+                              onSaved: tarefaController.tarefaPrioridade,
+                              textController:
+                                  tarefaController.controllerPrioridade,
+                              label: 'prioridade',
+                              senha: true),
+                          //child: Input(label: 'senha'),
+                        ),
+                        Botao(
+                          texto: 'Cadastrar',
+                          cor: const Color(0xFF6385C3),
+                          clicar: () async {
+                            bool succes = await tarefaController.saveTarefa();
+
+                            if (succes == true) {
+                              Navigator.pop(context);
+                              //entrar(context);
+                            }
+                          },
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          );
+        });
   }
 }
