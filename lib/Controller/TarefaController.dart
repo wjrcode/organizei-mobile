@@ -14,7 +14,7 @@ class TarefaController extends Base {
   //var loginConfiguracoes = LoginConfiguracoes();
 
   tarefaNome(String? value) => model.nome = value.toString();
-  tarefaDataehora(String? value) => model.dataehora = value.toString();
+  tarefaDataehora(String? value) => model.data = value.toString();
   tarefaObservacao(String? value) => model.observacao = value.toString();
   tarefaPrioridade(String? value) => model.prioridade = value.toString();
   tarefaCor(String? value) => model.cor = value.toString();

@@ -3,7 +3,7 @@ import 'package:organizei/Model/API/ResponseAPIModel.dart';
 class TarefaModel {
   int? id;
   String? nome;
-  String? dataehora;
+  String? data;
   String? observacao;
   String? prioridade;
   String? cor;
@@ -12,7 +12,7 @@ class TarefaModel {
   TarefaModel(
       {this.id,
       this.nome,
-      this.dataehora,
+      this.data,
       this.observacao,
       this.prioridade,
       this.cor});
@@ -20,7 +20,7 @@ class TarefaModel {
   TarefaModel.fromJson(Map<String, dynamic> json) {
     id = int.parse(json['id']);
     nome = json['nome'];
-    dataehora = json['dataehora'];
+    data = json['data'];
     observacao = json['observacao'];
     prioridade = json['prioridade'];
     cor = json['cor'];
@@ -30,7 +30,7 @@ class TarefaModel {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['id'] = this.id;
     data['nome'] = this.nome;
-    data['dataehora'] = this.dataehora;
+    data['data'] = this.data;
     data['observacao'] = this.observacao;
     data['prioridade'] = this.prioridade;
     data['cor'] = this.cor;

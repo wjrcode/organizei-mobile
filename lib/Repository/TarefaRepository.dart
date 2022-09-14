@@ -10,7 +10,7 @@ class TarefaRepository {
   Future<ResponseAPIModel> addTarefa(TarefaModel model) async {
     var json = {
       "nome": model.nome,
-      "dataehora": model.dataehora,
+      "data": model.data,
       "observacao": model.observacao,
       "prioridade": model.prioridade,
       "cor": model.prioridade,
