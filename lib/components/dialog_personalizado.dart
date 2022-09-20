@@ -52,6 +52,7 @@ class _DialogPersonalizadoState extends State<DialogPersonalizado>
       curve: Curves.easeInOut,
       child: Box(
         radius: 47,
+        minHeight: MediaQuery.of(context).size.height,
         child: Padding(
           padding: const EdgeInsets.fromLTRB(16.0, 32.0, 16.0, 0.0),
           child: Padding(

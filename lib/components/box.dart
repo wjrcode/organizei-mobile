@@ -28,22 +28,29 @@ class Box extends StatelessWidget {
         ),
       ),
       child: Container(
-        constraints: BoxConstraints(
-          minHeight: minHeight != null ? minHeight! : 0,
-        ),
-        margin: EdgeInsets.only(top: 3, left: 3, right: 3),
-        padding: EdgeInsets.only(bottom: padding != null ? padding! : 0),
-        decoration: BoxDecoration(
-          color: Color(0xFFE9E9E9),
-          borderRadius: BorderRadius.only(
-            topRight:
-                radius != null ? Radius.circular(radius!) : Radius.circular(0),
-            topLeft:
-                radius != null ? Radius.circular(radius!) : Radius.circular(0),
+          constraints: BoxConstraints(
+            minHeight: minHeight != null ? minHeight! : 0,
           ),
-        ),
-        child: child,
-      ),
+          margin: EdgeInsets.only(top: 3, left: 3, right: 3),
+          padding: EdgeInsets.only(bottom: padding != null ? padding! : 0),
+          decoration: BoxDecoration(
+            color: Color(0xFFE9E9E9),
+            borderRadius: BorderRadius.only(
+              topRight: radius != null
+                  ? Radius.circular(radius!)
+                  : Radius.circular(0),
+              topLeft: radius != null
+                  ? Radius.circular(radius!)
+                  : Radius.circular(0),
+            ),
+          ),
+          child:
+              //SingleChildScrollView(scrollDirection: Axis.vertical, child: child),
+              Column(
+            children: [
+              child,
+            ],
+          )),
     );
   }
 }

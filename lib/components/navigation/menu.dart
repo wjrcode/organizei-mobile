@@ -244,6 +244,13 @@ class _MenuState extends State<Menu> {
   }
 
   Future<dynamic> criarTarefa(BuildContext context) {
+    List<int> strs = [
+      0xFF6385C3,
+      0xFFEF7E69,
+      0xFF6BC8E4,
+      0xFFF7BC36,
+      0xFF74C198
+    ];
     setState(() {
       tarefaController = TarefaController(TarefaRepository(), context);
     });
@@ -296,13 +303,90 @@ class _MenuState extends State<Menu> {
                         ),
                         Padding(
                           padding: const EdgeInsets.only(bottom: 16),
-                          child: input(
-                              onSaved: tarefaController.tarefaPrioridade,
-                              textController:
-                                  tarefaController.controllerPrioridade,
-                              label: 'prioridade',
-                              senha: true),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: <Widget>[
+                              const Text(
+                                'prioridade',
+                                style: TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w400,
+                                ),
+                              ),
+                              DropdownButtonExample(
+                                  tarefaController: tarefaController),
+                            ],
+                          ),
                           //child: Input(label: 'senha'),
+                        ),
+                        Padding(
+                            padding: const EdgeInsets.only(bottom: 16),
+                            child: Expanded(
+                              child: SizedBox(
+                                height: 50,
+                                child: ListView(
+                                  scrollDirection: Axis.horizontal,
+                                  shrinkWrap: true,
+                                  //scrollDirection: Axis.horizontal,
+                                  children: strs.map((strone) {
+                                    // return Container(
+                                    //   child: Text(strone),
+                                    //   margin: EdgeInsets.all(5),
+                                    //   padding: EdgeInsets.all(15),
+                                    //   decoration: BoxDecoration(
+                                    //       borderRadius:
+                                    //           BorderRadius.circular(100),
+                                    //       border: Border.all(
+                                    //           width: 2, color: Colors.white)),
+                                    //   color: Colors.green[100],
+                                    // );
+                                    return Container(
+                                      width: 60,
+                                      height: 60,
+                                      decoration: BoxDecoration(
+                                          shape: BoxShape.circle,
+                                          color: Color(strone),
+                                          border: Border.all(
+                                            width: 3,
+                                            color: Colors.black,
+                                            style: BorderStyle.solid,
+                                          )),
+                                    );
+                                    // return OutlinedButton(
+                                    //   onPressed: () {
+                                    //     print('opa');
+                                    //   },
+                                    //   style: ButtonStyle(
+                                    //     shape: MaterialStateProperty.all<
+                                    //             RoundedRectangleBorder>(
+                                    //         RoundedRectangleBorder(
+                                    //       borderRadius:
+                                    //           BorderRadius.circular(100),
+                                    //       side: BorderSide(color: Colors.black),
+                                    //     )),
+                                    //   ),
+                                    //   child: Text(strone),
+                                    // );
+                                  }).toList(),
+                                ),
+                              ),
+                            )),
+                        // Container(
+                        //   height: 200,
+                        // ),
+                        Botao(
+                          texto: 'Cadastrar',
+                          cor: const Color(0xFF6385C3),
+                          clicar: () async {
+                            bool succes = await tarefaController.saveTarefa();
+
+                            if (succes == true) {
+                              Navigator.pop(context);
+                              //entrar(context);
+                            }
+                          },
                         ),
                         Botao(
                           texto: 'Cadastrar',
@@ -324,5 +408,61 @@ class _MenuState extends State<Menu> {
             ),
           );
         });
+  }
+}
+
+const List<String> list = <String>['baixa', 'média', 'alta'];
+
+class DropdownButtonExample extends StatefulWidget {
+  late TarefaController? tarefaController;
+  DropdownButtonExample({Key? key, this.tarefaController}) : super(key: key);
+
+  @override
+  State<DropdownButtonExample> createState() => _DropdownButtonExampleState();
+}
+
+class _DropdownButtonExampleState extends State<DropdownButtonExample> {
+  String dropdownValue = list.first;
+
+  @override
+  Widget build(BuildContext context) {
+    return DropdownButtonFormField<String>(
+      borderRadius: BorderRadius.circular(20),
+      icon: const Icon(Icons.expand_more),
+      decoration: InputDecoration(
+        fillColor: Colors.white,
+        filled: true,
+        enabledBorder: OutlineInputBorder(
+          borderSide: const BorderSide(
+            color: Colors.black,
+            width: 3.0,
+          ),
+          borderRadius: BorderRadius.circular(16.0),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderSide: const BorderSide(
+            color: Colors.black,
+            width: 3.0,
+          ),
+          borderRadius: BorderRadius.circular(16.0),
+        ),
+      ),
+      onSaved: widget.tarefaController!.tarefaPrioridade,
+      value: dropdownValue,
+      elevation: 16,
+      style: const TextStyle(color: Colors.grey),
+      onChanged: (String? value) {
+        // This is called when the user selects an item.
+        setState(() {
+          dropdownValue = value!;
+        });
+      },
+      items: list.map<DropdownMenuItem<String>>((String value) {
+        return DropdownMenuItem<String>(
+          value: value,
+          child: Text(value),
+        );
+      }).toList(),
+    );
   }
 }
