@@ -268,7 +268,7 @@ class _MenuState extends State<Menu> {
                 child: Form(
                   key: tarefaController.formKey,
                   child: Container(
-                    height: MediaQuery.of(context).size.height,
+                    // height: MediaQuery.of(context).size.height,
                     margin: const EdgeInsets.only(top: 24),
                     child: DialogPersonalizado(
                       nome: 'Tarefa',
@@ -321,27 +321,23 @@ class _MenuState extends State<Menu> {
                           ),
                           //child: Input(label: 'senha'),
                         ),
+                        Text(
+                          'cor',
+                          style: const TextStyle(
+                            color: Colors.black,
+                            fontSize: 16,
+                            fontWeight: FontWeight.w400,
+                          ),
+                        ),
                         Padding(
                             padding: const EdgeInsets.only(bottom: 16),
                             child: Expanded(
                               child: SizedBox(
                                 height: 50,
                                 child: ListView(
+                                  itemExtent: 70.0,
                                   scrollDirection: Axis.horizontal,
-                                  shrinkWrap: true,
-                                  //scrollDirection: Axis.horizontal,
                                   children: strs.map((strone) {
-                                    // return Container(
-                                    //   child: Text(strone),
-                                    //   margin: EdgeInsets.all(5),
-                                    //   padding: EdgeInsets.all(15),
-                                    //   decoration: BoxDecoration(
-                                    //       borderRadius:
-                                    //           BorderRadius.circular(100),
-                                    //       border: Border.all(
-                                    //           width: 2, color: Colors.white)),
-                                    //   color: Colors.green[100],
-                                    // );
                                     return Container(
                                       width: 60,
                                       height: 60,
@@ -354,21 +350,6 @@ class _MenuState extends State<Menu> {
                                             style: BorderStyle.solid,
                                           )),
                                     );
-                                    // return OutlinedButton(
-                                    //   onPressed: () {
-                                    //     print('opa');
-                                    //   },
-                                    //   style: ButtonStyle(
-                                    //     shape: MaterialStateProperty.all<
-                                    //             RoundedRectangleBorder>(
-                                    //         RoundedRectangleBorder(
-                                    //       borderRadius:
-                                    //           BorderRadius.circular(100),
-                                    //       side: BorderSide(color: Colors.black),
-                                    //     )),
-                                    //   ),
-                                    //   child: Text(strone),
-                                    // );
                                   }).toList(),
                                 ),
                               ),
@@ -376,18 +357,6 @@ class _MenuState extends State<Menu> {
                         // Container(
                         //   height: 200,
                         // ),
-                        Botao(
-                          texto: 'Cadastrar',
-                          cor: const Color(0xFF6385C3),
-                          clicar: () async {
-                            bool succes = await tarefaController.saveTarefa();
-
-                            if (succes == true) {
-                              Navigator.pop(context);
-                              //entrar(context);
-                            }
-                          },
-                        ),
                         Botao(
                           texto: 'Cadastrar',
                           cor: const Color(0xFF6385C3),

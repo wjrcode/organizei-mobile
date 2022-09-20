@@ -46,11 +46,7 @@ class Box extends StatelessWidget {
           ),
           child:
               //SingleChildScrollView(scrollDirection: Axis.vertical, child: child),
-              Column(
-            children: [
-              child,
-            ],
-          )),
+              child),
     );
   }
 }
