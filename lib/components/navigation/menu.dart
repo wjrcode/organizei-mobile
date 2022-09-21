@@ -337,7 +337,66 @@ class _MenuState extends State<Menu> {
                                 final time = await showTimePicker(
                                     context: context,
                                     initialTime: TimeOfDay(
-                                        hour: date.hour, minute: date.minute));
+                                        hour: date.hour, minute: date.minute),
+                                    builder: (BuildContext context, child) {
+                                      return Theme(
+                                        data: ThemeData.light().copyWith(
+                                            timePickerTheme:
+                                                TimePickerThemeData(
+                                              shape: RoundedRectangleBorder(
+                                                side: const BorderSide(
+                                                    width: 3,
+                                                    color: Colors.black),
+                                                borderRadius: BorderRadius.circular(
+                                                    16.0), // this is the border radius of the picker
+                                              ),
+                                              backgroundColor:
+                                                  Color(0xFFE9E9E9),
+                                              hourMinuteColor:
+                                                  MaterialStateColor.resolveWith(
+                                                      (states) => states
+                                                              .contains(
+                                                                  MaterialState
+                                                                      .selected)
+                                                          ? Color(0xFFE9E9E9)
+                                                          : Color(0xFFE9E9E9)),
+                                              dialHandColor: Color(0xFFE9E9E9),
+                                              dialTextColor: MaterialStateColor
+                                                  .resolveWith((states) =>
+                                                      states.contains(
+                                                              MaterialState
+                                                                  .selected)
+                                                          ? Colors.black
+                                                          : Colors.black),
+                                              hourMinuteTextColor:
+                                                  MaterialStateColor.resolveWith(
+                                                      (states) => states
+                                                              .contains(
+                                                                  MaterialState
+                                                                      .selected)
+                                                          ? Color(0xFF6385C3)
+                                                          : Colors.black),
+                                              dialBackgroundColor:
+                                                  Color(0xFF6385C3),
+                                            ),
+                                            textButtonTheme:
+                                                TextButtonThemeData(
+                                                    style: ButtonStyle(
+                                                        foregroundColor:
+                                                            MaterialStateColor
+                                                                .resolveWith(
+                                                                    (states) =>
+                                                                        Color(
+                                                                            0xFF6385C3)),
+                                                        overlayColor:
+                                                            MaterialStateColor
+                                                                .resolveWith(
+                                                          (states) =>
+                                                              Color(0xFF6385C3),
+                                                        )))),
+                                        child: child!,
+                                      );
+                                    });
 
                                 if (time == null) return;
 
