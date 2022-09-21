@@ -34,7 +34,7 @@ class TarefaController extends Base {
 
     try {
       if (model.id == null) {
-        return await repository.addTarefa(model).then((value) {
+        return await repository.addTarefa(model).then((value) async {
           ScaffoldMessenger.of(context).showSnackBar(SnackBar(
             elevation: 6.0,
             behavior: SnackBarBehavior.floating,
@@ -51,6 +51,8 @@ class TarefaController extends Base {
                 ? const Color(0xFF74C198)
                 : const Color(0xFFEF7E69),
           ));
+
+          await Future.delayed(const Duration(seconds: 1));
 
           if (value.valido!) {
             return value.valido!;

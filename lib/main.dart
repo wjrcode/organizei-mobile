@@ -5,6 +5,8 @@ import 'package:organizei/components/card_item.dart';
 import 'package:intl/intl.dart';
 import 'package:organizei/start_page.dart';
 
+import 'package:flutter_localizations/flutter_localizations.dart';
+
 //import 'home_page.dart';
 
 void main() {
@@ -16,6 +18,11 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      localizationsDelegates: [
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate
+      ],
+      supportedLocales: [const Locale('pt', 'BR')],
       title: 'Organizei',
       theme: ThemeData(
         fontFamily: 'Poppins',

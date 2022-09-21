@@ -13,7 +13,7 @@ class TarefaRepository {
       "data": model.data,
       "observacao": model.observacao,
       "prioridade": model.prioridade,
-      "cor": model.prioridade,
+      "cor": model.cor,
     };
 
     final response = await http.post(Uri.parse(ApiModel.ApiUrl + '/tarefas'),
