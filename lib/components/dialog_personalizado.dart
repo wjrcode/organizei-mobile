@@ -36,10 +36,8 @@ class _DialogPersonalizadoState extends State<DialogPersonalizado>
 
   @override
   void initState() {
-    //offset = const Offset(0, 2);
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) => _slideUp());
-    //offset = const Offset(0, 2);
   }
 
   @override
