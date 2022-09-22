@@ -5,8 +5,8 @@ import '../Controller/TarefaController.dart';
 const List<String> list = <String>['baixa', 'média', 'alta'];
 
 class SelectPrioridade extends StatefulWidget {
-  final TarefaController? tarefaController;
-  const SelectPrioridade({Key? key, this.tarefaController}) : super(key: key);
+  final dynamic prioridade;
+  const SelectPrioridade({Key? key, this.prioridade}) : super(key: key);
 
   @override
   State<SelectPrioridade> createState() => _DropdownButtonExampleState();
@@ -50,7 +50,7 @@ class _DropdownButtonExampleState extends State<SelectPrioridade> {
               borderRadius: BorderRadius.circular(16.0),
             ),
           ),
-          onSaved: widget.tarefaController!.tarefaPrioridade,
+          onSaved: widget.prioridade,
           value: dropdownValue,
           elevation: 16,
           style: const TextStyle(color: Colors.grey),

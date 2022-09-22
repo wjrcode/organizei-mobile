@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:organizei/components/navigation/menu.dart';
 
@@ -50,7 +49,7 @@ class _ButtonNavigatorBarState extends State<ButtonNavigatorBar>
               offset: offset,
               duration: const Duration(milliseconds: 250),
               curve: Curves.easeInOut,
-              child: Container(child: Menu(customFunction: _slideDown)),
+              child: Container(child: Menu(fecharMenu: _slideDown)),
             ),
             Box(
               radius: 30,

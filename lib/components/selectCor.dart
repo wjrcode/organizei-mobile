@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:organizei/Controller/TarefaController.dart';
 
 class SelectCor extends StatefulWidget {
-  final TarefaController tarefaController;
-  const SelectCor({Key? key, required this.tarefaController}) : super(key: key);
+  final dynamic cor;
+  const SelectCor({Key? key, required this.cor}) : super(key: key);
 
   @override
   State<SelectCor> createState() => _SelectCorState();
@@ -48,8 +48,7 @@ class _SelectCorState extends State<SelectCor> {
                         setState(() {
                           corSelected = strone;
                         });
-                        widget.tarefaController
-                            .tarefaCor(corSelected.toString());
+                        widget.cor(corSelected.toString());
                       },
                       child: Container(
                         width: 60,

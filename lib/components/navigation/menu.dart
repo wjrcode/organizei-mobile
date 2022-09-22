@@ -1,31 +1,17 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-//import 'package:intl/intl.dart';
-import 'package:organizei/Repository/TarefaRepository.dart';
-import 'package:organizei/components/botao.dart';
-import 'package:organizei/components/box.dart';
 import 'package:organizei/components/dialog_personalizado.dart';
 import 'package:organizei/components/dialogs/tarefaDialog.dart';
-import 'package:organizei/components/input.dart';
-import 'package:organizei/components/texto_contornado.dart';
-import 'package:organizei/home_page.dart';
-import 'package:intl/date_symbol_data_local.dart';
-import 'package:intl/intl.dart' as intl;
-
-import '../../Controller/TarefaController.dart';
 
 class Menu extends StatefulWidget {
-  const Menu({Key? key, this.customFunction}) : super(key: key);
+  const Menu({Key? key, this.fecharMenu}) : super(key: key);
 
-  final customFunction;
+  final fecharMenu;
 
   @override
   State<Menu> createState() => _MenuState();
 }
 
 class _MenuState extends State<Menu> {
-  late TarefaController tarefaController;
-
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -53,7 +39,7 @@ class _MenuState extends State<Menu> {
             children: [
               GestureDetector(
                 onTap: () {
-                  widget.customFunction();
+                  widget.fecharMenu();
                   showDialog(
                       barrierDismissible: false,
                       barrierColor: Colors.white.withOpacity(0),
@@ -184,6 +170,7 @@ class _MenuState extends State<Menu> {
               GestureDetector(
                 onTap: () {
                   criarTarefa(context);
+                  widget.fecharMenu();
                 },
                 child: AbsorbPointer(
                   child: Row(

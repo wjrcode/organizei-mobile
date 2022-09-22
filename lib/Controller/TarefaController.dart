@@ -20,10 +20,10 @@ class TarefaController extends Base {
   tarefaCor(String? value) => model.cor = value.toString();
 
   var controllerNome = TextEditingController();
-  var controllerDataehora = TextEditingController();
   var controllerObservacao = TextEditingController();
   var controllerPrioridade = TextEditingController();
   var controllerCor = TextEditingController();
+  var controllerDataehora = TextEditingController();
 
   Future<bool> saveTarefa() async {
     if (!formKey.currentState!.validate()) {

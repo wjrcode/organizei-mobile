@@ -41,7 +41,9 @@ Future<dynamic> criarTarefa(BuildContext context) {
                             label: 'nome',
                           ),
                         ),
-                        SelectData(tarefaController: tarefaController),
+                        SelectData(
+                            controller: tarefaController.controllerDataehora,
+                            onSaved: tarefaController.tarefaDataehora),
                         Padding(
                           padding: const EdgeInsets.only(bottom: 16),
                           child: input(
@@ -51,8 +53,9 @@ Future<dynamic> criarTarefa(BuildContext context) {
                             label: 'observação',
                           ),
                         ),
-                        SelectPrioridade(tarefaController: tarefaController),
-                        SelectCor(tarefaController: tarefaController),
+                        SelectPrioridade(
+                            prioridade: tarefaController.tarefaPrioridade),
+                        SelectCor(cor: tarefaController.tarefaCor),
                         Botao(
                           texto: 'Cadastrar',
                           cor: const Color(0xFF6385C3),

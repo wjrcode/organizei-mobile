@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:organizei/Controller/TarefaController.dart';
 import 'package:organizei/components/input.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/intl.dart' as intl;
 
 class SelectData extends StatefulWidget {
-  final TarefaController tarefaController;
-  const SelectData({Key? key, required this.tarefaController})
+  final dynamic onSaved;
+  final TextEditingController? controller;
+  const SelectData({Key? key, required this.onSaved, this.controller})
       : super(key: key);
 
   @override
@@ -29,8 +29,8 @@ class _SelectDataState extends State<SelectData> {
     return Padding(
       padding: const EdgeInsets.only(bottom: 16),
       child: input(
-          onSaved: widget.tarefaController.tarefaDataehora,
-          textController: widget.tarefaController.controllerDataehora,
+          onSaved: widget.onSaved,
+          textController: widget.controller,
           label: 'data e hora',
           placeholder: 'Selecione a data e hora',
           readOnly: true,
@@ -119,14 +119,14 @@ class _SelectDataState extends State<SelectData> {
               date = newDate;
             });
 
-            widget.tarefaController.tarefaDataehora(newDateTime.toString());
+            widget.onSaved(newDateTime.toString());
 
             intl.Intl.defaultLocale = 'pt_BR';
             initializeDateFormatting('pt_BR');
 
             intl.DateFormat('dd/MM/yyyy HH:mm').format(newDateTime);
 
-            widget.tarefaController.controllerDataehora.text =
+            widget.controller!.text =
                 intl.DateFormat('dd/MM/yyyy HH:mm').format(newDateTime);
           }),
     );
