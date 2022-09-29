@@ -4,7 +4,10 @@ import 'package:organizei/components/navigation/menu.dart';
 import '../box.dart';
 
 class ButtonNavigatorBar extends StatefulWidget {
-  const ButtonNavigatorBar({Key? key}) : super(key: key);
+  const ButtonNavigatorBar({Key? key, this.fecharDialog = null})
+      : super(key: key);
+
+  final Function? fecharDialog;
 
   @override
   State<ButtonNavigatorBar> createState() => _ButtonNavigatorBarState();
@@ -49,7 +52,10 @@ class _ButtonNavigatorBarState extends State<ButtonNavigatorBar>
               offset: offset,
               duration: const Duration(milliseconds: 250),
               curve: Curves.easeInOut,
-              child: Container(child: Menu(fecharMenu: _slideDown)),
+              child: Container(
+                  child: Menu(
+                      fecharMenu: _slideDown,
+                      fecharDialog: widget.fecharDialog)),
             ),
             Box(
               radius: 30,

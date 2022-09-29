@@ -3,7 +3,9 @@ import 'package:organizei/Controller/TarefaController.dart';
 
 class SelectCor extends StatefulWidget {
   final dynamic cor;
-  const SelectCor({Key? key, required this.cor}) : super(key: key);
+  final String corAtual;
+  const SelectCor({Key? key, required this.cor, this.corAtual = ''})
+      : super(key: key);
 
   @override
   State<SelectCor> createState() => _SelectCorState();
@@ -19,6 +21,13 @@ class _SelectCorState extends State<SelectCor> {
   ];
 
   late int corSelected = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    corSelected =
+        widget.corAtual != '' ? int.tryParse(widget.corAtual) ?? 0 : 0;
+  }
 
   @override
   Widget build(BuildContext context) {

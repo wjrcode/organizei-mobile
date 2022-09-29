@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:intl/date_symbol_data_local.dart';
+import 'package:organizei/Controller/TarefaController.dart';
+import 'package:organizei/Model/Tarefa/TarefaModel.dart';
+import 'package:organizei/Repository/TarefaRepository.dart';
 import 'package:organizei/components/card_item.dart';
 import 'package:intl/intl.dart';
+import 'package:organizei/components/dialogs/tarefaCadastroDialog.dart';
+import 'package:organizei/components/dialogs/tarefaDialog.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'components/box.dart';
@@ -40,45 +45,49 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
+    late TarefaController tarefaController;
+    tarefaController = TarefaController(TarefaRepository(), context);
+
     return Scaffold(
         resizeToAvoidBottomInset: false,
         floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
         extendBody: true,
-        backgroundColor: Color(0xFF6BC8E4),
-        // appBar: AppBar(
-        //   title: Text(widget.title),
-        // ),
-        body: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              Expanded(
-                child: ListView(
+        backgroundColor: const Color(0xFF6BC8E4),
+        body: SingleChildScrollView(
+          scrollDirection: Axis.vertical,
+          child: Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Column(
                   children: <Widget>[
                     Padding(
                       padding: const EdgeInsets.fromLTRB(24.0, 8.0, 24.0, 16.0),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: <Widget>[
-                          Column(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: <Widget>[
-                              Text(
-                                getSaudacao(),
-                                style: const TextStyle(
-                                  color: Colors.black,
-                                  fontSize: 32,
-                                  fontWeight: FontWeight.w300,
+                          Padding(
+                            padding: const EdgeInsets.only(top: 32.0),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: <Widget>[
+                                Text(
+                                  getSaudacao(),
+                                  style: const TextStyle(
+                                    color: Colors.black,
+                                    fontSize: 32,
+                                    fontWeight: FontWeight.w300,
+                                  ),
                                 ),
-                              ),
-                              TextoContornado(
-                                texto: widget.apelido!,
-                                tamanho: 32,
-                                cor: Color(0xFFF7BC36),
-                              )
-                            ],
+                                TextoContornado(
+                                  texto: widget.apelido!,
+                                  tamanho: 32,
+                                  cor: const Color(0xFFF7BC36),
+                                )
+                              ],
+                            ),
                           ),
                           Column(
                             mainAxisAlignment: MainAxisAlignment.end,
@@ -108,76 +117,100 @@ class _HomePageState extends State<HomePage> {
                       child: Padding(
                         padding:
                             const EdgeInsets.fromLTRB(16.0, 32.0, 16.0, 0.0),
-                        child: Column(
-                          children: <Widget>[
-                            Padding(
-                              padding: EdgeInsets.all(8.0),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: <Widget>[
-                                  TextoContornado(
-                                    texto: 'Hoje ',
-                                    tamanho: 32,
-                                    cor: Color(0xFF6385C3),
+                        child: Column(children: <Widget>[
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: <Widget>[
+                                const TextoContornado(
+                                  texto: 'Hoje ',
+                                  tamanho: 32,
+                                  cor: Color(0xFF6385C3),
+                                ),
+                                Text(
+                                  ' ' + getDia(),
+                                  style: const TextStyle(
+                                    color: Colors.black,
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w300,
                                   ),
-                                  Text(
-                                    ' ' + getDia(),
-                                    style: TextStyle(
-                                      color: Colors.black,
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.w300,
-                                    ),
-                                  ),
-                                ],
-                              ),
+                                ),
+                              ],
                             ),
-                            cardItem(
-                              cor: Color(0xFF6385C3),
-                              nome: 'Correr',
-                              horario: '09:30 até às 10:00',
-                            ),
-                            cardItem(
-                              cor: Color(0xFFEF7E69),
-                              nome: 'Estudar inglês',
-                              horario: '13:00 até às 15:00',
-                            ),
-                            cardItem(
-                              cor: Color(0xFF6BC8E4),
-                              nome: 'Tomar vitamina D e vitamna F',
-                              horario: '15:00',
-                            ),
-                            cardItem(
-                              cor: Color(0xFFF7BC36),
-                              nome: 'Pular corda',
-                              horario: '07:30 até às 09:00',
-                            ),
-                            cardItem(
-                              cor: Color(0xFF74C198),
-                              nome: 'Pular corda',
-                              horario: '07:30 até às 09:00',
-                            ),
-                            cardItem(
-                              cor: Color(0xFF6385C3),
-                              nome: 'Pular corda',
-                              horario: '07:30 até às 09:00',
-                            ),
-                          ],
-                        ),
+                          ),
+                          FutureBuilder(
+                              future: tarefaController.getTarefas(),
+                              builder: (context, AsyncSnapshot snapshot) {
+                                if (!snapshot.hasData) {
+                                  return const Center(
+                                      child: CircularProgressIndicator());
+                                }
+
+                                if (snapshot.hasError) {
+                                  return const Center(
+                                    child: Text('Ocorreu um erro!'),
+                                  );
+                                }
+
+                                if (snapshot.data.length == 0) {
+                                  return const Center(
+                                    child: Text(
+                                        "Você não tem nada pra fazer hoje!"),
+                                  );
+                                }
+
+                                return ListView.builder(
+                                    primary: false,
+                                    shrinkWrap: true,
+                                    itemCount: snapshot.data.length,
+                                    itemBuilder: (context, index) {
+                                      TarefaModel item = snapshot.data[index];
+                                      return cardItem(
+                                          cor: Color(int.tryParse(
+                                                  item.cor ?? '0xFF6385C3') ??
+                                              0),
+                                          nome: item.nome,
+                                          horario: item.data,
+                                          abrirDialog: () {
+                                            visualizarTarefa(
+                                              context,
+                                              tarefa: item,
+                                              fecharDialog: () {
+                                                setState(() {});
+                                              },
+                                            );
+                                            // criarTarefa(
+                                            //   context,
+                                            //   tarefa: item,
+                                            //   fecharDialog: () {
+                                            //     setState(() {});
+                                            //   },
+                                            // );
+                                          });
+                                    });
+                              }),
+                        ]),
                       ),
-                    ),
+                    )
                   ],
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
+
         // floatingActionButton: FloatingActionButton(
         //   onPressed: _incrementCounter,
         //   tooltip: 'Increment',
         //   child: const Icon(Icons.add),
         // ),
-        floatingActionButton: ButtonNavigatorBar()
+        floatingActionButton: ButtonNavigatorBar(
+          fecharDialog: () {
+            setState(() {});
+          },
+        )
         //
         );
   }

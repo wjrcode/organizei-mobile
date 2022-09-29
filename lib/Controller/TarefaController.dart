@@ -1,4 +1,7 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
+import 'package:http/http.dart';
 import 'package:organizei/Model/Tarefa/TarefaModel.dart';
 import 'package:organizei/Controller/Base/Base.dart';
 import 'package:organizei/Repository/TarefaRepository.dart';
@@ -13,6 +16,7 @@ class TarefaController extends Base {
   var model = TarefaModel();
   //var loginConfiguracoes = LoginConfiguracoes();
 
+  tarefaId(int? value) => model.id = value;
   tarefaNome(String? value) => model.nome = value.toString();
   tarefaDataehora(String? value) => model.data = value.toString();
   tarefaObservacao(String? value) => model.observacao = value.toString();
@@ -35,24 +39,28 @@ class TarefaController extends Base {
     try {
       if (model.id == null) {
         return await repository.addTarefa(model).then((value) async {
-          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-            elevation: 6.0,
-            behavior: SnackBarBehavior.floating,
-            shape: RoundedRectangleBorder(
-              side: const BorderSide(color: Colors.black, width: 3),
-              borderRadius: BorderRadius.circular(16),
-            ),
-            content: Text(value.msg!,
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              elevation: 6.0,
+              behavior: SnackBarBehavior.floating,
+              shape: RoundedRectangleBorder(
+                side: const BorderSide(color: Colors.black, width: 3),
+                borderRadius: BorderRadius.circular(16),
+              ),
+              content: Text(
+                value.msg!,
                 style: const TextStyle(
                   color: Colors.black,
                   fontWeight: FontWeight.w500,
-                )),
-            backgroundColor: value.valido!
-                ? const Color(0xFF74C198)
-                : const Color(0xFFEF7E69),
-          ));
+                ),
+              ),
+              backgroundColor: value.valido!
+                  ? const Color(0xFF74C198)
+                  : const Color(0xFFEF7E69),
+            ),
+          );
 
-          await Future.delayed(const Duration(seconds: 1));
+          await Future.delayed(const Duration(milliseconds: 500));
 
           if (value.valido!) {
             return value.valido!;
@@ -61,18 +69,44 @@ class TarefaController extends Base {
           }
         });
       } else {
-        /*return await repository.updateProduto(model).then((value) {
-          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-            content: Text(value.msg),
-            backgroundColor: value.valido ? Colors.green : Colors.red,
-          ));
-          return value.valido;
-        });*/
-        return false;
+        return await repository.updateTarefa(model).then((value) async {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              elevation: 6.0,
+              behavior: SnackBarBehavior.floating,
+              shape: RoundedRectangleBorder(
+                side: const BorderSide(color: Colors.black, width: 3),
+                borderRadius: BorderRadius.circular(16),
+              ),
+              content: Text(
+                value.msg!,
+                style: const TextStyle(
+                  color: Colors.black,
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+              backgroundColor: value.valido!
+                  ? const Color(0xFF74C198)
+                  : const Color(0xFFEF7E69),
+            ),
+          );
+
+          await Future.delayed(const Duration(milliseconds: 500));
+
+          if (value.valido!) {
+            return value.valido!;
+          } else {
+            return false;
+          }
+        });
       }
     } catch (e) {
       print(e);
       return false;
     }
+  }
+
+  Future<List<TarefaModel>?> getTarefas() async {
+    return await repository.getTarefas();
   }
 }

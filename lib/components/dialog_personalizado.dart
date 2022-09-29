@@ -67,7 +67,7 @@ class _DialogPersonalizadoState extends State<DialogPersonalizado>
                         child: const Icon(Icons.close),
                         onTap: () {
                           _slideDown();
-                          Future.delayed(Duration(milliseconds: 500))
+                          Future.delayed(const Duration(milliseconds: 500))
                               .then((value) => Navigator.pop(context));
                         },
                       ),

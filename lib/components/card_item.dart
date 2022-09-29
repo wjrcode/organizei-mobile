@@ -6,8 +6,10 @@ class cardItem extends StatelessWidget {
   final Color? cor;
   final String? horario;
   final String? nome;
+  final Function? abrirDialog;
 
-  const cardItem({Key? key, this.cor, this.horario, this.nome})
+  const cardItem(
+      {Key? key, this.cor, this.horario, this.nome, this.abrirDialog})
       : super(key: key);
 
   String formatarNome() {
@@ -37,7 +39,7 @@ class cardItem extends StatelessWidget {
             borderRadius: BorderRadius.all(Radius.circular(21)),
             child: GestureDetector(
               onTap: () {
-                debugPrint(nome);
+                abrirDialog!();
               },
               child: Row(
                 children: [

@@ -6,7 +6,9 @@ const List<String> list = <String>['baixa', 'média', 'alta'];
 
 class SelectPrioridade extends StatefulWidget {
   final dynamic prioridade;
-  const SelectPrioridade({Key? key, this.prioridade}) : super(key: key);
+  final String prioridadeAtual;
+  const SelectPrioridade({Key? key, this.prioridade, this.prioridadeAtual = ''})
+      : super(key: key);
 
   @override
   State<SelectPrioridade> createState() => _DropdownButtonExampleState();
@@ -14,6 +16,13 @@ class SelectPrioridade extends StatefulWidget {
 
 class _DropdownButtonExampleState extends State<SelectPrioridade> {
   String dropdownValue = list.first;
+
+  @override
+  void initState() {
+    super.initState();
+    dropdownValue =
+        widget.prioridadeAtual != '' ? widget.prioridadeAtual : list.first;
+  }
 
   @override
   Widget build(BuildContext context) {

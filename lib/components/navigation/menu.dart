@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:organizei/components/dialog_personalizado.dart';
-import 'package:organizei/components/dialogs/tarefaDialog.dart';
+import 'package:organizei/components/dialogs/tarefaCadastroDialog.dart';
 
 class Menu extends StatefulWidget {
-  const Menu({Key? key, this.fecharMenu}) : super(key: key);
+  const Menu({Key? key, this.fecharMenu, this.fecharDialog = null})
+      : super(key: key);
 
-  final fecharMenu;
+  final Function? fecharMenu;
+  final Function? fecharDialog;
 
   @override
   State<Menu> createState() => _MenuState();
@@ -39,7 +41,7 @@ class _MenuState extends State<Menu> {
             children: [
               GestureDetector(
                 onTap: () {
-                  widget.fecharMenu();
+                  widget.fecharMenu!();
                   showDialog(
                       barrierDismissible: false,
                       barrierColor: Colors.white.withOpacity(0),
@@ -169,8 +171,8 @@ class _MenuState extends State<Menu> {
               ),
               GestureDetector(
                 onTap: () {
-                  criarTarefa(context);
-                  widget.fecharMenu();
+                  criarTarefa(context, fecharDialog: widget.fecharDialog);
+                  widget.fecharMenu!();
                 },
                 child: AbsorbPointer(
                   child: Row(

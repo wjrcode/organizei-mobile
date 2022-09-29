@@ -21,4 +21,37 @@ class TarefaRepository {
 
     return ResponseAPIModel.fromJson(jsonDecode(response.body));
   }
+
+  Future<ResponseAPIModel> updateTarefa(TarefaModel model) async {
+    var json = {
+      "nome": model.nome,
+      "data": model.data,
+      "observacao": model.observacao,
+      "prioridade": model.prioridade,
+      "cor": model.cor,
+    };
+
+    print(ApiModel.ApiUrl + '/tarefas/' + model.id.toString());
+
+    final response = await http.put(
+        Uri.parse(ApiModel.ApiUrl + '/tarefas/' + model.id.toString()),
+        headers: ApiModel.headers,
+        body: jsonEncode(json));
+
+    return ResponseAPIModel.fromJson(jsonDecode(response.body));
+  }
+
+  Future<List<TarefaModel>> getTarefas() async {
+    Uri _uriSearchProduto = Uri.parse(ApiModel.ApiUrl + '/tarefas');
+
+    var _url = Uri.parse(_uriSearchProduto.toString());
+    final response = await http.get(_url, headers: ApiModel.headers);
+
+    Map<String, dynamic> jsonMap = jsonDecode(response.body);
+    List<TarefaModel> listaProdutos = (jsonMap['tarefas'] as List)
+        .map((item) => TarefaModel.fromJson(item))
+        .toList();
+
+    return listaProdutos;
+  }
 }
