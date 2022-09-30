@@ -83,17 +83,25 @@ Future<dynamic> visualizarTarefa(BuildContext context,
                           texto: 'Editar',
                           cor: const Color(0xFF6385C3),
                           clicar: () async {
-                            // Navigator.pop(context);
                             criarTarefa(context,
                                 tarefa: tarefa, fecharDialog: fecharDialog);
-
-                            // bool succes = await tarefaController.saveTarefa();
-
-                            // if (succes == true) {
-                            //   Navigator.pop(context);
-                            //   fecharDialog!();
-                            // }
                           },
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(bottom: 16, top: 16),
+                          child: Botao(
+                            texto: 'Excluir',
+                            cor: const Color(0xFFEF7E69),
+                            clicar: () async {
+                              bool succes =
+                                  await tarefaController.excluirTarefa();
+
+                              if (succes == true) {
+                                Navigator.pop(context);
+                                fecharDialog!();
+                              }
+                            },
+                          ),
                         ),
                       ],
                     ),

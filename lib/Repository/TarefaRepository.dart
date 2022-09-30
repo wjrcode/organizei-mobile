@@ -54,6 +54,14 @@ class TarefaRepository {
     return ResponseAPIModel.fromJson(jsonDecode(response.body));
   }
 
+  Future<ResponseAPIModel> excluirTarefa(TarefaModel model) async {
+    final response = await http.delete(
+        Uri.parse(ApiModel.ApiUrl + '/tarefas/' + model.id.toString()),
+        headers: ApiModel.headers);
+
+    return ResponseAPIModel.fromJson(jsonDecode(response.body));
+  }
+
   Future<List<TarefaModel>> getTarefas() async {
     Uri _uriSearchProduto = Uri.parse(ApiModel.ApiUrl + '/tarefas');
 

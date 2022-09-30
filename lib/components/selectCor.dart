@@ -45,37 +45,35 @@ class _SelectCorState extends State<SelectCor> {
         ),
         Padding(
             padding: const EdgeInsets.only(bottom: 16),
-            child: Expanded(
-              child: SizedBox(
-                height: 50,
-                child: ListView(
-                  itemExtent: 70.0,
-                  scrollDirection: Axis.horizontal,
-                  children: cores.map((strone) {
-                    return GestureDetector(
-                      onTap: () {
-                        setState(() {
-                          corSelected = strone;
-                        });
-                        widget.cor(corSelected.toString());
-                      },
-                      child: Container(
-                        width: 60,
-                        height: 60,
-                        decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            color: Color(strone),
-                            border: Border.all(
-                              width: corSelected == strone ? 5 : 3,
-                              color: corSelected == strone
-                                  ? Colors.white
-                                  : Colors.black,
-                              style: BorderStyle.solid,
-                            )),
-                      ),
-                    );
-                  }).toList(),
-                ),
+            child: SizedBox(
+              height: 50,
+              child: ListView(
+                itemExtent: 70.0,
+                scrollDirection: Axis.horizontal,
+                children: cores.map((strone) {
+                  return GestureDetector(
+                    onTap: () {
+                      setState(() {
+                        corSelected = strone;
+                      });
+                      widget.cor(corSelected.toString());
+                    },
+                    child: Container(
+                      width: 60,
+                      height: 60,
+                      decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: Color(strone),
+                          border: Border.all(
+                            width: corSelected == strone ? 5 : 3,
+                            color: corSelected == strone
+                                ? Colors.white
+                                : Colors.black,
+                            style: BorderStyle.solid,
+                          )),
+                    ),
+                  );
+                }).toList(),
               ),
             )),
       ],

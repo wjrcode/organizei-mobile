@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:organizei/components/dialog_personalizado.dart';
 import 'package:organizei/components/dialogs/tarefaCadastroDialog.dart';
+import 'package:organizei/components/dialogs/tarefaCadastroHabito.dart';
 
 class Menu extends StatefulWidget {
   const Menu({Key? key, this.fecharMenu, this.fecharDialog = null})
@@ -191,15 +192,23 @@ class _MenuState extends State<Menu> {
                 thickness: 3,
                 color: Colors.black,
               ),
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  Text(
-                    'criar hábito',
-                    style: TextStyle(fontSize: 24.0),
+              GestureDetector(
+                onTap: () {
+                  criarHabito(context);
+                  widget.fecharMenu!();
+                },
+                child: AbsorbPointer(
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      Text(
+                        'criar hábito',
+                        style: TextStyle(fontSize: 24.0),
+                      ),
+                    ],
                   ),
-                ],
+                ),
               ),
               Divider(
                 thickness: 3,
