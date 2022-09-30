@@ -137,7 +137,7 @@ class _StartPageState extends State<StartPage> {
                                     Navigator.of(context).push<void>(
                                       MaterialPageRoute<void>(
                                         builder: (BuildContext context) =>
-                                            HomePage(apelido: apelido),
+                                            HomePage(),
                                       ),
                                     );
                                   }

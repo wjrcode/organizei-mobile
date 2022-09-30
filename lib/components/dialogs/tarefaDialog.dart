@@ -4,19 +4,14 @@ import 'package:organizei/Repository/TarefaRepository.dart';
 import 'package:organizei/components/botao.dart';
 import 'package:organizei/components/dialog_personalizado.dart';
 import 'package:organizei/components/dialogs/tarefaCadastroDialog.dart';
-import 'package:organizei/components/input.dart';
-import 'package:organizei/components/selectCor.dart';
-import 'package:organizei/components/selectData.dart';
-import 'package:organizei/components/selectPrioridade.dart';
 import '../../Controller/TarefaController.dart';
 
 Future<dynamic> visualizarTarefa(BuildContext context,
     {required TarefaModel tarefa, Function? fecharDialog = null}) {
   late TarefaController tarefaController;
-  //setState(() {
   tarefaController = TarefaController(TarefaRepository(), context);
 
-  // });
+  tarefaController.tarefaId(tarefa.id);
 
   return showDialog(
       barrierDismissible: false,
@@ -37,25 +32,60 @@ Future<dynamic> visualizarTarefa(BuildContext context,
                     margin: const EdgeInsets.only(top: 24),
                     child: DialogPersonalizado(
                       nome: tarefa.nome ?? '',
+                      cor: tarefa.cor ?? '',
                       child: <Widget>[
-                        Botao(
-                          texto: 'Concluir',
-                          cor: const Color(0xFF74C198),
-                          clicar: () async {
-                            // bool succes = await tarefaController.saveTarefa();
+                        Text(tarefa.observacao ?? ''),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: <Widget>[
+                            const Text(
+                              'data:  ',
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontWeight: FontWeight.w700,
+                              ),
+                            ),
+                            Text(tarefa.data ?? ''),
+                          ],
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: <Widget>[
+                            const Text(
+                              'prioridade:  ',
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontWeight: FontWeight.w700,
+                              ),
+                            ),
+                            Text(tarefa.prioridade ?? ''),
+                          ],
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(bottom: 16, top: 16),
+                          child: Botao(
+                            texto: 'Concluir',
+                            cor: const Color(0xFF74C198),
+                            clicar: () async {
+                              bool succes =
+                                  await tarefaController.concluirTarefa(true);
 
-                            // if (succes == true) {
-                            //   Navigator.pop(context);
-                            //   fecharDialog!();
-                            // }
-                          },
+                              if (succes == true) {
+                                Navigator.pop(context);
+                                fecharDialog!();
+                              }
+                            },
+                          ),
                         ),
                         Botao(
                           texto: 'Editar',
                           cor: const Color(0xFF6385C3),
                           clicar: () async {
-                            Navigator.pop(context);
-                            criarTarefa(context, tarefa: tarefa);
+                            // Navigator.pop(context);
+                            criarTarefa(context,
+                                tarefa: tarefa, fecharDialog: fecharDialog);
 
                             // bool succes = await tarefaController.saveTarefa();
 

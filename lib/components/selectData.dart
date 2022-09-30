@@ -27,109 +27,253 @@ class _SelectDataState extends State<SelectData> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(bottom: 16),
-      child: input(
-          onSaved: widget.onSaved,
-          textController: widget.controller,
-          label: 'data e hora',
-          placeholder: 'Selecione a data e hora',
-          readOnly: true,
-          customFunction: () async {
-            DateTime date = new DateTime.now();
+        padding: const EdgeInsets.only(bottom: 16),
+        child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              const Text(
+                'data e hora',
+                style: TextStyle(
+                  color: Colors.black,
+                  fontSize: 16,
+                  fontWeight: FontWeight.w400,
+                ),
+              ),
+              Material(
+                color: Colors.white.withOpacity(0),
+                child: TextFormField(
+                  onTap: () async {
+                    DateTime date = new DateTime.now();
 
-            DateTime? newDate = await showDatePicker(
-              context: context,
-              initialDate: date,
-              firstDate: DateTime(2020),
-              lastDate: DateTime(2100),
-              builder: (BuildContext context, child) {
-                return Theme(
-                  data: Theme.of(context).copyWith(
-                    colorScheme: const ColorScheme.light(
-                      primary: Color(0xFF6385C3),
-                    ),
-                    dialogTheme: DialogTheme(
-                      backgroundColor: const Color(0xFFE9E9E9),
-                      elevation: 1,
-                      shape: RoundedRectangleBorder(
-                        side: const BorderSide(width: 3, color: Colors.black),
-                        borderRadius: BorderRadius.circular(16.0),
-                      ),
-                    ),
-                  ),
-                  child: child!,
-                );
-              },
-            );
-
-            if (newDate == null) return;
-
-            final time = await showTimePicker(
-                context: context,
-                initialTime: TimeOfDay(hour: date.hour, minute: date.minute),
-                builder: (BuildContext context, child) {
-                  return Theme(
-                    data: ThemeData.light().copyWith(
-                      timePickerTheme: TimePickerThemeData(
-                        shape: RoundedRectangleBorder(
-                          side: const BorderSide(width: 3, color: Colors.black),
-                          borderRadius: BorderRadius.circular(16.0),
-                        ),
-                        backgroundColor: const Color(0xFFE9E9E9),
-                        hourMinuteColor: MaterialStateColor.resolveWith(
-                            (states) => states.contains(MaterialState.selected)
-                                ? const Color(0xFFE9E9E9)
-                                : const Color(0xFFE9E9E9)),
-                        dialHandColor: Color(0xFFE9E9E9),
-                        dialTextColor: MaterialStateColor.resolveWith(
-                            (states) => states.contains(MaterialState.selected)
-                                ? Colors.black
-                                : Colors.black),
-                        hourMinuteTextColor: MaterialStateColor.resolveWith(
-                            (states) => states.contains(MaterialState.selected)
-                                ? const Color(0xFF6385C3)
-                                : Colors.black),
-                        dialBackgroundColor: const Color(0xFF6385C3),
-                      ),
-                      textButtonTheme: TextButtonThemeData(
-                        style: ButtonStyle(
-                          foregroundColor: MaterialStateColor.resolveWith(
-                              (states) => const Color(0xFF6385C3)),
-                          overlayColor: MaterialStateColor.resolveWith(
-                            (states) => const Color(0xFF6385C3),
+                    DateTime? newDate = await showDatePicker(
+                      context: context,
+                      initialDate: date,
+                      firstDate: DateTime(2020),
+                      lastDate: DateTime(2100),
+                      builder: (BuildContext context, child) {
+                        return Theme(
+                          data: Theme.of(context).copyWith(
+                            colorScheme: const ColorScheme.light(
+                              primary: Color(0xFF6385C3),
+                            ),
+                            dialogTheme: DialogTheme(
+                              backgroundColor: const Color(0xFFE9E9E9),
+                              elevation: 1,
+                              shape: RoundedRectangleBorder(
+                                side: const BorderSide(
+                                    width: 3, color: Colors.black),
+                                borderRadius: BorderRadius.circular(16.0),
+                              ),
+                            ),
                           ),
-                        ),
+                          child: child!,
+                        );
+                      },
+                    );
+
+                    if (newDate == null) return;
+
+                    final time = await showTimePicker(
+                        context: context,
+                        initialTime:
+                            TimeOfDay(hour: date.hour, minute: date.minute),
+                        builder: (BuildContext context, child) {
+                          return Theme(
+                            data: ThemeData.light().copyWith(
+                              timePickerTheme: TimePickerThemeData(
+                                shape: RoundedRectangleBorder(
+                                  side: const BorderSide(
+                                      width: 3, color: Colors.black),
+                                  borderRadius: BorderRadius.circular(16.0),
+                                ),
+                                backgroundColor: const Color(0xFFE9E9E9),
+                                hourMinuteColor: MaterialStateColor.resolveWith(
+                                    (states) =>
+                                        states.contains(MaterialState.selected)
+                                            ? const Color(0xFFE9E9E9)
+                                            : const Color(0xFFE9E9E9)),
+                                dialHandColor: Color(0xFFE9E9E9),
+                                dialTextColor: MaterialStateColor.resolveWith(
+                                    (states) =>
+                                        states.contains(MaterialState.selected)
+                                            ? Colors.black
+                                            : Colors.black),
+                                hourMinuteTextColor:
+                                    MaterialStateColor.resolveWith((states) =>
+                                        states.contains(MaterialState.selected)
+                                            ? const Color(0xFF6385C3)
+                                            : Colors.black),
+                                dialBackgroundColor: const Color(0xFF6385C3),
+                              ),
+                              textButtonTheme: TextButtonThemeData(
+                                style: ButtonStyle(
+                                  foregroundColor:
+                                      MaterialStateColor.resolveWith(
+                                          (states) => const Color(0xFF6385C3)),
+                                  overlayColor: MaterialStateColor.resolveWith(
+                                    (states) => const Color(0xFF6385C3),
+                                  ),
+                                ),
+                              ),
+                            ),
+                            child: child!,
+                          );
+                        });
+
+                    if (time == null) return;
+
+                    final newDateTime = DateTime(
+                      newDate.year,
+                      newDate.month,
+                      newDate.day,
+                      time.hour,
+                      time.minute,
+                    );
+
+                    setState(() {
+                      date = newDate;
+                    });
+
+                    widget.onSaved(newDateTime.toString());
+
+                    intl.Intl.defaultLocale = 'pt_BR';
+                    initializeDateFormatting('pt_BR');
+
+                    intl.DateFormat('dd/MM/yyyy HH:mm').format(newDateTime);
+
+                    widget.controller!.text =
+                        intl.DateFormat('dd/MM/yyyy HH:mm').format(newDateTime);
+                  },
+                  readOnly: true,
+                  onSaved: widget.onSaved,
+                  controller: widget.controller,
+                  decoration: InputDecoration(
+                    hintText: 'Selecione a data e hora',
+                    fillColor: Colors.white,
+                    filled: true,
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: const BorderSide(
+                        color: Colors.black,
+                        width: 3.0,
                       ),
+                      borderRadius: BorderRadius.circular(16.0),
                     ),
-                    child: child!,
-                  );
-                });
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: const BorderSide(
+                        color: Colors.black,
+                        width: 3.0,
+                      ),
+                      borderRadius: BorderRadius.circular(16.0),
+                    ),
 
-            if (time == null) return;
+                    //labelText: 'Password',
+                  ),
+                ),
+              )
+            ])
+        // child: input(
+        //     onSaved: widget.onSaved,
+        //     textController: widget.controller,
+        //     label: 'data e hora',
+        //     placeholder: 'Selecione a data e hora',
+        //     readOnly: true,
+        //     customFunction: () async {
+        //       DateTime date = new DateTime.now();
 
-            final newDateTime = DateTime(
-              newDate.year,
-              newDate.month,
-              newDate.day,
-              time.hour,
-              time.minute,
-            );
+        //       DateTime? newDate = await showDatePicker(
+        //         context: context,
+        //         initialDate: date,
+        //         firstDate: DateTime(2020),
+        //         lastDate: DateTime(2100),
+        //         builder: (BuildContext context, child) {
+        //           return Theme(
+        //             data: Theme.of(context).copyWith(
+        //               colorScheme: const ColorScheme.light(
+        //                 primary: Color(0xFF6385C3),
+        //               ),
+        //               dialogTheme: DialogTheme(
+        //                 backgroundColor: const Color(0xFFE9E9E9),
+        //                 elevation: 1,
+        //                 shape: RoundedRectangleBorder(
+        //                   side: const BorderSide(width: 3, color: Colors.black),
+        //                   borderRadius: BorderRadius.circular(16.0),
+        //                 ),
+        //               ),
+        //             ),
+        //             child: child!,
+        //           );
+        //         },
+        //       );
 
-            setState(() {
-              date = newDate;
-            });
+        //       if (newDate == null) return;
 
-            widget.onSaved(newDateTime.toString());
+        //       final time = await showTimePicker(
+        //           context: context,
+        //           initialTime: TimeOfDay(hour: date.hour, minute: date.minute),
+        //           builder: (BuildContext context, child) {
+        //             return Theme(
+        //               data: ThemeData.light().copyWith(
+        //                 timePickerTheme: TimePickerThemeData(
+        //                   shape: RoundedRectangleBorder(
+        //                     side: const BorderSide(width: 3, color: Colors.black),
+        //                     borderRadius: BorderRadius.circular(16.0),
+        //                   ),
+        //                   backgroundColor: const Color(0xFFE9E9E9),
+        //                   hourMinuteColor: MaterialStateColor.resolveWith(
+        //                       (states) => states.contains(MaterialState.selected)
+        //                           ? const Color(0xFFE9E9E9)
+        //                           : const Color(0xFFE9E9E9)),
+        //                   dialHandColor: Color(0xFFE9E9E9),
+        //                   dialTextColor: MaterialStateColor.resolveWith(
+        //                       (states) => states.contains(MaterialState.selected)
+        //                           ? Colors.black
+        //                           : Colors.black),
+        //                   hourMinuteTextColor: MaterialStateColor.resolveWith(
+        //                       (states) => states.contains(MaterialState.selected)
+        //                           ? const Color(0xFF6385C3)
+        //                           : Colors.black),
+        //                   dialBackgroundColor: const Color(0xFF6385C3),
+        //                 ),
+        //                 textButtonTheme: TextButtonThemeData(
+        //                   style: ButtonStyle(
+        //                     foregroundColor: MaterialStateColor.resolveWith(
+        //                         (states) => const Color(0xFF6385C3)),
+        //                     overlayColor: MaterialStateColor.resolveWith(
+        //                       (states) => const Color(0xFF6385C3),
+        //                     ),
+        //                   ),
+        //                 ),
+        //               ),
+        //               child: child!,
+        //             );
+        //           });
 
-            intl.Intl.defaultLocale = 'pt_BR';
-            initializeDateFormatting('pt_BR');
+        //       if (time == null) return;
 
-            intl.DateFormat('dd/MM/yyyy HH:mm').format(newDateTime);
+        //       final newDateTime = DateTime(
+        //         newDate.year,
+        //         newDate.month,
+        //         newDate.day,
+        //         time.hour,
+        //         time.minute,
+        //       );
 
-            widget.controller!.text =
-                intl.DateFormat('dd/MM/yyyy HH:mm').format(newDateTime);
-          }),
-    );
+        //       setState(() {
+        //         date = newDate;
+        //       });
+
+        //       widget.onSaved(newDateTime.toString());
+
+        //       intl.Intl.defaultLocale = 'pt_BR';
+        //       initializeDateFormatting('pt_BR');
+
+        //       intl.DateFormat('dd/MM/yyyy HH:mm').format(newDateTime);
+
+        //       widget.controller!.text =
+        //           intl.DateFormat('dd/MM/yyyy HH:mm').format(newDateTime);
+        //     }),
+        );
   }
 }
 

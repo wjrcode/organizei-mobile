@@ -5,7 +5,6 @@ import 'package:organizei/Model/Tarefa/TarefaModel.dart';
 import 'package:organizei/Repository/TarefaRepository.dart';
 import 'package:organizei/components/card_item.dart';
 import 'package:intl/intl.dart';
-import 'package:organizei/components/dialogs/tarefaCadastroDialog.dart';
 import 'package:organizei/components/dialogs/tarefaDialog.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -35,14 +34,29 @@ String getDia() {
 }
 
 class HomePage extends StatefulWidget {
-  const HomePage({Key? key, required this.apelido}) : super(key: key);
-  final String? apelido;
+  const HomePage({Key? key}) : super(key: key);
 
   @override
   State<HomePage> createState() => _HomePageState();
 }
 
 class _HomePageState extends State<HomePage> {
+  late String? apelido = '';
+
+  @override
+  initState() {
+    getApelido();
+    super.initState();
+  }
+
+  getApelido() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    setState(() {
+      apelido = prefs.getString('UsuarioApelido');
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     late TarefaController tarefaController;
@@ -82,7 +96,7 @@ class _HomePageState extends State<HomePage> {
                                   ),
                                 ),
                                 TextoContornado(
-                                  texto: widget.apelido!,
+                                  texto: apelido!,
                                   tamanho: 32,
                                   cor: const Color(0xFFF7BC36),
                                 )

@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
-Widget input(
-    {dynamic onSaved,
-    TextEditingController? textController,
-    String? label,
-    bool senha = false,
-    bool readOnly = false,
-    String? placeholder = '',
-    Function? customFunction}) {
+Widget input({
+  dynamic onSaved,
+  TextEditingController? textController,
+  String? label,
+  bool senha = false,
+  bool readOnly = false,
+  String? placeholder = '',
+}) {
   return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -24,9 +24,6 @@ Widget input(
           color: Colors.white.withOpacity(0),
           child: TextFormField(
             obscureText: senha,
-            onTap: () {
-              return customFunction!();
-            },
             readOnly: readOnly,
             onSaved: onSaved,
             controller: textController,

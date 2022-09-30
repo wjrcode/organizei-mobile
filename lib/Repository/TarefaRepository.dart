@@ -31,10 +31,23 @@ class TarefaRepository {
       "cor": model.cor,
     };
 
-    print(ApiModel.ApiUrl + '/tarefas/' + model.id.toString());
-
     final response = await http.put(
         Uri.parse(ApiModel.ApiUrl + '/tarefas/' + model.id.toString()),
+        headers: ApiModel.headers,
+        body: jsonEncode(json));
+
+    return ResponseAPIModel.fromJson(jsonDecode(response.body));
+  }
+
+  Future<ResponseAPIModel> concluirTarefa(
+      TarefaModel model, bool concluido) async {
+    var json = {
+      "concluido": concluido,
+    };
+
+    final response = await http.put(
+        Uri.parse(
+            ApiModel.ApiUrl + '/tarefas/' + model.id.toString() + '/concluir'),
         headers: ApiModel.headers,
         body: jsonEncode(json));
 

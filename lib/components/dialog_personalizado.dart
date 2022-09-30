@@ -7,10 +7,12 @@ class DialogPersonalizado extends StatefulWidget {
     Key? key,
     required this.child,
     required this.nome,
+    this.cor = '',
   }) : super(key: key);
 
   final List<Widget> child;
   final String nome;
+  final String cor;
 
   @override
   State<DialogPersonalizado> createState() => _DialogPersonalizadoState();
@@ -81,7 +83,7 @@ class _DialogPersonalizadoState extends State<DialogPersonalizado>
                     TextoContornado(
                       texto: widget.nome,
                       tamanho: 32,
-                      cor: const Color(0xFF6385C3),
+                      cor: Color(int.tryParse(widget.cor) ?? 0xFF6385C3),
                     ),
                   ],
                 ),

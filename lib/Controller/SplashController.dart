@@ -16,7 +16,7 @@ class SplashController extends Base {
     String? apelido = prefs.getString('UsuarioApelido');
 
     if (login != null) {
-      return HomePage(apelido: apelido);
+      return HomePage();
     } else
       return StartPage();
   }

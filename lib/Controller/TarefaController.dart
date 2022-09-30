@@ -109,4 +109,44 @@ class TarefaController extends Base {
   Future<List<TarefaModel>?> getTarefas() async {
     return await repository.getTarefas();
   }
+
+  Future<bool> concluirTarefa(bool concluido) async {
+    try {
+      return await repository
+          .concluirTarefa(model, concluido)
+          .then((value) async {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            elevation: 6.0,
+            behavior: SnackBarBehavior.floating,
+            shape: RoundedRectangleBorder(
+              side: const BorderSide(color: Colors.black, width: 3),
+              borderRadius: BorderRadius.circular(16),
+            ),
+            content: Text(
+              value.msg!,
+              style: const TextStyle(
+                color: Colors.black,
+                fontWeight: FontWeight.w500,
+              ),
+            ),
+            backgroundColor: value.valido!
+                ? const Color(0xFF74C198)
+                : const Color(0xFFEF7E69),
+          ),
+        );
+
+        await Future.delayed(const Duration(milliseconds: 500));
+
+        if (value.valido!) {
+          return value.valido!;
+        } else {
+          return false;
+        }
+      });
+    } catch (e) {
+      print(e);
+      return false;
+    }
+  }
 }

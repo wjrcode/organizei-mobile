@@ -7,6 +7,7 @@ import 'package:organizei/components/input.dart';
 import 'package:organizei/components/selectCor.dart';
 import 'package:organizei/components/selectData.dart';
 import 'package:organizei/components/selectPrioridade.dart';
+import 'package:organizei/home_page.dart';
 import '../../Controller/TarefaController.dart';
 
 Future<dynamic> criarTarefa(BuildContext context,
@@ -78,7 +79,13 @@ Future<dynamic> criarTarefa(BuildContext context,
                             bool succes = await tarefaController.saveTarefa();
 
                             if (succes == true) {
-                              Navigator.pop(context);
+                              var nav = Navigator.of(context);
+                              nav.pop();
+
+                              if (tarefa?.id != null) {
+                                //nav.pop();
+                                nav.pop();
+                              }
                               fecharDialog!();
                             }
                           },
