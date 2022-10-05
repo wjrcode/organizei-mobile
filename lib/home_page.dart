@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:http/retry.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:organizei/Controller/TarefaController.dart';
+import 'package:organizei/Model/Habito/HabitoModel.dart';
 import 'package:organizei/Model/Tarefa/TarefaModel.dart';
 import 'package:organizei/Repository/TarefaRepository.dart';
 import 'package:organizei/components/card_item.dart';
 import 'package:intl/intl.dart';
-import 'package:organizei/components/dialogs/tarefaDialog.dart';
+import 'package:organizei/components/dialogs/habitos/habitoDialog.dart';
+import 'package:organizei/components/dialogs/tarefas/tarefaDialog.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'components/box.dart';
@@ -155,7 +158,7 @@ class _HomePageState extends State<HomePage> {
                             ),
                           ),
                           FutureBuilder(
-                              future: tarefaController.getTarefas(),
+                              future: tarefaController.get(),
                               builder: (context, AsyncSnapshot snapshot) {
                                 if (!snapshot.hasData) {
                                   return const Center(
@@ -178,9 +181,39 @@ class _HomePageState extends State<HomePage> {
                                 return ListView.builder(
                                     primary: false,
                                     shrinkWrap: true,
-                                    itemCount: snapshot.data.length,
+                                    itemCount: snapshot.data['tarefas'].length,
                                     itemBuilder: (context, index) {
-                                      TarefaModel item = snapshot.data[index];
+                                      var item;
+
+                                      //var dialog;
+
+                                      var tipo = snapshot.data['tarefas'][index]
+                                          ['tipo'];
+                                      if (tipo == 'tarefa') {
+                                        item = TarefaModel.fromJson(
+                                            snapshot.data['tarefas'][index]);
+
+                                        // dialog = visualizarTarefa(
+                                        //   context,
+                                        //   tarefa: item,
+                                        //   fecharDialog: () {
+                                        //     setState(() {});
+                                        //   },
+                                        // );
+                                      }
+
+                                      if (tipo == 'habito') {
+                                        item = HabitoModel.fromJson(
+                                            snapshot.data['tarefas'][index]);
+
+                                        // dialog = visualizarHabito(
+                                        //   context,
+                                        //   habito: item,
+                                        //   fecharDialog: () {
+                                        //     setState(() {});
+                                        //   },
+                                        // );
+                                      }
                                       return cardItem(
                                           cor: Color(int.tryParse(
                                                   item.cor ?? '0xFF6385C3') ??
@@ -188,20 +221,22 @@ class _HomePageState extends State<HomePage> {
                                           nome: item.nome,
                                           horario: item.data,
                                           abrirDialog: () {
-                                            visualizarTarefa(
-                                              context,
-                                              tarefa: item,
-                                              fecharDialog: () {
-                                                setState(() {});
-                                              },
-                                            );
-                                            // criarTarefa(
-                                            //   context,
-                                            //   tarefa: item,
-                                            //   fecharDialog: () {
-                                            //     setState(() {});
-                                            //   },
-                                            // );
+                                            if (tipo == 'tarefa')
+                                              return visualizarTarefa(
+                                                context,
+                                                tarefa: item,
+                                                fecharDialog: () {
+                                                  setState(() {});
+                                                },
+                                              );
+                                            else if (tipo == 'habito')
+                                              return visualizarHabito(
+                                                context,
+                                                habito: item,
+                                                fecharDialog: () {
+                                                  setState(() {});
+                                                },
+                                              );
                                           });
                                     });
                               }),
@@ -214,12 +249,6 @@ class _HomePageState extends State<HomePage> {
             ),
           ),
         ),
-
-        // floatingActionButton: FloatingActionButton(
-        //   onPressed: _incrementCounter,
-        //   tooltip: 'Increment',
-        //   child: const Icon(Icons.add),
-        // ),
         floatingActionButton: ButtonNavigatorBar(
           fecharDialog: () {
             setState(() {});

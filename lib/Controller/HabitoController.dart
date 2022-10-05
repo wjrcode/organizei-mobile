@@ -2,34 +2,33 @@ import 'dart:ffi';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
-import 'package:organizei/Model/Tarefa/TarefaModel.dart';
+import 'package:organizei/Model/Habito/HabitoModel.dart';
 import 'package:organizei/Controller/Base/Base.dart';
-import 'package:organizei/Repository/TarefaRepository.dart';
+import 'package:organizei/Repository/HabitoRepository.dart';
 import 'package:organizei/services/persistencia/login.configuracoes.dart';
 
-class TarefaController extends Base {
-  TarefaController(this.repository, this.context);
+class HabitoController extends Base {
+  HabitoController(this.repository, this.context);
 
   final BuildContext context;
-  final TarefaRepository repository;
+  final HabitoRepository repository;
   final formKey = GlobalKey<FormState>();
-  var model = TarefaModel();
+  var model = HabitoModel();
   //var loginConfiguracoes = LoginConfiguracoes();
 
-  tarefaId(int? value) => model.id = value;
-  tarefaNome(String? value) => model.nome = value.toString();
-  tarefaDataehora(String? value) => model.data = value.toString();
-  tarefaObservacao(String? value) => model.observacao = value.toString();
-  tarefaPrioridade(String? value) => model.prioridade = value.toString();
-  tarefaCor(String? value) => model.cor = value.toString();
+  habitoId(int? value) => model.id = value;
+  habitoNome(String? value) => model.nome = value.toString();
+  habitoDataehora(String? value) => model.data = value.toString();
+  habitoDias(List<dynamic>? value) => model.dias = value!.cast<String>();
+  habitoCor(String? value) => model.cor = value.toString();
 
   var controllerNome = TextEditingController();
-  var controllerObservacao = TextEditingController();
+  var controllerDias = TextEditingController();
   var controllerPrioridade = TextEditingController();
   var controllerCor = TextEditingController();
   var controllerDataehora = TextEditingController();
 
-  Future<bool> saveTarefa() async {
+  Future<bool> saveHabito() async {
     if (!formKey.currentState!.validate()) {
       return false;
     }
@@ -38,7 +37,7 @@ class TarefaController extends Base {
 
     try {
       if (model.id == null) {
-        return await repository.addTarefa(model).then((value) async {
+        return await repository.addHabito(model).then((value) async {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
               elevation: 6.0,
@@ -69,7 +68,7 @@ class TarefaController extends Base {
           }
         });
       } else {
-        return await repository.updateTarefa(model).then((value) async {
+        return await repository.updateHabito(model).then((value) async {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
               elevation: 6.0,
@@ -106,18 +105,14 @@ class TarefaController extends Base {
     }
   }
 
-  Future<List<TarefaModel>?> getTarefas() async {
-    return await repository.getTarefas();
+  Future<List<HabitoModel>?> getHabitos() async {
+    return await repository.getHabitos();
   }
 
-  Future<Map<String, dynamic>> get() async {
-    return await repository.get();
-  }
-
-  Future<bool> concluirTarefa(bool concluido) async {
+  Future<bool> concluirHabito(bool concluido) async {
     try {
       return await repository
-          .concluirTarefa(model, concluido)
+          .concluirHabito(model, concluido)
           .then((value) async {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
@@ -154,9 +149,9 @@ class TarefaController extends Base {
     }
   }
 
-  Future<bool> excluirTarefa() async {
+  Future<bool> excluirHabito() async {
     try {
-      return await repository.excluirTarefa(model).then((value) async {
+      return await repository.excluirHabito(model).then((value) async {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             elevation: 6.0,

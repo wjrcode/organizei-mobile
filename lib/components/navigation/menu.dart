@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:organizei/components/dialog_personalizado.dart';
-import 'package:organizei/components/dialogs/tarefaCadastroDialog.dart';
-import 'package:organizei/components/dialogs/tarefaCadastroHabito.dart';
+import 'package:organizei/components/dialogs/tarefas/tarefaCadastroDialog.dart';
+import 'package:organizei/components/dialogs/habitos/habitoCadastroDialog.dart';
 
 class Menu extends StatefulWidget {
   const Menu({Key? key, this.fecharMenu, this.fecharDialog = null})
@@ -194,7 +194,7 @@ class _MenuState extends State<Menu> {
               ),
               GestureDetector(
                 onTap: () {
-                  criarHabito(context);
+                  criarHabito(context, fecharDialog: widget.fecharDialog);
                   widget.fecharMenu!();
                 },
                 child: AbsorbPointer(

@@ -69,10 +69,21 @@ class TarefaRepository {
     final response = await http.get(_url, headers: ApiModel.headers);
 
     Map<String, dynamic> jsonMap = jsonDecode(response.body);
-    List<TarefaModel> listaProdutos = (jsonMap['tarefas'] as List)
+    List<TarefaModel> listaTarefas = (jsonMap['tarefas'] as List)
         .map((item) => TarefaModel.fromJson(item))
         .toList();
 
-    return listaProdutos;
+    return listaTarefas;
+  }
+
+  Future<Map<String, dynamic>> get() async {
+    Uri _uriSearchProduto = Uri.parse(ApiModel.ApiUrl + '/tarefas');
+
+    var _url = Uri.parse(_uriSearchProduto.toString());
+    final response = await http.get(_url, headers: ApiModel.headers);
+
+    Map<String, dynamic> jsonMap = jsonDecode(response.body);
+
+    return jsonMap;
   }
 }

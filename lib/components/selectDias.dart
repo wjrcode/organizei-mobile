@@ -3,8 +3,11 @@ import 'package:organizei/Controller/TarefaController.dart';
 
 class SelectDia extends StatefulWidget {
   final dynamic dia;
-  final String diaAtual;
-  const SelectDia({Key? key, required this.dia, this.diaAtual = ''})
+  final List<dynamic>? diaAtual;
+  const SelectDia(
+      {Key? key,
+      required this.dia,
+      this.diaAtual = const ['0', '0', '0', '0', '0', '0', '0']})
       : super(key: key);
 
   @override
@@ -12,14 +15,15 @@ class SelectDia extends StatefulWidget {
 }
 
 class _SelectDiaState extends State<SelectDia> {
-  List<String> dias = ['D', 'S', 'T', 'Q', 'Q', 'S', 'S'];
+  List<String> dias = ['d', 's', 't', 'q', 'q', 's', 's'];
+  List<dynamic>? teste = ['0', '0', '0', '0', '0', '0', '0'];
 
   late String diaSelected = '';
 
   @override
   void initState() {
     super.initState();
-    diaSelected = widget.diaAtual;
+    teste = widget.diaAtual!;
   }
 
   @override
@@ -29,7 +33,7 @@ class _SelectDiaState extends State<SelectDia> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         const Text(
-          'dia',
+          'repetir',
           style: TextStyle(
             color: Colors.black,
             fontSize: 16,
@@ -39,24 +43,27 @@ class _SelectDiaState extends State<SelectDia> {
         Padding(
             padding: const EdgeInsets.only(bottom: 16),
             child: SizedBox(
-              height: 50,
+              height: 45,
               child: ListView(
                 itemExtent: 50.0,
                 scrollDirection: Axis.horizontal,
-                children: dias.map((dia) {
+                children: dias.asMap().entries.map((dia) {
                   return GestureDetector(
                     onTap: () {
                       setState(() {
-                        diaSelected = dia;
+                        teste![dia.key] = teste![dia.key] == '1' ? '0' : '1';
                       });
-                      widget.dia(diaSelected.toString());
+                      widget.dia(teste);
+                      //widget.dia(teste));
                     },
                     child: Container(
                         width: 20,
                         height: 20,
                         decoration: BoxDecoration(
                             shape: BoxShape.circle,
-                            color: Color(0xFFE9E9E9),
+                            color: teste![dia.key] == '1'
+                                ? const Color(0xFF74C198)
+                                : const Color(0xFFE9E9E9),
                             border: Border.all(
                               width: 3,
                               color: Colors.black,
@@ -65,19 +72,14 @@ class _SelectDiaState extends State<SelectDia> {
                         child: Align(
                           alignment: Alignment.center,
                           child: Text(
-                            dia,
+                            dia.value,
                             textAlign: TextAlign.center,
                             style: TextStyle(
                               color: Colors.black,
                               fontWeight: FontWeight.w700,
                             ),
                           ),
-                        )
-                        //   ),Text(
-                        //   dia,
-                        //   textAlign: TextAlign.center,
-                        // ),
-                        ),
+                        )),
                   );
                 }).toList(),
               ),

@@ -6,12 +6,10 @@ import 'package:organizei/components/dialog_personalizado.dart';
 import 'package:organizei/components/input.dart';
 import 'package:organizei/components/selectCor.dart';
 import 'package:organizei/components/selectData.dart';
-import 'package:organizei/components/selectDias.dart';
 import 'package:organizei/components/selectPrioridade.dart';
-import 'package:organizei/home_page.dart';
-import '../../Controller/TarefaController.dart';
+import '../../../Controller/TarefaController.dart';
 
-Future<dynamic> criarHabito(BuildContext context,
+Future<dynamic> criarTarefa(BuildContext context,
     {TarefaModel? tarefa = null, Function? fecharDialog = null}) {
   late TarefaController tarefaController;
 
@@ -43,7 +41,7 @@ Future<dynamic> criarHabito(BuildContext context,
                   child: Container(
                     margin: const EdgeInsets.only(top: 24),
                     child: DialogPersonalizado(
-                      nome: 'Hábito',
+                      nome: 'Tarefa',
                       child: <Widget>[
                         Padding(
                           padding: const EdgeInsets.only(bottom: 16),
@@ -71,7 +69,6 @@ Future<dynamic> criarHabito(BuildContext context,
                               prioridade: tarefaController.tarefaPrioridade,
                               prioridadeAtual: tarefa?.prioridade ?? ''),
                         ),
-                        SelectDia(dia: tarefaController.tarefaCor),
                         SelectCor(
                             cor: tarefaController.tarefaCor,
                             corAtual: tarefa?.cor ?? ''),
@@ -103,5 +100,3 @@ Future<dynamic> criarHabito(BuildContext context,
         });
       });
 }
-
-selectDias() {}

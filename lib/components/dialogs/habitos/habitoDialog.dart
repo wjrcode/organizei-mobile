@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:organizei/Model/Tarefa/TarefaModel.dart';
-import 'package:organizei/Repository/TarefaRepository.dart';
+import 'package:organizei/Model/Habito/HabitoModel.dart';
+import 'package:organizei/Repository/HabitoRepository.dart';
 import 'package:organizei/components/botao.dart';
 import 'package:organizei/components/dialog_personalizado.dart';
-import 'package:organizei/components/dialogs/tarefaCadastroDialog.dart';
-import '../../Controller/TarefaController.dart';
+import 'package:organizei/components/dialogs/habitos/habitoCadastroDialog.dart';
+import '../../../Controller/HabitoController.dart';
 
-Future<dynamic> visualizarTarefa(BuildContext context,
-    {required TarefaModel tarefa, Function? fecharDialog = null}) {
-  late TarefaController tarefaController;
-  tarefaController = TarefaController(TarefaRepository(), context);
+Future<dynamic> visualizarHabito(BuildContext context,
+    {required HabitoModel habito, Function? fecharDialog = null}) {
+  late HabitoController habitoController;
+  habitoController = HabitoController(HabitoRepository(), context);
 
-  tarefaController.tarefaId(tarefa.id);
+  habitoController.habitoId(habito.id);
 
   return showDialog(
       barrierDismissible: false,
@@ -26,43 +26,14 @@ Future<dynamic> visualizarTarefa(BuildContext context,
               child: Material(
                 type: MaterialType.transparency,
                 child: Form(
-                  key: tarefaController.formKey,
+                  key: habitoController.formKey,
                   child: Container(
                     height: MediaQuery.of(context).size.height,
                     margin: const EdgeInsets.only(top: 24),
                     child: DialogPersonalizado(
-                      nome: tarefa.nome ?? '',
-                      cor: tarefa.cor ?? '',
+                      nome: habito.nome ?? '',
+                      cor: habito.cor ?? '',
                       child: <Widget>[
-                        Text(tarefa.observacao ?? ''),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: <Widget>[
-                            const Text(
-                              'data:  ',
-                              style: TextStyle(
-                                color: Colors.black,
-                                fontWeight: FontWeight.w700,
-                              ),
-                            ),
-                            Text(tarefa.data ?? ''),
-                          ],
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: <Widget>[
-                            const Text(
-                              'prioridade:  ',
-                              style: TextStyle(
-                                color: Colors.black,
-                                fontWeight: FontWeight.w700,
-                              ),
-                            ),
-                            Text(tarefa.prioridade ?? ''),
-                          ],
-                        ),
                         Padding(
                           padding: const EdgeInsets.only(bottom: 16, top: 16),
                           child: Botao(
@@ -70,7 +41,7 @@ Future<dynamic> visualizarTarefa(BuildContext context,
                             cor: const Color(0xFF74C198),
                             clicar: () async {
                               bool succes =
-                                  await tarefaController.concluirTarefa(true);
+                                  await habitoController.concluirHabito(true);
 
                               if (succes == true) {
                                 Navigator.pop(context);
@@ -83,8 +54,8 @@ Future<dynamic> visualizarTarefa(BuildContext context,
                           texto: 'Editar',
                           cor: const Color(0xFF6385C3),
                           clicar: () async {
-                            criarTarefa(context,
-                                tarefa: tarefa, fecharDialog: fecharDialog);
+                            criarHabito(context,
+                                habito: habito, fecharDialog: fecharDialog);
                           },
                         ),
                         Padding(
@@ -94,7 +65,7 @@ Future<dynamic> visualizarTarefa(BuildContext context,
                             cor: const Color(0xFFEF7E69),
                             clicar: () async {
                               bool succes =
-                                  await tarefaController.excluirTarefa();
+                                  await habitoController.excluirHabito();
 
                               if (succes == true) {
                                 Navigator.pop(context);
