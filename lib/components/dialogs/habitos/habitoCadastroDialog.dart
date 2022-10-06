@@ -52,8 +52,10 @@ Future<dynamic> criarHabito(BuildContext context,
                           ),
                         ),
                         SelectData(
-                            controller: habitoController.controllerDataehora,
-                            onSaved: habitoController.habitoDataehora),
+                          controller: habitoController.controllerDataehora,
+                          onSaved: habitoController.habitoDataehora,
+                          apenasHora: true,
+                        ),
                         SelectDia(
                             dia: habitoController.habitoDias,
                             diaAtual: habito?.dias ??

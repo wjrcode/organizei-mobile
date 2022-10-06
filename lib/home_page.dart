@@ -192,36 +192,21 @@ class _HomePageState extends State<HomePage> {
                                       if (tipo == 'tarefa') {
                                         item = TarefaModel.fromJson(
                                             snapshot.data['tarefas'][index]);
-
-                                        // dialog = visualizarTarefa(
-                                        //   context,
-                                        //   tarefa: item,
-                                        //   fecharDialog: () {
-                                        //     setState(() {});
-                                        //   },
-                                        // );
                                       }
 
                                       if (tipo == 'habito') {
                                         item = HabitoModel.fromJson(
                                             snapshot.data['tarefas'][index]);
-
-                                        // dialog = visualizarHabito(
-                                        //   context,
-                                        //   habito: item,
-                                        //   fecharDialog: () {
-                                        //     setState(() {});
-                                        //   },
-                                        // );
                                       }
                                       return cardItem(
                                           cor: Color(int.tryParse(
                                                   item.cor ?? '0xFF6385C3') ??
                                               0),
                                           nome: item.nome,
-                                          horario: item.data,
+                                          horario: snapshot.data['tarefas']
+                                              [index]['dataFormatada'],
                                           abrirDialog: () {
-                                            if (tipo == 'tarefa')
+                                            if (tipo == 'tarefa') {
                                               return visualizarTarefa(
                                                 context,
                                                 tarefa: item,
@@ -229,7 +214,7 @@ class _HomePageState extends State<HomePage> {
                                                   setState(() {});
                                                 },
                                               );
-                                            else if (tipo == 'habito')
+                                            } else if (tipo == 'habito') {
                                               return visualizarHabito(
                                                 context,
                                                 habito: item,
@@ -237,6 +222,7 @@ class _HomePageState extends State<HomePage> {
                                                   setState(() {});
                                                 },
                                               );
+                                            }
                                           });
                                     });
                               }),
