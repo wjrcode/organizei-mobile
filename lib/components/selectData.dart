@@ -21,6 +21,9 @@ class SelectData extends StatefulWidget {
 class _SelectDataState extends State<SelectData> {
   @override
   Widget build(BuildContext context) {
+    if (widget.controller!.text.length > 6 && widget.apenasHora!) {
+      widget.controller!.text = widget.controller!.text.substring(11);
+    }
     return Padding(
         padding: const EdgeInsets.only(bottom: 16),
         child: Column(

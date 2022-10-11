@@ -24,6 +24,7 @@ class _SelectDiaState extends State<SelectDia> {
   void initState() {
     super.initState();
     teste = widget.diaAtual!;
+    widget.dia(teste);
   }
 
   @override

@@ -18,7 +18,8 @@ class HabitoController extends Base {
 
   habitoId(int? value) => model.id = value;
   habitoNome(String? value) => model.nome = value.toString();
-  habitoDataehora(String? value) => model.data = value.toString();
+  habitoDataehora(String? value) =>
+      {print('dfasfa ' + (value ?? '')), model.data = value.toString()};
   habitoDias(List<dynamic>? value) => model.dias = value!.cast<String>();
   habitoCor(String? value) => model.cor = value.toString();
 
