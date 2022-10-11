@@ -12,6 +12,7 @@ Future<dynamic> visualizarHabito(BuildContext context,
   habitoController = HabitoController(HabitoRepository(), context);
 
   habitoController.habitoId(habito.id);
+  habitoController.habitoIdRotina(habito.idRotina);
 
   return showDialog(
       barrierDismissible: false,

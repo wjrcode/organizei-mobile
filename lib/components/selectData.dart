@@ -6,12 +6,14 @@ import 'package:intl/intl.dart' as intl;
 class SelectData extends StatefulWidget {
   final dynamic onSaved;
   final TextEditingController? controller;
-  final bool? apenasHora;
+  final String? tipo;
+  final String label;
   const SelectData(
       {Key? key,
       required this.onSaved,
       this.controller,
-      this.apenasHora = false})
+      this.tipo = 'dataHora',
+      this.label = 'data e hora'})
       : super(key: key);
 
   @override
@@ -21,7 +23,7 @@ class SelectData extends StatefulWidget {
 class _SelectDataState extends State<SelectData> {
   @override
   Widget build(BuildContext context) {
-    if (widget.controller!.text.length > 6 && widget.apenasHora!) {
+    if (widget.controller!.text.length > 6 && widget.tipo! == 'hora') {
       widget.controller!.text = widget.controller!.text.substring(11);
     }
     return Padding(
@@ -31,7 +33,7 @@ class _SelectDataState extends State<SelectData> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Text(
-                widget.apenasHora == true ? 'hora' : 'data e hora',
+                widget.label,
                 style: const TextStyle(
                   color: Colors.black,
                   fontSize: 16,
@@ -44,8 +46,10 @@ class _SelectDataState extends State<SelectData> {
                   onTap: () async {
                     DateTime date = new DateTime.now();
 
-                    if (widget.apenasHora == false) {
-                      DateTime? newDate = await showDatePicker(
+                    DateTime? newDate;
+
+                    if (widget.tipo != 'hora') {
+                      newDate = await showDatePicker(
                         context: context,
                         initialDate: date,
                         firstDate: DateTime(2020),
@@ -73,81 +77,94 @@ class _SelectDataState extends State<SelectData> {
 
                       if (newDate == null) return;
 
-                      final time = await showTimePicker(
-                          context: context,
-                          initialTime:
-                              TimeOfDay(hour: date.hour, minute: date.minute),
-                          builder: (BuildContext context, child) {
-                            return Theme(
-                              data: ThemeData.light().copyWith(
-                                timePickerTheme: TimePickerThemeData(
-                                  shape: RoundedRectangleBorder(
-                                    side: const BorderSide(
-                                        width: 3, color: Colors.black),
-                                    borderRadius: BorderRadius.circular(16.0),
+                      setState(() {
+                        date = newDate!;
+                      });
+
+                      widget.controller!.text =
+                          intl.DateFormat('dd/MM/yyyy').format(newDate);
+
+                      widget.onSaved(newDate.toString());
+
+                      if (widget.tipo != 'data') {
+                        final time = await showTimePicker(
+                            context: context,
+                            initialTime:
+                                TimeOfDay(hour: date.hour, minute: date.minute),
+                            builder: (BuildContext context, child) {
+                              return Theme(
+                                data: ThemeData.light().copyWith(
+                                  timePickerTheme: TimePickerThemeData(
+                                    shape: RoundedRectangleBorder(
+                                      side: const BorderSide(
+                                          width: 3, color: Colors.black),
+                                      borderRadius: BorderRadius.circular(16.0),
+                                    ),
+                                    backgroundColor: const Color(0xFFE9E9E9),
+                                    hourMinuteColor:
+                                        MaterialStateColor.resolveWith(
+                                            (states) => states.contains(
+                                                    MaterialState.selected)
+                                                ? const Color(0xFFE9E9E9)
+                                                : const Color(0xFFE9E9E9)),
+                                    dialHandColor: Color(0xFFE9E9E9),
+                                    dialTextColor:
+                                        MaterialStateColor.resolveWith(
+                                            (states) => states.contains(
+                                                    MaterialState.selected)
+                                                ? Colors.black
+                                                : Colors.black),
+                                    hourMinuteTextColor:
+                                        MaterialStateColor.resolveWith(
+                                            (states) => states.contains(
+                                                    MaterialState.selected)
+                                                ? const Color(0xFF6385C3)
+                                                : Colors.black),
+                                    dialBackgroundColor:
+                                        const Color(0xFF6385C3),
                                   ),
-                                  backgroundColor: const Color(0xFFE9E9E9),
-                                  hourMinuteColor:
-                                      MaterialStateColor.resolveWith((states) =>
-                                          states.contains(
-                                                  MaterialState.selected)
-                                              ? const Color(0xFFE9E9E9)
-                                              : const Color(0xFFE9E9E9)),
-                                  dialHandColor: Color(0xFFE9E9E9),
-                                  dialTextColor: MaterialStateColor.resolveWith(
-                                      (states) => states
-                                              .contains(MaterialState.selected)
-                                          ? Colors.black
-                                          : Colors.black),
-                                  hourMinuteTextColor:
-                                      MaterialStateColor.resolveWith((states) =>
-                                          states.contains(
-                                                  MaterialState.selected)
-                                              ? const Color(0xFF6385C3)
-                                              : Colors.black),
-                                  dialBackgroundColor: const Color(0xFF6385C3),
-                                ),
-                                textButtonTheme: TextButtonThemeData(
-                                  style: ButtonStyle(
-                                    foregroundColor:
-                                        MaterialStateColor.resolveWith(
-                                            (states) =>
-                                                const Color(0xFF6385C3)),
-                                    overlayColor:
-                                        MaterialStateColor.resolveWith(
-                                      (states) => const Color(0xFF6385C3),
+                                  textButtonTheme: TextButtonThemeData(
+                                    style: ButtonStyle(
+                                      foregroundColor:
+                                          MaterialStateColor.resolveWith(
+                                              (states) =>
+                                                  const Color(0xFF6385C3)),
+                                      overlayColor:
+                                          MaterialStateColor.resolveWith(
+                                        (states) => const Color(0xFF6385C3),
+                                      ),
                                     ),
                                   ),
                                 ),
-                              ),
-                              child: child!,
-                            );
-                          });
+                                child: child!,
+                              );
+                            });
 
-                      if (time == null) return;
+                        if (time == null) return;
 
-                      final newDateTime = DateTime(
-                        newDate.year,
-                        newDate.month,
-                        newDate.day,
-                        time.hour,
-                        time.minute,
-                      );
+                        final newDateTime = DateTime(
+                          newDate.year,
+                          newDate.month,
+                          newDate.day,
+                          time.hour,
+                          time.minute,
+                        );
 
-                      setState(() {
-                        date = newDate;
-                      });
+                        setState(() {
+                          date = newDate!;
+                        });
 
-                      widget.onSaved(newDateTime.toString());
+                        widget.onSaved(newDateTime.toString());
 
-                      intl.Intl.defaultLocale = 'pt_BR';
-                      initializeDateFormatting('pt_BR');
+                        intl.Intl.defaultLocale = 'pt_BR';
+                        initializeDateFormatting('pt_BR');
 
-                      intl.DateFormat('dd/MM/yyyy HH:mm').format(newDateTime);
+                        intl.DateFormat('dd/MM/yyyy HH:mm').format(newDateTime);
 
-                      widget.controller!.text =
-                          intl.DateFormat('dd/MM/yyyy HH:mm')
-                              .format(newDateTime);
+                        widget.controller!.text =
+                            intl.DateFormat('dd/MM/yyyy HH:mm')
+                                .format(newDateTime);
+                      }
                     } else {
                       final time = await showTimePicker(
                           context: context,
@@ -227,7 +244,11 @@ class _SelectDataState extends State<SelectData> {
                   onSaved: widget.onSaved,
                   controller: widget.controller,
                   decoration: InputDecoration(
-                    hintText: 'Selecione a data e hora',
+                    hintText: widget.tipo == 'hora'
+                        ? 'seleciona a hora'
+                        : widget.tipo == 'data'
+                            ? 'selecione a data'
+                            : 'selecione a data e hora',
                     fillColor: Colors.white,
                     filled: true,
                     enabledBorder: OutlineInputBorder(

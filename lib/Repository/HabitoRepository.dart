@@ -13,6 +13,7 @@ class HabitoRepository {
       "hora": model.data,
       "dias": model.dias,
       "cor": model.cor,
+      "dataFinal": model.dataFinal,
     };
 
     final response = await http.post(Uri.parse(ApiModel.ApiUrl + '/habitos'),
@@ -27,6 +28,7 @@ class HabitoRepository {
       "hora": model.data,
       "dias": model.dias,
       "cor": model.cor,
+      "dataFinal": model.dataFinal,
     };
 
     final response = await http.put(
@@ -44,8 +46,10 @@ class HabitoRepository {
     };
 
     final response = await http.put(
-        Uri.parse(
-            ApiModel.ApiUrl + '/habitos/' + model.id.toString() + '/concluir'),
+        Uri.parse(ApiModel.ApiUrl +
+            '/habitos/' +
+            model.idRotina.toString() +
+            '/concluir'),
         headers: ApiModel.headers,
         body: jsonEncode(json));
 

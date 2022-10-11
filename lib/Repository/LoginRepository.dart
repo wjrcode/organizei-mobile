@@ -26,7 +26,6 @@ class LoginRepository {
       final dadosLogin = ResponseAPIModel.fromJson(jsonDecode(response.body));
 
       prefs.setString('UsuarioApelido', dadosLogin.msg.toString());
-      print(dadosLogin.msg.toString());
       return true;
     }
 

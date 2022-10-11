@@ -18,6 +18,8 @@ Future<dynamic> criarHabito(BuildContext context,
   if (habito != null) {
     habitoController.controllerNome.text = habito.nome ?? '';
     habitoController.controllerDataehora.text = habito.data ?? '';
+    habitoController.controllerDataFinal.text =
+        habito.dataFinal!.substring(0, 10);
     habitoController.controllerDias.text = habito.dias.toString();
     habitoController.habitoCor(habito.cor);
     habitoController.habitoId(habito.id);
@@ -39,7 +41,7 @@ Future<dynamic> criarHabito(BuildContext context,
                   key: habitoController.formKey,
                   child: Container(
                     margin: const EdgeInsets.only(top: 24),
-                    height: MediaQuery.of(context).size.height,
+                    //height: MediaQuery.of(context).size.height,
                     child: DialogPersonalizado(
                       nome: 'Hábito',
                       child: <Widget>[
@@ -54,12 +56,20 @@ Future<dynamic> criarHabito(BuildContext context,
                         SelectData(
                           controller: habitoController.controllerDataehora,
                           onSaved: habitoController.habitoDataehora,
-                          apenasHora: true,
+                          tipo: 'hora',
+                          label: 'hora',
                         ),
                         SelectDia(
-                            dia: habitoController.habitoDias,
-                            diaAtual: habito?.dias ??
-                                ['0', '0', '0', '0', '0', '0', '0']),
+                          dia: habitoController.habitoDias,
+                          diaAtual: habito?.dias ??
+                              ['0', '0', '0', '0', '0', '0', '0'],
+                        ),
+                        SelectData(
+                          controller: habitoController.controllerDataFinal,
+                          onSaved: habitoController.habitoDataFinal,
+                          tipo: 'data',
+                          label: 'repetir até quanto?',
+                        ),
                         SelectCor(
                             cor: habitoController.habitoCor,
                             corAtual: habito?.cor ?? ''),

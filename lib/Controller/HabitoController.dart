@@ -17,17 +17,19 @@ class HabitoController extends Base {
   //var loginConfiguracoes = LoginConfiguracoes();
 
   habitoId(int? value) => model.id = value;
+  habitoIdRotina(int? value) => model.idRotina = value;
   habitoNome(String? value) => model.nome = value.toString();
-  habitoDataehora(String? value) =>
-      {print('dfasfa ' + (value ?? '')), model.data = value.toString()};
+  habitoDataehora(String? value) => model.data = value.toString();
   habitoDias(List<dynamic>? value) => model.dias = value!.cast<String>();
   habitoCor(String? value) => model.cor = value.toString();
+  habitoDataFinal(String? value) => model.dataFinal = value.toString();
 
   var controllerNome = TextEditingController();
   var controllerDias = TextEditingController();
   var controllerPrioridade = TextEditingController();
   var controllerCor = TextEditingController();
   var controllerDataehora = TextEditingController();
+  var controllerDataFinal = TextEditingController();
 
   Future<bool> saveHabito() async {
     if (!formKey.currentState!.validate()) {
