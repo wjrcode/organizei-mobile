@@ -71,10 +71,10 @@ class HabitoRepository {
     final response = await http.get(_url, headers: ApiModel.headers);
 
     Map<String, dynamic> jsonMap = jsonDecode(response.body);
-    List<HabitoModel> listaProdutos = (jsonMap['habitos'] as List)
+    List<HabitoModel> listaHabitos = (jsonMap['habitos'] as List)
         .map((item) => HabitoModel.fromJson(item))
         .toList();
 
-    return listaProdutos;
+    return listaHabitos;
   }
 }

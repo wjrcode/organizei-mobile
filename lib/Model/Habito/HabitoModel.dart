@@ -1,7 +1,6 @@
 import 'package:organizei/Model/API/ResponseAPIModel.dart';
-import 'package:organizei/Model/Generica.dart';
 
-class HabitoModel extends GenericaModel {
+class HabitoModel {
   int? id;
   int? idRotina;
   String? nome;
