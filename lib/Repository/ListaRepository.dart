@@ -37,17 +37,17 @@ class ListaRepository {
     return ResponseAPIModel.fromJson(jsonDecode(response.body));
   }
 
-  Future<List<ListaModel>> getListas() async {
+  Future<Map<String, dynamic>> getListas() async {
     Uri _uriSearchProduto = Uri.parse(ApiModel.ApiUrl + '/listas');
 
     var _url = Uri.parse(_uriSearchProduto.toString());
     final response = await http.get(_url, headers: ApiModel.headers);
 
     Map<String, dynamic> jsonMap = jsonDecode(response.body);
-    List<ListaModel> listaProdutos = (jsonMap['listas'] as List)
-        .map((item) => ListaModel.fromJson(item))
-        .toList();
+    // List<ListaModel> listaProdutos = (jsonMap['listas'] as List)
+    //     .map((item) => ListaModel.fromJson(item))
+    //     .toList();
 
-    return listaProdutos;
+    return jsonMap;
   }
 }

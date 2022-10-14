@@ -102,7 +102,7 @@ class ListaController extends Base {
     }
   }
 
-  Future<List<ListaModel>?> getListas() async {
+  Future<Map<String, dynamic>> getListas() async {
     return await repository.getListas();
   }
 
