@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 
-Widget input({
-  dynamic onSaved,
-  TextEditingController? textController,
-  String? label,
-  bool senha = false,
-  bool readOnly = false,
-  String? placeholder = '',
-}) {
+Widget input(
+    {dynamic onSaved,
+    TextEditingController? textController,
+    String? label,
+    bool senha = false,
+    bool readOnly = false,
+    String? placeholder = '',
+    bool excluir = false,
+    Function? funcao}) {
   return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -28,6 +29,13 @@ Widget input({
             onSaved: onSaved,
             controller: textController,
             decoration: InputDecoration(
+              suffixIcon: excluir
+                  ? GestureDetector(
+                      onTap: () {
+                        funcao!();
+                      },
+                      child: const Icon(Icons.close))
+                  : null,
               hintText: placeholder,
               fillColor: Colors.white,
               filled: true,

@@ -6,13 +6,12 @@ import 'package:organizei/components/botao.dart';
 import 'package:organizei/components/dialog_personalizado.dart';
 import 'package:organizei/components/input.dart';
 import 'package:organizei/components/selectCor.dart';
-import 'package:organizei/components/selectData.dart';
-import 'package:organizei/components/selectPrioridade.dart';
 import '../../../Controller/ListaController.dart';
 
 Future<dynamic> criarLista(BuildContext context,
     {ListaModel? lista = null, Function? fecharDialog = null}) {
   late ListaController listaController;
+  late List<TextEditingController> _controllers = [new TextEditingController()];
 
   listaController = ListaController(ListaRepository(), context);
 
@@ -63,18 +62,23 @@ Future<dynamic> criarLista(BuildContext context,
                             shrinkWrap: true,
                             itemCount: itens.length,
                             itemBuilder: (context, index) {
-                              var item;
-
                               //var dialog;
 
-                              var controllerNomeItem = TextEditingController();
+                              // var controllerNomeItem = TextEditingController();
 
                               return Padding(
                                 padding: const EdgeInsets.only(bottom: 16),
                                 child: input(
                                   //onSaved: listaController.listaNome,
-                                  textController: controllerNomeItem,
+                                  textController: _controllers[index],
                                   label: 'item',
+                                  excluir: true,
+                                  funcao: () {
+                                    setState(() {
+                                      itens.remove(itens[index]);
+                                      _controllers.remove(_controllers[index]);
+                                    });
+                                  },
                                 ),
                               );
                             }),
@@ -86,6 +90,7 @@ Future<dynamic> criarLista(BuildContext context,
                             clicar: () async {
                               setState(() {
                                 itens.add(ItemModel());
+                                _controllers.add(new TextEditingController());
                               });
 
                               // bool succes = await listaController.saveLista();
@@ -103,23 +108,33 @@ Future<dynamic> criarLista(BuildContext context,
                             },
                           ),
                         ),
-                        Botao(
-                          texto: 'Salvar',
-                          cor: const Color(0xFF6385C3),
-                          clicar: () async {
-                            bool succes = await listaController.saveLista();
+                        Padding(
+                          padding: const EdgeInsets.only(bottom: 16),
+                          child: Botao(
+                            texto: 'Salvar',
+                            cor: const Color(0xFF6385C3),
+                            clicar: () async {
+                              List<ItemModel?>? listaitens = [];
 
-                            if (succes == true) {
-                              var nav = Navigator.of(context);
-                              nav.pop();
+                              _controllers.map((item) {
+                                listaitens.add(ItemModel(nome: (item.text)));
+                              }).toList();
 
-                              if (lista?.id != null) {
-                                //nav.pop();
+                              listaController.listaItens(listaitens);
+                              bool succes = await listaController.saveLista();
+
+                              if (succes == true) {
+                                var nav = Navigator.of(context);
                                 nav.pop();
+
+                                if (lista?.id != null) {
+                                  //nav.pop();
+                                  nav.pop();
+                                }
+                                fecharDialog!();
                               }
-                              fecharDialog!();
-                            }
-                          },
+                            },
+                          ),
                         ),
                       ],
                     ),
