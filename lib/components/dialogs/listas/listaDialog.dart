@@ -1,17 +1,22 @@
 import 'package:flutter/material.dart';
-import 'package:organizei/Model/Tarefa/TarefaModel.dart';
-import 'package:organizei/Repository/TarefaRepository.dart';
+import 'package:organizei/Controller/ItemController.dart';
+import 'package:organizei/Model/Item/ItemModel.dart';
+import 'package:organizei/Model/Lista/ListaModel.dart';
+import 'package:organizei/Repository/ItemRepository.dart';
+import 'package:organizei/Repository/ListaRepository.dart';
 import 'package:organizei/components/botao.dart';
 import 'package:organizei/components/dialog_personalizado.dart';
-import 'package:organizei/components/dialogs/tarefas/tarefaCadastroDialog.dart';
-import '../../../Controller/TarefaController.dart';
+import 'package:organizei/components/dialogs/listas/listaCadastroDialog.dart';
+import '../../../Controller/ListaController.dart';
 
-Future<dynamic> visualizarTarefa(BuildContext context,
-    {required TarefaModel tarefa, Function? fecharDialog = null}) {
-  late TarefaController tarefaController;
-  tarefaController = TarefaController(TarefaRepository(), context);
+Future<dynamic> visualizarLista(BuildContext context,
+    {required ListaModel lista, Function? fecharDialog = null}) {
+  late ListaController listaController;
+  late ItemController itemController;
+  listaController = ListaController(ListaRepository(), context);
+  itemController = ItemController(ItemRepository(), context);
 
-  tarefaController.tarefaId(tarefa.id);
+  listaController.listaId(lista.id);
 
   return showDialog(
       barrierDismissible: false,
@@ -26,65 +31,52 @@ Future<dynamic> visualizarTarefa(BuildContext context,
               child: Material(
                 type: MaterialType.transparency,
                 child: Form(
-                  key: tarefaController.formKey,
+                  key: listaController.formKey,
                   child: Container(
                     height: MediaQuery.of(context).size.height,
                     margin: const EdgeInsets.only(top: 24),
                     child: DialogPersonalizado(
-                      nome: tarefa.nome ?? '',
-                      cor: tarefa.cor ?? '',
+                      nome: lista.nome ?? '',
+                      cor: lista.cor ?? '',
                       child: <Widget>[
-                        Text(tarefa.observacao ?? ''),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: <Widget>[
-                            const Text(
-                              'data:  ',
-                              style: TextStyle(
-                                color: Colors.black,
-                                fontWeight: FontWeight.w700,
-                              ),
-                            ),
-                            Text(tarefa.data ?? ''),
-                          ],
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: <Widget>[
-                            const Text(
-                              'prioridade:  ',
-                              style: TextStyle(
-                                color: Colors.black,
-                                fontWeight: FontWeight.w700,
-                              ),
-                            ),
-                            Text(tarefa.prioridade ?? ''),
-                          ],
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(bottom: 16, top: 16),
-                          child: Botao(
-                            texto: 'Concluir',
-                            cor: const Color(0xFF74C198),
-                            clicar: () async {
-                              bool succes =
-                                  await tarefaController.concluirTarefa(true);
+                        ListView.builder(
+                            //primary: false,
+                            shrinkWrap: true,
+                            itemCount: lista.itens!.length,
+                            itemBuilder: (context, index) {
+                              var item = ItemModel(
+                                id: lista.itens![index]!.id,
+                                nome: lista.itens![index]!.nome,
+                                concluido: lista.itens![index]!.concluido,
+                              );
 
-                              if (succes == true) {
-                                Navigator.pop(context);
-                                fecharDialog!();
-                              }
-                            },
-                          ),
-                        ),
+                              return Row(
+                                children: [
+                                  Checkbox(
+                                    value: lista.itens![index]!.concluido,
+                                    onChanged: (bool? value) async {
+                                      setState(() {
+                                        lista.itens![index]!.concluido = value!;
+                                      });
+                                      itemController.itemId(item.id);
+                                      await itemController.concluirItem(
+                                          lista.itens![index]!.concluido);
+                                    },
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.only(bottom: 16),
+                                    child: Text(
+                                        lista.itens![index]!.nome.toString()),
+                                  ),
+                                ],
+                              );
+                            }),
                         Botao(
                           texto: 'Editar',
                           cor: const Color(0xFF6385C3),
                           clicar: () async {
-                            criarTarefa(context,
-                                tarefa: tarefa, fecharDialog: fecharDialog);
+                            criarLista(context,
+                                lista: lista, fecharDialog: fecharDialog);
                           },
                         ),
                         Padding(
@@ -94,7 +86,7 @@ Future<dynamic> visualizarTarefa(BuildContext context,
                             cor: const Color(0xFFEF7E69),
                             clicar: () async {
                               bool succes =
-                                  await tarefaController.excluirTarefa();
+                                  await listaController.excluirLista();
 
                               if (succes == true) {
                                 Navigator.pop(context);

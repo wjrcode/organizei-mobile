@@ -1,43 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:http/retry.dart';
-import 'package:intl/date_symbol_data_local.dart';
 import 'package:organizei/Controller/ListaController.dart';
-import 'package:organizei/Controller/TarefaController.dart';
-import 'package:organizei/Model/Habito/HabitoModel.dart';
 import 'package:organizei/Model/Lista/ListaModel.dart';
-import 'package:organizei/Model/Tarefa/TarefaModel.dart';
 import 'package:organizei/Repository/ListaRepository.dart';
-import 'package:organizei/Repository/TarefaRepository.dart';
 import 'package:organizei/components/card_item.dart';
-import 'package:intl/intl.dart';
-import 'package:organizei/components/dialogs/habitos/habitoDialog.dart';
-import 'package:organizei/components/dialogs/tarefas/tarefaDialog.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-
-import 'components/box.dart';
+import 'package:organizei/components/dialogs/listas/listaDialog.dart';
 import 'components/navigation/bottom_navigation_bar.dart';
 import 'components/texto_contornado.dart';
-
-String getSaudacao() {
-  int horaAtual = new DateTime.now().hour;
-
-  if (horaAtual > 4 && horaAtual < 13) {
-    return 'Bom dia,';
-  } else if (horaAtual > 12 && horaAtual < 19) {
-    return 'Boa tarde,';
-  } else {
-    return 'Boa Noite,';
-  }
-}
-
-String getDia() {
-  DateTime data = new DateTime.now();
-
-  Intl.defaultLocale = 'pt_BR';
-  initializeDateFormatting('pt_BR');
-
-  return DateFormat.MMMMd().format(data);
-}
 
 class ListasPage extends StatefulWidget {
   const ListasPage({Key? key}) : super(key: key);
@@ -48,20 +16,6 @@ class ListasPage extends StatefulWidget {
 
 class _HomePageState extends State<ListasPage> {
   late String? apelido = '';
-
-  @override
-  initState() {
-    getApelido();
-    super.initState();
-  }
-
-  getApelido() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-
-    setState(() {
-      apelido = prefs.getString('UsuarioApelido');
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -131,9 +85,8 @@ class _HomePageState extends State<ListasPage> {
                                   itemCount: snapshot.data['listas'].length,
                                   itemBuilder: (context, index) {
                                     var item = ListaModel.fromJson(
-                                        snapshot.data['listas'][index]);
-
-                                    //var dialog;
+                                      snapshot.data['listas'][index],
+                                    );
 
                                     return cardItem(
                                         cor: Color(int.tryParse(
@@ -141,7 +94,15 @@ class _HomePageState extends State<ListasPage> {
                                             0),
                                         nome: item.nome,
                                         horario: '',
-                                        abrirDialog: () {});
+                                        abrirDialog: () {
+                                          return visualizarLista(
+                                            context,
+                                            lista: item,
+                                            fecharDialog: () {
+                                              setState(() {});
+                                            },
+                                          );
+                                        });
                                   });
                             }),
                       ]),
@@ -153,6 +114,7 @@ class _HomePageState extends State<ListasPage> {
           ),
         ),
         floatingActionButton: ButtonNavigatorBar(
+          iconSelected: 'listas',
           fecharDialog: () {
             setState(() {});
           },

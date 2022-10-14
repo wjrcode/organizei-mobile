@@ -6,10 +6,12 @@ import 'package:organizei/listas_page.dart';
 import '../box.dart';
 
 class ButtonNavigatorBar extends StatefulWidget {
-  const ButtonNavigatorBar({Key? key, this.fecharDialog = null})
+  ButtonNavigatorBar(
+      {Key? key, this.fecharDialog = null, this.iconSelected = 'home'})
       : super(key: key);
 
   final Function? fecharDialog;
+  late String? iconSelected;
 
   @override
   State<ButtonNavigatorBar> createState() => _ButtonNavigatorBarState();
@@ -18,7 +20,6 @@ class ButtonNavigatorBar extends StatefulWidget {
 class _ButtonNavigatorBarState extends State<ButtonNavigatorBar>
     with SingleTickerProviderStateMixin {
   bool addIcone = false;
-  String iconSelected = 'home';
 
   Offset offset = const Offset(0, 2);
 
@@ -70,13 +71,13 @@ class _ButtonNavigatorBarState extends State<ButtonNavigatorBar>
                     IconButton(
                       icon: Icon(
                         Icons.home_outlined,
-                        color: iconSelected == 'home'
+                        color: widget.iconSelected == 'home'
                             ? const Color(0xFFF7BC36)
                             : Colors.black,
                       ),
                       onPressed: () {
                         setState(() {
-                          iconSelected = 'home';
+                          widget.iconSelected = 'home';
                         });
                         Navigator.of(context).push<void>(
                           MaterialPageRoute<void>(
@@ -88,13 +89,13 @@ class _ButtonNavigatorBarState extends State<ButtonNavigatorBar>
                     IconButton(
                       icon: Icon(
                         Icons.bar_chart_outlined,
-                        color: iconSelected == 'dashboard'
+                        color: widget.iconSelected == 'dashboard'
                             ? const Color(0xFFF7BC36)
                             : Colors.black,
                       ),
                       onPressed: () {
                         setState(() {
-                          iconSelected = 'dashboard';
+                          widget.iconSelected = 'dashboard';
                         });
                       },
                     ),
@@ -127,13 +128,13 @@ class _ButtonNavigatorBarState extends State<ButtonNavigatorBar>
                     IconButton(
                       icon: Icon(
                         Icons.list_outlined,
-                        color: iconSelected == 'listas'
+                        color: widget.iconSelected == 'listas'
                             ? const Color(0xFFF7BC36)
                             : Colors.black,
                       ),
                       onPressed: () {
                         setState(() {
-                          iconSelected = 'listas';
+                          widget.iconSelected = 'listas';
                         });
                         Navigator.push(
                           context,
@@ -150,13 +151,13 @@ class _ButtonNavigatorBarState extends State<ButtonNavigatorBar>
                     IconButton(
                       icon: Icon(
                         Icons.folder_outlined,
-                        color: iconSelected == 'projetos'
+                        color: widget.iconSelected == 'projetos'
                             ? const Color(0xFFF7BC36)
                             : Colors.black,
                       ),
                       onPressed: () {
                         setState(() {
-                          iconSelected = 'projetos';
+                          widget.iconSelected = 'projetos';
                         });
                       },
                     ),

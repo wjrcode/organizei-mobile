@@ -19,7 +19,20 @@ class ListaModel {
     id = int.parse(json['id']);
     nome = json['nome'];
     cor = json['cor'];
-    itens = json['itens'];
+
+    List<ItemModel> listaItens = [];
+    json['item'].map((item) {
+      listaItens.add(ItemModel(
+          nome: item['nome'],
+          concluido: item['concluido'],
+          id: int.parse(item['id'])));
+    }).toList();
+
+    itens = listaItens;
+
+    // _controllers.map((item) {
+    //   listaitens.add(ItemModel(nome: (item.text)));
+    // }).toList();
   }
 
   Map<String, dynamic> toJson() {

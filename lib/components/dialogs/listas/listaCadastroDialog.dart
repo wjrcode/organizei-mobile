@@ -22,6 +22,16 @@ Future<dynamic> criarLista(BuildContext context,
     listaController.listaCor(lista.cor);
     listaController.listaId(lista.id);
     listaController.listaItens(lista.itens);
+
+    itens = [];
+
+    itens = lista.itens;
+
+    itens!.map((item) {
+      var controllerNome = TextEditingController();
+      controllerNome.text = (item!.nome ?? '');
+      _controllers.add(controllerNome);
+    }).toList();
   }
 
   return showDialog(
@@ -40,7 +50,7 @@ Future<dynamic> criarLista(BuildContext context,
                   key: listaController.formKey,
                   child: Container(
                     margin: const EdgeInsets.only(top: 24),
-                    height: itens.length < 3
+                    height: itens!.length < 3
                         ? MediaQuery.of(context).size.height
                         : null,
                     child: DialogPersonalizado(
@@ -75,7 +85,7 @@ Future<dynamic> criarLista(BuildContext context,
                                   excluir: true,
                                   funcao: () {
                                     setState(() {
-                                      itens.remove(itens[index]);
+                                      itens!.remove(itens[index]);
                                       _controllers.remove(_controllers[index]);
                                     });
                                   },
@@ -89,7 +99,7 @@ Future<dynamic> criarLista(BuildContext context,
                             cor: const Color(0xFF6BC8E4),
                             clicar: () async {
                               setState(() {
-                                itens.add(ItemModel());
+                                itens!.add(ItemModel());
                                 _controllers.add(new TextEditingController());
                               });
 
