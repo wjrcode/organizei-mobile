@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:organizei/components/dialog_personalizado.dart';
+import 'package:organizei/components/dialogs/lembretes/lembreteCadastroDialog.dart';
 import 'package:organizei/components/dialogs/listas/listaCadastroDialog.dart';
 import 'package:organizei/components/dialogs/tarefas/tarefaCadastroDialog.dart';
 import 'package:organizei/components/dialogs/habitos/habitoCadastroDialog.dart';
@@ -121,15 +122,23 @@ class _MenuState extends State<Menu> {
                 thickness: 3,
                 color: Colors.black,
               ),
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  Text(
-                    'criar lembrete',
-                    style: TextStyle(fontSize: 24.0),
+              GestureDetector(
+                onTap: () {
+                  criarLembrete(context, fecharDialog: widget.fecharDialog);
+                  widget.fecharMenu!();
+                },
+                child: AbsorbPointer(
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      const Text(
+                        'criar lembrete',
+                        style: TextStyle(fontSize: 24.0),
+                      ),
+                    ],
                   ),
-                ],
+                ),
               ),
             ],
           ),
