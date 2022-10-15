@@ -3,11 +3,13 @@ import 'package:http/retry.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:organizei/Controller/TarefaController.dart';
 import 'package:organizei/Model/Habito/HabitoModel.dart';
+import 'package:organizei/Model/Lembrete/LembreteModel.dart';
 import 'package:organizei/Model/Tarefa/TarefaModel.dart';
 import 'package:organizei/Repository/TarefaRepository.dart';
 import 'package:organizei/components/card_item.dart';
 import 'package:intl/intl.dart';
 import 'package:organizei/components/dialogs/habitos/habitoDialog.dart';
+import 'package:organizei/components/dialogs/lembretes/lembreteDialog.dart';
 import 'package:organizei/components/dialogs/tarefas/tarefaDialog.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -198,6 +200,11 @@ class _HomePageState extends State<HomePage> {
                                         item = HabitoModel.fromJson(
                                             snapshot.data['tarefas'][index]);
                                       }
+
+                                      if (tipo == 'lembrete') {
+                                        item = LembreteModel.fromJson(
+                                            snapshot.data['tarefas'][index]);
+                                      }
                                       return cardItem(
                                           cor: Color(int.tryParse(
                                                   item.cor ?? '0xFF6385C3') ??
@@ -218,6 +225,14 @@ class _HomePageState extends State<HomePage> {
                                               return visualizarHabito(
                                                 context,
                                                 habito: item,
+                                                fecharDialog: () {
+                                                  setState(() {});
+                                                },
+                                              );
+                                            } else if (tipo == 'lembrete') {
+                                              return visualizarLembrete(
+                                                context,
+                                                lembrete: item,
                                                 fecharDialog: () {
                                                   setState(() {});
                                                 },

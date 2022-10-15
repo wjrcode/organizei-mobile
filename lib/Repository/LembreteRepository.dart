@@ -59,6 +59,23 @@ class LembreteRepository {
     return listaLembretes;
   }
 
+  Future<ResponseAPIModel> concluirLembrete(
+      LembreteModel model, bool concluido) async {
+    var json = {
+      "concluido": concluido,
+    };
+
+    final response = await http.put(
+        Uri.parse(ApiModel.ApiUrl +
+            '/lembretes/' +
+            model.id.toString() +
+            '/concluir'),
+        headers: ApiModel.headers,
+        body: jsonEncode(json));
+
+    return ResponseAPIModel.fromJson(jsonDecode(response.body));
+  }
+
   Future<Map<String, dynamic>> get() async {
     Uri _uriSearchProduto = Uri.parse(ApiModel.ApiUrl + '/lembretes');
 

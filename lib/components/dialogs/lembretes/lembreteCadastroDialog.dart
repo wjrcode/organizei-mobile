@@ -77,9 +77,6 @@ Future<dynamic> criarLembrete(BuildContext context,
                                     setState(() {
                                       eAniversario = value;
                                     });
-
-                                    lembreteController
-                                        .lembreteAniversario(eAniversario);
                                   },
                                 ),
                               ),
@@ -96,6 +93,8 @@ Future<dynamic> criarLembrete(BuildContext context,
                             texto: 'Salvar',
                             cor: const Color(0xFF6385C3),
                             clicar: () async {
+                              lembreteController
+                                  .lembreteAniversario(eAniversario);
                               bool succes =
                                   await lembreteController.saveLembrete();
 

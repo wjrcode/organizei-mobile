@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:organizei/Model/Tarefa/TarefaModel.dart';
-import 'package:organizei/Repository/TarefaRepository.dart';
+import 'package:organizei/Model/Lembrete/LembreteModel.dart';
+import 'package:organizei/Repository/LembreteRepository.dart';
 import 'package:organizei/components/botao.dart';
 import 'package:organizei/components/dialog_personalizado.dart';
-import 'package:organizei/components/dialogs/tarefas/tarefaCadastroDialog.dart';
-import '../../../Controller/TarefaController.dart';
+import 'package:organizei/components/dialogs/lembretes/lembreteCadastroDialog.dart';
+import '../../../Controller/LembreteController.dart';
 
-Future<dynamic> visualizarTarefa(BuildContext context,
-    {required TarefaModel tarefa, Function? fecharDialog = null}) {
-  late TarefaController tarefaController;
-  tarefaController = TarefaController(TarefaRepository(), context);
+Future<dynamic> visualizarLembrete(BuildContext context,
+    {required LembreteModel lembrete, Function? fecharDialog = null}) {
+  late LembreteController lembreteController;
+  lembreteController = LembreteController(LembreteRepository(), context);
 
-  tarefaController.tarefaId(tarefa.id);
+  lembreteController.lembreteId(lembrete.id);
 
   return showDialog(
       barrierDismissible: false,
@@ -26,7 +26,7 @@ Future<dynamic> visualizarTarefa(BuildContext context,
               child: Material(
                 type: MaterialType.transparency,
                 child: Form(
-                  key: tarefaController.formKey,
+                  key: lembreteController.formKey,
                   child: Padding(
                     padding: const EdgeInsets.only(top: 24.0),
                     child: ConstrainedBox(
@@ -34,10 +34,9 @@ Future<dynamic> visualizarTarefa(BuildContext context,
                         minHeight: MediaQuery.of(context).size.height,
                       ),
                       child: DialogPersonalizado(
-                        nome: tarefa.nome ?? '',
-                        cor: tarefa.cor ?? '',
+                        nome: lembrete.nome ?? '',
+                        cor: lembrete.cor ?? '',
                         child: <Widget>[
-                          Text(tarefa.observacao ?? ''),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.start,
                             crossAxisAlignment: CrossAxisAlignment.center,
@@ -49,21 +48,7 @@ Future<dynamic> visualizarTarefa(BuildContext context,
                                   fontWeight: FontWeight.w700,
                                 ),
                               ),
-                              Text(tarefa.data ?? ''),
-                            ],
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: <Widget>[
-                              const Text(
-                                'prioridade:  ',
-                                style: TextStyle(
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.w700,
-                                ),
-                              ),
-                              Text(tarefa.prioridade ?? ''),
+                              Text(lembrete.data ?? ''),
                             ],
                           ),
                           Padding(
@@ -72,9 +57,8 @@ Future<dynamic> visualizarTarefa(BuildContext context,
                               texto: 'Concluir',
                               cor: const Color(0xFF74C198),
                               clicar: () async {
-                                bool succes =
-                                    await tarefaController.concluirTarefa(true);
-
+                                bool succes = await lembreteController
+                                    .concluirLembrete(true);
                                 if (succes == true) {
                                   Navigator.pop(context);
                                   fecharDialog!();
@@ -86,8 +70,9 @@ Future<dynamic> visualizarTarefa(BuildContext context,
                             texto: 'Editar',
                             cor: const Color(0xFF6385C3),
                             clicar: () async {
-                              criarTarefa(context,
-                                  tarefa: tarefa, fecharDialog: fecharDialog);
+                              criarLembrete(context,
+                                  lembrete: lembrete,
+                                  fecharDialog: fecharDialog);
                             },
                           ),
                           Padding(
@@ -97,7 +82,7 @@ Future<dynamic> visualizarTarefa(BuildContext context,
                               cor: const Color(0xFFEF7E69),
                               clicar: () async {
                                 bool succes =
-                                    await tarefaController.excluirTarefa();
+                                    await lembreteController.excluirLembrete();
 
                                 if (succes == true) {
                                   Navigator.pop(context);
