@@ -18,6 +18,10 @@ Future<dynamic> visualizarLista(BuildContext context,
 
   listaController.listaId(lista.id);
 
+  var _pageSize = MediaQuery.of(context).size.height;
+  var _notifySize = MediaQuery.of(context).padding.top;
+  //var _appBarSize = appBar.preferredSize.height;
+
   return showDialog(
       barrierDismissible: false,
       barrierColor: Colors.white.withOpacity(0),
@@ -33,15 +37,19 @@ Future<dynamic> visualizarLista(BuildContext context,
                 child: Form(
                   key: listaController.formKey,
                   child: Container(
+                    margin: const EdgeInsets.only(top: 24),
+                    height: lista.itens!.length < 3
+                        ? MediaQuery.of(context).size.height
+                        : null,
                     // height: MediaQuery.of(context).size.height *
                     //     lista.itens!.length,
-                    margin: const EdgeInsets.only(top: 24),
+
                     child: DialogPersonalizado(
                       nome: lista.nome ?? '',
                       cor: lista.cor ?? '',
                       child: <Widget>[
                         ListView.builder(
-                            //primary: false,
+                            primary: false,
                             shrinkWrap: true,
                             itemCount: lista.itens!.length,
                             itemBuilder: (context, index) {
@@ -56,7 +64,7 @@ Future<dynamic> visualizarLista(BuildContext context,
                                 crossAxisAlignment: CrossAxisAlignment.end,
                                 children: [
                                   Padding(
-                                    padding: const EdgeInsets.only(bottom: 1.0),
+                                    padding: const EdgeInsets.only(bottom: 4.0),
                                     child: Checkbox(
                                       //tristate: true,
                                       activeColor: Color(

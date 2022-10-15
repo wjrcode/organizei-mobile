@@ -20,4 +20,13 @@ class ItemRepository {
 
     return ResponseAPIModel.fromJson(jsonDecode(response.body));
   }
+
+  Future<ResponseAPIModel> excluirItem(ItemModel model) async {
+    final response = await http.delete(
+      Uri.parse(ApiModel.ApiUrl + '/item/' + model.id.toString()),
+      headers: ApiModel.headers,
+    );
+
+    return ResponseAPIModel.fromJson(jsonDecode(response.body));
+  }
 }

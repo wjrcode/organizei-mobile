@@ -72,7 +72,7 @@ class _HomePageState extends State<ListasPage> {
                                 );
                               }
 
-                              if (snapshot.data.length == 0) {
+                              if (snapshot.data['listas'].length == 0) {
                                 return const Center(
                                   child:
                                       Text("Você não tem nada pra fazer hoje!"),
