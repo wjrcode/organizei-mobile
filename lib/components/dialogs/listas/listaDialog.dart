@@ -36,87 +36,88 @@ Future<dynamic> visualizarLista(BuildContext context,
                 type: MaterialType.transparency,
                 child: Form(
                   key: listaController.formKey,
-                  child: Container(
-                    margin: const EdgeInsets.only(top: 24),
-                    height: lista.itens!.length < 3
-                        ? MediaQuery.of(context).size.height
-                        : null,
-                    // height: MediaQuery.of(context).size.height *
-                    //     lista.itens!.length,
+                  child: Padding(
+                    padding: const EdgeInsets.only(top: 24.0),
+                    child: ConstrainedBox(
+                      constraints: BoxConstraints(
+                        minHeight: MediaQuery.of(context).size.height,
+                      ),
+                      child: DialogPersonalizado(
+                        nome: lista.nome ?? '',
+                        cor: lista.cor ?? '',
+                        child: <Widget>[
+                          ListView.builder(
+                              primary: false,
+                              shrinkWrap: true,
+                              itemCount: lista.itens!.length,
+                              itemBuilder: (context, index) {
+                                var item = ItemModel(
+                                  id: lista.itens![index]!.id,
+                                  nome: lista.itens![index]!.nome,
+                                  concluido: lista.itens![index]!.concluido,
+                                );
 
-                    child: DialogPersonalizado(
-                      nome: lista.nome ?? '',
-                      cor: lista.cor ?? '',
-                      child: <Widget>[
-                        ListView.builder(
-                            primary: false,
-                            shrinkWrap: true,
-                            itemCount: lista.itens!.length,
-                            itemBuilder: (context, index) {
-                              var item = ItemModel(
-                                id: lista.itens![index]!.id,
-                                nome: lista.itens![index]!.nome,
-                                concluido: lista.itens![index]!.concluido,
-                              );
-
-                              return Row(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                crossAxisAlignment: CrossAxisAlignment.end,
-                                children: [
-                                  Padding(
-                                    padding: const EdgeInsets.only(bottom: 4.0),
-                                    child: Checkbox(
-                                      //tristate: true,
-                                      activeColor: Color(
-                                          int.tryParse(lista.cor ?? '') ??
-                                              0xFF6385C3),
-                                      side: const BorderSide(
-                                          width: 2, color: Colors.black),
-                                      value: lista.itens![index]!.concluido,
-                                      onChanged: (bool? value) async {
-                                        setState(() {
-                                          lista.itens![index]!.concluido =
-                                              value;
-                                        });
-                                        itemController.itemId(item.id);
-                                        await itemController.concluirItem(
-                                            lista.itens![index]!.concluido);
-                                      },
+                                return Row(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  crossAxisAlignment: CrossAxisAlignment.end,
+                                  children: [
+                                    Padding(
+                                      padding:
+                                          const EdgeInsets.only(bottom: 4.0),
+                                      child: Checkbox(
+                                        //tristate: true,
+                                        activeColor: Color(
+                                            int.tryParse(lista.cor ?? '') ??
+                                                0xFF6385C3),
+                                        side: const BorderSide(
+                                            width: 2, color: Colors.black),
+                                        value: lista.itens![index]!.concluido,
+                                        onChanged: (bool? value) async {
+                                          setState(() {
+                                            lista.itens![index]!.concluido =
+                                                value;
+                                          });
+                                          itemController.itemId(item.id);
+                                          await itemController.concluirItem(
+                                              lista.itens![index]!.concluido);
+                                        },
+                                      ),
                                     ),
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.only(bottom: 16),
-                                    child: Text(
-                                        lista.itens![index]!.nome.toString()),
-                                  ),
-                                ],
-                              );
-                            }),
-                        Botao(
-                          texto: 'Editar',
-                          cor: const Color(0xFF6385C3),
-                          clicar: () async {
-                            criarLista(context,
-                                lista: lista, fecharDialog: fecharDialog);
-                          },
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(bottom: 16, top: 16),
-                          child: Botao(
-                            texto: 'Excluir',
-                            cor: const Color(0xFFEF7E69),
+                                    Padding(
+                                      padding:
+                                          const EdgeInsets.only(bottom: 16),
+                                      child: Text(
+                                          lista.itens![index]!.nome.toString()),
+                                    ),
+                                  ],
+                                );
+                              }),
+                          Botao(
+                            texto: 'Editar',
+                            cor: const Color(0xFF6385C3),
                             clicar: () async {
-                              bool succes =
-                                  await listaController.excluirLista();
-
-                              if (succes == true) {
-                                Navigator.pop(context);
-                                fecharDialog!();
-                              }
+                              criarLista(context,
+                                  lista: lista, fecharDialog: fecharDialog);
                             },
                           ),
-                        ),
-                      ],
+                          Padding(
+                            padding: const EdgeInsets.only(bottom: 16, top: 16),
+                            child: Botao(
+                              texto: 'Excluir',
+                              cor: const Color(0xFFEF7E69),
+                              clicar: () async {
+                                bool succes =
+                                    await listaController.excluirLista();
+
+                                if (succes == true) {
+                                  Navigator.pop(context);
+                                  fecharDialog!();
+                                }
+                              },
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ),

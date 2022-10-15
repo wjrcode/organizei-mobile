@@ -39,59 +39,63 @@ Future<dynamic> criarHabito(BuildContext context,
                 type: MaterialType.transparency,
                 child: Form(
                   key: habitoController.formKey,
-                  child: Container(
-                    margin: const EdgeInsets.only(top: 24),
-                    //height: MediaQuery.of(context).size.height,
-                    child: DialogPersonalizado(
-                      nome: 'Hábito',
-                      child: <Widget>[
-                        Padding(
-                          padding: const EdgeInsets.only(bottom: 16),
-                          child: input(
-                            onSaved: habitoController.habitoNome,
-                            textController: habitoController.controllerNome,
-                            label: 'nome',
+                  child: Padding(
+                    padding: const EdgeInsets.only(top: 24.0),
+                    child: ConstrainedBox(
+                      constraints: BoxConstraints(
+                        minHeight: MediaQuery.of(context).size.height,
+                      ),
+                      child: DialogPersonalizado(
+                        nome: 'Hábito',
+                        child: <Widget>[
+                          Padding(
+                            padding: const EdgeInsets.only(bottom: 16),
+                            child: input(
+                              onSaved: habitoController.habitoNome,
+                              textController: habitoController.controllerNome,
+                              label: 'nome',
+                            ),
                           ),
-                        ),
-                        SelectData(
-                          controller: habitoController.controllerDataehora,
-                          onSaved: habitoController.habitoDataehora,
-                          tipo: 'hora',
-                          label: 'hora',
-                        ),
-                        SelectDia(
-                          dia: habitoController.habitoDias,
-                          diaAtual: habito?.dias ??
-                              ['0', '0', '0', '0', '0', '0', '0'],
-                        ),
-                        SelectData(
-                          controller: habitoController.controllerDataFinal,
-                          onSaved: habitoController.habitoDataFinal,
-                          tipo: 'data',
-                          label: 'repetir até quanto?',
-                        ),
-                        SelectCor(
-                            cor: habitoController.habitoCor,
-                            corAtual: habito?.cor ?? ''),
-                        Botao(
-                          texto: 'Salvar',
-                          cor: const Color(0xFF6385C3),
-                          clicar: () async {
-                            bool succes = await habitoController.saveHabito();
+                          SelectData(
+                            controller: habitoController.controllerDataehora,
+                            onSaved: habitoController.habitoDataehora,
+                            tipo: 'hora',
+                            label: 'hora',
+                          ),
+                          SelectDia(
+                            dia: habitoController.habitoDias,
+                            diaAtual: habito?.dias ??
+                                ['0', '0', '0', '0', '0', '0', '0'],
+                          ),
+                          SelectData(
+                            controller: habitoController.controllerDataFinal,
+                            onSaved: habitoController.habitoDataFinal,
+                            tipo: 'data',
+                            label: 'repetir até quanto?',
+                          ),
+                          SelectCor(
+                              cor: habitoController.habitoCor,
+                              corAtual: habito?.cor ?? ''),
+                          Botao(
+                            texto: 'Salvar',
+                            cor: const Color(0xFF6385C3),
+                            clicar: () async {
+                              bool succes = await habitoController.saveHabito();
 
-                            if (succes == true) {
-                              var nav = Navigator.of(context);
-                              nav.pop();
-
-                              if (habito?.id != null) {
-                                //nav.pop();
+                              if (succes == true) {
+                                var nav = Navigator.of(context);
                                 nav.pop();
+
+                                if (habito?.id != null) {
+                                  //nav.pop();
+                                  nav.pop();
+                                }
+                                fecharDialog!();
                               }
-                              fecharDialog!();
-                            }
-                          },
-                        ),
-                      ],
+                            },
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ),

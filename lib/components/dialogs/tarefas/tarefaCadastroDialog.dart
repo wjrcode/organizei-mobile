@@ -38,59 +38,64 @@ Future<dynamic> criarTarefa(BuildContext context,
                 type: MaterialType.transparency,
                 child: Form(
                   key: tarefaController.formKey,
-                  child: Container(
-                    margin: const EdgeInsets.only(top: 24),
-                    child: DialogPersonalizado(
-                      nome: 'Tarefa',
-                      child: <Widget>[
-                        Padding(
-                          padding: const EdgeInsets.only(bottom: 16),
-                          child: input(
-                            onSaved: tarefaController.tarefaNome,
-                            textController: tarefaController.controllerNome,
-                            label: 'nome',
+                  child: Padding(
+                    padding: const EdgeInsets.only(top: 24.0),
+                    child: ConstrainedBox(
+                      constraints: BoxConstraints(
+                        minHeight: MediaQuery.of(context).size.height,
+                      ),
+                      child: DialogPersonalizado(
+                        nome: 'Tarefa',
+                        child: <Widget>[
+                          Padding(
+                            padding: const EdgeInsets.only(bottom: 16),
+                            child: input(
+                              onSaved: tarefaController.tarefaNome,
+                              textController: tarefaController.controllerNome,
+                              label: 'nome',
+                            ),
                           ),
-                        ),
-                        SelectData(
-                            controller: tarefaController.controllerDataehora,
-                            onSaved: tarefaController.tarefaDataehora),
-                        Padding(
-                          padding: const EdgeInsets.only(bottom: 16),
-                          child: input(
-                            onSaved: tarefaController.tarefaObservacao,
-                            textController:
-                                tarefaController.controllerObservacao,
-                            label: 'observação',
+                          SelectData(
+                              controller: tarefaController.controllerDataehora,
+                              onSaved: tarefaController.tarefaDataehora),
+                          Padding(
+                            padding: const EdgeInsets.only(bottom: 16),
+                            child: input(
+                              onSaved: tarefaController.tarefaObservacao,
+                              textController:
+                                  tarefaController.controllerObservacao,
+                              label: 'observação',
+                            ),
                           ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(bottom: 16),
-                          child: SelectPrioridade(
-                              prioridade: tarefaController.tarefaPrioridade,
-                              prioridadeAtual: tarefa?.prioridade ?? ''),
-                        ),
-                        SelectCor(
-                            cor: tarefaController.tarefaCor,
-                            corAtual: tarefa?.cor ?? ''),
-                        Botao(
-                          texto: 'Salvar',
-                          cor: const Color(0xFF6385C3),
-                          clicar: () async {
-                            bool succes = await tarefaController.saveTarefa();
+                          Padding(
+                            padding: const EdgeInsets.only(bottom: 16),
+                            child: SelectPrioridade(
+                                prioridade: tarefaController.tarefaPrioridade,
+                                prioridadeAtual: tarefa?.prioridade ?? ''),
+                          ),
+                          SelectCor(
+                              cor: tarefaController.tarefaCor,
+                              corAtual: tarefa?.cor ?? ''),
+                          Botao(
+                            texto: 'Salvar',
+                            cor: const Color(0xFF6385C3),
+                            clicar: () async {
+                              bool succes = await tarefaController.saveTarefa();
 
-                            if (succes == true) {
-                              var nav = Navigator.of(context);
-                              nav.pop();
-
-                              if (tarefa?.id != null) {
-                                //nav.pop();
+                              if (succes == true) {
+                                var nav = Navigator.of(context);
                                 nav.pop();
+
+                                if (tarefa?.id != null) {
+                                  //nav.pop();
+                                  nav.pop();
+                                }
+                                fecharDialog!();
                               }
-                              fecharDialog!();
-                            }
-                          },
-                        ),
-                      ],
+                            },
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ),

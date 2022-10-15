@@ -28,54 +28,58 @@ Future<dynamic> visualizarHabito(BuildContext context,
                 type: MaterialType.transparency,
                 child: Form(
                   key: habitoController.formKey,
-                  child: Container(
-                    height: MediaQuery.of(context).size.height,
-                    margin: const EdgeInsets.only(top: 24),
-                    child: DialogPersonalizado(
-                      nome: habito.nome ?? '',
-                      cor: habito.cor ?? '',
-                      child: <Widget>[
-                        Padding(
-                          padding: const EdgeInsets.only(bottom: 16, top: 16),
-                          child: Botao(
-                            texto: 'Concluir',
-                            cor: const Color(0xFF74C198),
-                            clicar: () async {
-                              bool succes =
-                                  await habitoController.concluirHabito(true);
+                  child: Padding(
+                    padding: const EdgeInsets.only(top: 24.0),
+                    child: ConstrainedBox(
+                      constraints: BoxConstraints(
+                        minHeight: MediaQuery.of(context).size.height,
+                      ),
+                      child: DialogPersonalizado(
+                        nome: habito.nome ?? '',
+                        cor: habito.cor ?? '',
+                        child: <Widget>[
+                          Padding(
+                            padding: const EdgeInsets.only(bottom: 16, top: 16),
+                            child: Botao(
+                              texto: 'Concluir',
+                              cor: const Color(0xFF74C198),
+                              clicar: () async {
+                                bool succes =
+                                    await habitoController.concluirHabito(true);
 
-                              if (succes == true) {
-                                Navigator.pop(context);
-                                fecharDialog!();
-                              }
+                                if (succes == true) {
+                                  Navigator.pop(context);
+                                  fecharDialog!();
+                                }
+                              },
+                            ),
+                          ),
+                          Botao(
+                            texto: 'Editar',
+                            cor: const Color(0xFF6385C3),
+                            clicar: () async {
+                              criarHabito(context,
+                                  habito: habito, fecharDialog: fecharDialog);
                             },
                           ),
-                        ),
-                        Botao(
-                          texto: 'Editar',
-                          cor: const Color(0xFF6385C3),
-                          clicar: () async {
-                            criarHabito(context,
-                                habito: habito, fecharDialog: fecharDialog);
-                          },
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(bottom: 16, top: 16),
-                          child: Botao(
-                            texto: 'Excluir',
-                            cor: const Color(0xFFEF7E69),
-                            clicar: () async {
-                              bool succes =
-                                  await habitoController.excluirHabito();
+                          Padding(
+                            padding: const EdgeInsets.only(bottom: 16, top: 16),
+                            child: Botao(
+                              texto: 'Excluir',
+                              cor: const Color(0xFFEF7E69),
+                              clicar: () async {
+                                bool succes =
+                                    await habitoController.excluirHabito();
 
-                              if (succes == true) {
-                                Navigator.pop(context);
-                                fecharDialog!();
-                              }
-                            },
+                                if (succes == true) {
+                                  Navigator.pop(context);
+                                  fecharDialog!();
+                                }
+                              },
+                            ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   ),
                 ),
