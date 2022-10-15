@@ -33,7 +33,8 @@ Future<dynamic> visualizarLista(BuildContext context,
                 child: Form(
                   key: listaController.formKey,
                   child: Container(
-                    height: MediaQuery.of(context).size.height,
+                    // height: MediaQuery.of(context).size.height *
+                    //     lista.itens!.length,
                     margin: const EdgeInsets.only(top: 24),
                     child: DialogPersonalizado(
                       nome: lista.nome ?? '',
@@ -51,17 +52,29 @@ Future<dynamic> visualizarLista(BuildContext context,
                               );
 
                               return Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.end,
                                 children: [
-                                  Checkbox(
-                                    value: lista.itens![index]!.concluido,
-                                    onChanged: (bool? value) async {
-                                      setState(() {
-                                        lista.itens![index]!.concluido = value!;
-                                      });
-                                      itemController.itemId(item.id);
-                                      await itemController.concluirItem(
-                                          lista.itens![index]!.concluido);
-                                    },
+                                  Padding(
+                                    padding: const EdgeInsets.only(bottom: 1.0),
+                                    child: Checkbox(
+                                      //tristate: true,
+                                      activeColor: Color(
+                                          int.tryParse(lista.cor ?? '') ??
+                                              0xFF6385C3),
+                                      side: const BorderSide(
+                                          width: 2, color: Colors.black),
+                                      value: lista.itens![index]!.concluido,
+                                      onChanged: (bool? value) async {
+                                        setState(() {
+                                          lista.itens![index]!.concluido =
+                                              value;
+                                        });
+                                        itemController.itemId(item.id);
+                                        await itemController.concluirItem(
+                                            lista.itens![index]!.concluido);
+                                      },
+                                    ),
                                   ),
                                   Padding(
                                     padding: const EdgeInsets.only(bottom: 16),

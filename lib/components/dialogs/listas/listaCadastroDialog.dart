@@ -27,6 +27,8 @@ Future<dynamic> criarLista(BuildContext context,
 
     itens = lista.itens;
 
+    _controllers = [];
+
     itens!.map((item) {
       var controllerNome = TextEditingController();
       controllerNome.text = (item!.nome ?? '');
@@ -102,19 +104,6 @@ Future<dynamic> criarLista(BuildContext context,
                                 itens!.add(ItemModel());
                                 _controllers.add(new TextEditingController());
                               });
-
-                              // bool succes = await listaController.saveLista();
-
-                              // if (succes == true) {
-                              //   var nav = Navigator.of(context);
-                              //   nav.pop();
-
-                              //   if (lista?.id != null) {
-                              //     //nav.pop();
-                              //     nav.pop();
-                              //   }
-                              //   fecharDialog!();
-                              // }
                             },
                           ),
                         ),
@@ -126,8 +115,13 @@ Future<dynamic> criarLista(BuildContext context,
                             clicar: () async {
                               List<ItemModel?>? listaitens = [];
 
-                              _controllers.map((item) {
-                                listaitens.add(ItemModel(nome: (item.text)));
+                              _controllers.asMap().entries.map((item) {
+                                listaitens.add(
+                                  ItemModel(
+                                      nome: (item.value.text),
+                                      concluido: false,
+                                      id: itens![item.key]!.id),
+                                );
                               }).toList();
 
                               listaController.listaItens(listaitens);
