@@ -46,9 +46,9 @@ class LembreteRepository {
   }
 
   Future<List<LembreteModel>> getLembretes() async {
-    Uri _uriSearchProduto = Uri.parse(ApiModel.ApiUrl + '/lembretes');
+    Uri url = Uri.parse(ApiModel.ApiUrl + '/lembretes');
 
-    var _url = Uri.parse(_uriSearchProduto.toString());
+    var _url = Uri.parse(url.toString());
     final response = await http.get(_url, headers: ApiModel.headers);
 
     Map<String, dynamic> jsonMap = jsonDecode(response.body);
@@ -77,9 +77,9 @@ class LembreteRepository {
   }
 
   Future<Map<String, dynamic>> get() async {
-    Uri _uriSearchProduto = Uri.parse(ApiModel.ApiUrl + '/lembretes');
+    Uri url = Uri.parse(ApiModel.ApiUrl + '/lembretes');
 
-    var _url = Uri.parse(_uriSearchProduto.toString());
+    var _url = Uri.parse(url.toString());
     final response = await http.get(_url, headers: ApiModel.headers);
 
     Map<String, dynamic> jsonMap = jsonDecode(response.body);

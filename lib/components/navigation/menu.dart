@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:organizei/components/dialog_personalizado.dart';
 import 'package:organizei/components/dialogs/lembretes/lembreteCadastroDialog.dart';
 import 'package:organizei/components/dialogs/listas/listaCadastroDialog.dart';
+import 'package:organizei/components/dialogs/projetos/projetoCadastroDialog.dart';
 import 'package:organizei/components/dialogs/tarefas/tarefaCadastroDialog.dart';
 import 'package:organizei/components/dialogs/habitos/habitoCadastroDialog.dart';
 
@@ -51,7 +52,7 @@ class _MenuState extends State<Menu> {
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
+                    children: const <Widget>[
                       Text(
                         'criar lista',
                         style: TextStyle(fontSize: 24.0),
@@ -60,7 +61,7 @@ class _MenuState extends State<Menu> {
                   ),
                 ),
               ),
-              Divider(
+              const Divider(
                 thickness: 3,
                 color: Colors.black,
               ),
@@ -73,7 +74,7 @@ class _MenuState extends State<Menu> {
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
+                    children: const <Widget>[
                       Text(
                         'criar tarefa',
                         style: TextStyle(fontSize: 24.0),
@@ -82,7 +83,7 @@ class _MenuState extends State<Menu> {
                   ),
                 ),
               ),
-              Divider(
+              const Divider(
                 thickness: 3,
                 color: Colors.black,
               ),
@@ -95,7 +96,7 @@ class _MenuState extends State<Menu> {
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
+                    children: const <Widget>[
                       Text(
                         'criar hábito',
                         style: TextStyle(fontSize: 24.0),
@@ -104,21 +105,29 @@ class _MenuState extends State<Menu> {
                   ),
                 ),
               ),
-              Divider(
+              const Divider(
                 thickness: 3,
                 color: Colors.black,
               ),
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  Text(
-                    'criar projeto',
-                    style: TextStyle(fontSize: 24.0),
+              GestureDetector(
+                onTap: () {
+                  criarProjeto(context, fecharDialog: widget.fecharDialog);
+                  widget.fecharMenu!();
+                },
+                child: AbsorbPointer(
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: const <Widget>[
+                      Text(
+                        'criar projeto',
+                        style: TextStyle(fontSize: 24.0),
+                      ),
+                    ],
                   ),
-                ],
+                ),
               ),
-              Divider(
+              const Divider(
                 thickness: 3,
                 color: Colors.black,
               ),
@@ -131,8 +140,8 @@ class _MenuState extends State<Menu> {
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      const Text(
+                    children: const <Widget>[
+                      Text(
                         'criar lembrete',
                         style: TextStyle(fontSize: 24.0),
                       ),

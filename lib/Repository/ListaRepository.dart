@@ -38,9 +38,9 @@ class ListaRepository {
   }
 
   Future<Map<String, dynamic>> getListas() async {
-    Uri _uriSearchProduto = Uri.parse(ApiModel.ApiUrl + '/listas');
+    Uri url = Uri.parse(ApiModel.ApiUrl + '/listas');
 
-    var _url = Uri.parse(_uriSearchProduto.toString());
+    var _url = Uri.parse(url.toString());
     final response = await http.get(_url, headers: ApiModel.headers);
 
     Map<String, dynamic> jsonMap = jsonDecode(response.body);

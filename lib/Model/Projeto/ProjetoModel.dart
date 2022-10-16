@@ -1,28 +1,28 @@
 import 'package:organizei/Model/API/ResponseAPIModel.dart';
 
-class TarefaModel {
+class ProjetoModel {
   int? id;
   String? nome;
-  String? data;
+  String? dataInicial;
   String? observacao;
-  String? prioridade;
+  String? dataFinal;
   String? cor;
   ResponseAPIModel? responseAPIModel;
 
-  TarefaModel(
+  ProjetoModel(
       {this.id,
       this.nome,
-      this.data,
+      this.dataInicial,
       this.observacao,
-      this.prioridade,
+      this.dataFinal,
       this.cor});
 
-  TarefaModel.fromJson(Map<String, dynamic> json) {
+  ProjetoModel.fromJson(Map<String, dynamic> json) {
     id = int.parse(json['id']);
     nome = json['nome'];
-    data = json['data'];
+    dataInicial = json['dataInicial'];
     observacao = json['observacao'];
-    prioridade = json['prioridade'];
+    dataFinal = json['dataFinal'];
     cor = json['cor'];
   }
 
@@ -30,9 +30,9 @@ class TarefaModel {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['id'] = id;
     data['nome'] = nome;
-    data['data'] = data;
+    data['dataInicial'] = dataInicial;
     data['observacao'] = observacao;
-    data['prioridade'] = prioridade;
+    data['dataFinal'] = dataFinal;
     data['cor'] = cor;
 
     return data;

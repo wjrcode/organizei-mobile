@@ -65,9 +65,9 @@ class HabitoRepository {
   }
 
   Future<List<HabitoModel>> getHabitos() async {
-    Uri _uriSearchProduto = Uri.parse(ApiModel.ApiUrl + '/habitos');
+    Uri url = Uri.parse(ApiModel.ApiUrl + '/habitos');
 
-    var _url = Uri.parse(_uriSearchProduto.toString());
+    var _url = Uri.parse(url.toString());
     final response = await http.get(_url, headers: ApiModel.headers);
 
     Map<String, dynamic> jsonMap = jsonDecode(response.body);

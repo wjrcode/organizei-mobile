@@ -4,80 +4,79 @@ import 'package:organizei/Model/API/APIModel.dart';
 
 import 'package:http/http.dart' as http;
 import 'package:organizei/Model/API/ResponseAPIModel.dart';
-import 'package:organizei/Model/Tarefa/TarefaModel.dart';
+import 'package:organizei/Model/Projeto/ProjetoModel.dart';
 
-class TarefaRepository {
-  Future<ResponseAPIModel> addTarefa(TarefaModel model) async {
+class ProjetoRepository {
+  Future<ResponseAPIModel> addProjeto(ProjetoModel model) async {
     var json = {
       "nome": model.nome,
-      "data": model.data,
+      "dataInicial": model.dataInicial,
       "observacao": model.observacao,
-      "prioridade": model.prioridade,
+      "dataFinal": model.dataFinal,
       "cor": model.cor,
     };
 
-    final response = await http.post(Uri.parse(ApiModel.ApiUrl + '/tarefas'),
+    print('olha to here');
+
+    final response = await http.post(Uri.parse(ApiModel.ApiUrl + '/projetos'),
         headers: ApiModel.headers, body: jsonEncode(json));
 
     return ResponseAPIModel.fromJson(jsonDecode(response.body));
   }
 
-  Future<ResponseAPIModel> updateTarefa(TarefaModel model) async {
+  Future<ResponseAPIModel> updateProjeto(ProjetoModel model) async {
     var json = {
       "nome": model.nome,
-      "data": model.data,
+      "dataInicial": model.dataInicial,
       "observacao": model.observacao,
-      "prioridade": model.prioridade,
+      "dataFinal": model.dataFinal,
       "cor": model.cor,
     };
 
     final response = await http.put(
-        Uri.parse(ApiModel.ApiUrl + '/tarefas/' + model.id.toString()),
+        Uri.parse(ApiModel.ApiUrl + '/projetos/' + model.id.toString()),
         headers: ApiModel.headers,
         body: jsonEncode(json));
 
     return ResponseAPIModel.fromJson(jsonDecode(response.body));
   }
 
-  Future<ResponseAPIModel> concluirTarefa(
-      TarefaModel model, bool concluido) async {
+  Future<ResponseAPIModel> concluirProjeto(
+      ProjetoModel model, bool concluido) async {
     var json = {
       "concluido": concluido,
     };
 
     final response = await http.put(
         Uri.parse(
-            ApiModel.ApiUrl + '/tarefas/' + model.id.toString() + '/concluir'),
+            ApiModel.ApiUrl + '/projetos/' + model.id.toString() + '/concluir'),
         headers: ApiModel.headers,
         body: jsonEncode(json));
 
     return ResponseAPIModel.fromJson(jsonDecode(response.body));
   }
 
-  Future<ResponseAPIModel> excluirTarefa(TarefaModel model) async {
+  Future<ResponseAPIModel> excluirProjeto(ProjetoModel model) async {
     final response = await http.delete(
-        Uri.parse(ApiModel.ApiUrl + '/tarefas/' + model.id.toString()),
+        Uri.parse(ApiModel.ApiUrl + '/projetos/' + model.id.toString()),
         headers: ApiModel.headers);
 
     return ResponseAPIModel.fromJson(jsonDecode(response.body));
   }
 
-  Future<List<TarefaModel>> getTarefas() async {
-    Uri url = Uri.parse(ApiModel.ApiUrl + '/tarefas');
+  Future<Map<String, dynamic>> getProjetos() async {
+    Uri url = Uri.parse(ApiModel.ApiUrl + '/projetos');
 
     var _url = Uri.parse(url.toString());
     final response = await http.get(_url, headers: ApiModel.headers);
 
     Map<String, dynamic> jsonMap = jsonDecode(response.body);
-    List<TarefaModel> listaTarefas = (jsonMap['tarefas'] as List)
-        .map((item) => TarefaModel.fromJson(item))
-        .toList();
 
-    return listaTarefas;
+    return jsonMap;
   }
 
   Future<Map<String, dynamic>> get() async {
-    Uri url = Uri.parse(ApiModel.ApiUrl + '/tarefas');
+    Uri url = Uri.parse(ApiModel.ApiUrl + '/projetos');
 
     var _url = Uri.parse(url.toString());
     final response = await http.get(_url, headers: ApiModel.headers);

@@ -175,8 +175,11 @@ class _HomePageState extends State<HomePage> {
 
                                 if (snapshot.data.length == 0) {
                                   return const Center(
-                                    child: Text(
-                                        "Você não tem nada pra fazer hoje!"),
+                                    child: Padding(
+                                      padding: EdgeInsets.only(top: 32.0),
+                                      child:
+                                          Text("Você não tem nada pra fazer!"),
+                                    ),
                                   );
                                 }
 
