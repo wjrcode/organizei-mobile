@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:organizei/components/navigation/menu.dart';
 import 'package:organizei/home_page.dart';
 import 'package:organizei/listas_page.dart';
+import 'package:organizei/projetos_page.dart';
 
 import '../box.dart';
 
@@ -159,6 +160,12 @@ class _ButtonNavigatorBarState extends State<ButtonNavigatorBar>
                         setState(() {
                           widget.iconSelected = 'projetos';
                         });
+
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const ProjetosPage()),
+                        );
                       },
                     ),
                   ],
