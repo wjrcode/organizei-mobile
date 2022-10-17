@@ -11,12 +11,15 @@ import 'package:organizei/components/dialogs/tarefas/tarefaCadastroDialog.dart';
 import 'package:organizei/start_page.dart';
 import '../../../Controller/TarefaController.dart';
 
-Future<dynamic> sair(BuildContext context, {Function? fecharDialog}) {
+Future<dynamic> sair(BuildContext context, {Function? fecharDialog}) async {
   UsuarioModel? usuario;
 
   late LoginController loginController;
 
   loginController = LoginController(LoginRepository(), context);
+
+  usuario = await loginController.getUsuarioLogado();
+
   return showDialog(
       barrierDismissible: false,
       barrierColor: Colors.white.withOpacity(0),
@@ -53,18 +56,13 @@ Future<dynamic> sair(BuildContext context, {Function? fecharDialog}) {
                             texto: 'Sair',
                             cor: const Color(0xFFEF7E69),
                             clicar: () async {
-                              await loginController.limpaPreferencesLogin();
+                              await loginController.sair();
 
                               Navigator.pushAndRemoveUntil(
                                   context,
                                   MaterialPageRoute(
                                       builder: (_) => const StartPage()),
                                   (route) => false);
-
-                              // if (succes == true) {
-                              //   Navigator.pop(context);
-                              //   fecharDialog!();
-                              // }
                             },
                           ),
                         ),

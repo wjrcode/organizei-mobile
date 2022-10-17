@@ -2,8 +2,8 @@ import 'dart:convert';
 import 'package:organizei/Model/API/APIModel.dart';
 
 import 'package:http/http.dart' as http;
-import 'package:organizei/Model/API/ResponseAPIModel.dart';
 import 'package:organizei/Model/Login/LoginModel.dart';
+import 'package:organizei/Model/Usuario/UsuarioModel.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginRepository {
@@ -23,24 +23,28 @@ class LoginRepository {
     if (response.statusCode == 200) {
       SharedPreferences prefs = await SharedPreferences.getInstance();
 
-      final dadosLogin = ResponseAPIModel.fromJson(jsonDecode(response.body));
+      final dadosLogin = jsonDecode(response.body);
 
-      prefs.setString('UsuarioApelido', dadosLogin.msg.toString());
+      prefs.setString('UsuarioApelido', dadosLogin['apelido'].toString());
+      prefs.setString('UsuarioToken', dadosLogin['token'].toString());
       return true;
     }
 
     return false;
   }
 
-  Future<bool> validarDispositivo(String id) async {
-    var _url = Uri.parse(ApiModel.ApiUrl + '/dispositivos/' + id + '/validar');
+  Future<UsuarioModel> getUsuarioLogado() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
 
-    final response = await http.post(_url, headers: ApiModel.headers);
+    String? token = prefs.getString('UsuarioToken');
+    print(token);
 
-    if (response.statusCode == 200) {
-      return true;
-    }
+    var _url = Uri.parse(ApiModel.ApiUrl + '/usuario/' + token!);
 
-    return false;
+    final response = await http.get(_url, headers: ApiModel.headers);
+
+    UsuarioModel usuario = UsuarioModel.fromJson(jsonDecode(response.body));
+
+    return usuario;
   }
 }

@@ -12,6 +12,12 @@ Future<dynamic> cadastrarUsuario(BuildContext context,
   late UsuarioController usuarioController;
   usuarioController = UsuarioController(UsuarioRepository(), context);
 
+  if (usuario != null) {
+    usuarioController.controllerNome.text = usuario.nome ?? '';
+    usuarioController.controllerApelido.text = usuario.nome ?? '';
+    usuarioController.controllerSenha.text = usuario.apelido ?? '';
+  }
+
   return showDialog(
       barrierDismissible: false,
       barrierColor: Colors.white.withOpacity(0),
@@ -70,7 +76,7 @@ Future<dynamic> cadastrarUsuario(BuildContext context,
                           //child: Input(label: 'senha'),
                         ),
                         Botao(
-                          texto: 'Cadastrar',
+                          texto: 'salvar',
                           cor: const Color(0xFF6BC8E4),
                           clicar: () async {
                             bool succes = await usuarioController.saveUsuario();

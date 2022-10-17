@@ -27,25 +27,25 @@ class _StartPageState extends State<StartPage> {
   initState() {
     controller = LoginController(LoginRepository(), context);
     usuarioController = UsuarioController(UsuarioRepository(), context);
-    _logar();
+    // _logar();
     super.initState();
   }
 
-  _logar() async {
-    await controller.getLogin().then((value) async {
-      if (value != null) {
-        String teste = await controller.getUsuarioLogado();
-        String senha = await controller.getSenhaUsuarioLogado();
+  // _logar() async {
+  //   await controller.getLogin().then((value) async {
+  //     if (value != null) {
+  //       String teste = await controller.getUsuarioLogado();
+  //       String senha = await controller.getSenhaUsuarioLogado();
 
-        SharedPreferences prefs = await SharedPreferences.getInstance();
+  //       SharedPreferences prefs = await SharedPreferences.getInstance();
 
-        apelido = prefs.getString('UsuarioApelido');
+  //       apelido = prefs.getString('UsuarioApelido');
 
-        controller.controllerUsuario.text = teste.toString();
-        controller.controllerSenha.text = senha.toString();
-      }
-    });
-  }
+  //       controller.controllerUsuario.text = teste.toString();
+  //       controller.controllerSenha.text = senha.toString();
+  //     }
+  //   });
+  // }
 
   @override
   Widget build(BuildContext context) {

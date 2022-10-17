@@ -23,12 +23,8 @@ class LoginConfiguracoes {
     return ret;
   }
 
-  deleteLogin(LoginModel login) async {
-    var logins = await getLogin();
-    //logins.removeWhere((e) => e.chaveCentralizador == login.chaveCentralizador);
-
+  deleteLogin() async {
     excluirArquivo();
-    // salvarArquivo(logins);
   }
 
   Future<String> lerArquivo() async {

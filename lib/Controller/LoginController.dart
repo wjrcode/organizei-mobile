@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:http/retry.dart';
+import 'package:organizei/Model/Usuario/UsuarioModel.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:organizei/Controller/Base/Base.dart';
 import 'package:organizei/Controller/DeviceDetailsController.dart';
@@ -69,10 +70,18 @@ class LoginController extends Base {
     }
   }
 
+  Future<UsuarioModel> getUsuarioLogado() async {
+    return repository.getUsuarioLogado();
+  }
+
   salvarLogin(LoginModel login) async {
     //LoginModel? login = await loginConfiguracoes.getLogin();
 
     await loginConfiguracoes.salvarArquivo(login);
+  }
+
+  sair() async {
+    await loginConfiguracoes.deleteLogin();
   }
 
   bool existeLogin() {
@@ -92,18 +101,8 @@ class LoginController extends Base {
 
     prefs.setString('usuario', '');
     prefs.setString('senha', '');
-    prefs.setString('apelido', '');
+    prefs.setString('UsuarioApelido', '');
     prefs.setString('token', '');
-  }
-
-  Future<String> getUsuarioLogado() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-
-    LoginModel? login = await getLogin();
-
-    String usuario = login!.usuario.toString();
-
-    return '$usuario';
   }
 
   Future<String> getSenhaUsuarioLogado() async {

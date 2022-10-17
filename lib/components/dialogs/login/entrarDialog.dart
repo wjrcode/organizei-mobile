@@ -63,8 +63,6 @@ Future<dynamic> entrar(BuildContext context) {
                                 clicar: () async {
                                   bool succes =
                                       await loginController.autentica();
-                                  SharedPreferences prefs =
-                                      await SharedPreferences.getInstance();
 
                                   if (succes) {
                                     Navigator.of(context).push<void>(
