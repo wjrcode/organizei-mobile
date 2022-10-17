@@ -29,10 +29,6 @@ class ListaModel {
     }).toList();
 
     itens = listaItens;
-
-    // _controllers.map((item) {
-    //   listaitens.add(ItemModel(nome: (item.text)));
-    // }).toList();
   }
 
   Map<String, dynamic> toJson() {

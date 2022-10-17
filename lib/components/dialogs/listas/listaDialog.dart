@@ -17,9 +17,6 @@ Future<dynamic> visualizarLista(BuildContext context,
   itemController = ItemController(ItemRepository(), context);
 
   listaController.listaId(lista.id);
-
-  var _pageSize = MediaQuery.of(context).size.height;
-  var _notifySize = MediaQuery.of(context).padding.top;
   //var _appBarSize = appBar.preferredSize.height;
 
   return showDialog(

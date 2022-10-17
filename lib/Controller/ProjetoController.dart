@@ -2,6 +2,7 @@ import 'dart:ffi';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
+import 'package:organizei/Model/Atividade/AtividadeModel.dart';
 import 'package:organizei/Model/Projeto/ProjetoModel.dart';
 import 'package:organizei/Controller/Base/Base.dart';
 import 'package:organizei/Repository/ProjetoRepository.dart';
@@ -22,6 +23,7 @@ class ProjetoController extends Base {
   projetoObservacao(String? value) => model.observacao = value.toString();
   projetoDataFinal(String? value) => model.dataFinal = value.toString();
   projetoCor(String? value) => model.cor = value.toString();
+  projetoAtividades(List<AtividadeModel?>? value) => model.atividades = value;
 
   var controllerNome = TextEditingController();
   var controllerObservacao = TextEditingController();

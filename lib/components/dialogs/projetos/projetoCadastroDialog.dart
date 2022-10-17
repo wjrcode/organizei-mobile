@@ -1,19 +1,28 @@
 import 'package:flutter/material.dart';
+import 'package:organizei/Model/Atividade/AtividadeModel.dart';
 import 'package:organizei/Model/Projeto/ProjetoModel.dart';
 import 'package:organizei/Repository/ProjetoRepository.dart';
 import 'package:organizei/components/botao.dart';
+import 'package:organizei/components/card_item.dart';
 import 'package:organizei/components/dialog_personalizado.dart';
+import 'package:organizei/components/dialogs/atividades/atividadeCadastroDialog.dart';
+import 'package:organizei/components/dialogs/atividades/atividadeDialog.dart';
 import 'package:organizei/components/input.dart';
 import 'package:organizei/components/selectCor.dart';
 import 'package:organizei/components/selectData.dart';
 import 'package:organizei/components/selectPrioridade.dart';
 import '../../../Controller/ProjetoController.dart';
 
-Future<dynamic> criarProjeto(BuildContext context,
-    {ProjetoModel? projeto = null, Function? fecharDialog = null}) {
+Future<dynamic> criarProjeto(
+  BuildContext context, {
+  ProjetoModel? projeto = null,
+  Function? fecharDialog = null,
+}) {
   late ProjetoController projetoController;
 
   projetoController = ProjetoController(ProjetoRepository(), context);
+
+  late List<AtividadeModel?>? atividades = [];
 
   if (projeto != null) {
     projetoController.controllerNome.text = projeto.nome ?? '';
@@ -22,6 +31,9 @@ Future<dynamic> criarProjeto(BuildContext context,
     projetoController.controllerObservacao.text = projeto.observacao ?? '';
     projetoController.projetoCor(projeto.cor);
     projetoController.projetoId(projeto.id);
+    projetoController.projetoAtividades(projeto.atividades);
+
+    atividades = projeto.atividades;
   }
 
   return showDialog(
@@ -77,12 +89,66 @@ Future<dynamic> criarProjeto(BuildContext context,
                             ),
                           ),
                           SelectCor(
-                              cor: projetoController.projetoCor,
-                              corAtual: projeto?.cor ?? ''),
+                            cor: projetoController.projetoCor,
+                            corAtual: projeto?.cor ?? '',
+                          ),
+                          ListView.builder(
+                              primary: false,
+                              shrinkWrap: true,
+                              itemCount: atividades!.length,
+                              itemBuilder: (context, index) {
+                                return cardItem(
+                                    cor: Color(int.tryParse(
+                                            atividades![index]!.cor ??
+                                                '0xFF6385C3') ??
+                                        0),
+                                    nome: atividades[index]!.nome ?? 'a',
+                                    horario: '',
+                                    abrirDialog: () {
+                                      return visualizarAtividade(
+                                        context,
+                                        atividade: atividades![index]!,
+                                        addAtividade: (atividade) {
+                                          setState((() {
+                                            atividades![index] = atividade;
+                                          }));
+                                        },
+                                        fecharDialog: fecharDialog,
+                                        deleteAtividade: () {
+                                          setState(() {
+                                            atividades!
+                                                .remove(atividades[index]);
+                                          });
+                                        },
+                                      );
+                                    });
+                              }),
+                          Padding(
+                            padding: const EdgeInsets.only(bottom: 16),
+                            child: Botao(
+                              texto: 'Adicionar atividade',
+                              cor: const Color(0xFF6BC8E4),
+                              clicar: () async {
+                                atividades!.add(AtividadeModel());
+                                criarAtividade(
+                                  context,
+                                  atividade: atividades[atividades.length - 1],
+                                  addAtividade: (atividade) {
+                                    setState((() {
+                                      atividades![atividades.length - 1] =
+                                          atividade;
+                                    }));
+                                  },
+                                  fecharDialog: fecharDialog,
+                                );
+                              },
+                            ),
+                          ),
                           Botao(
                             texto: 'Salvar',
                             cor: const Color(0xFF6385C3),
                             clicar: () async {
+                              projetoController.projetoAtividades(atividades);
                               bool succes =
                                   await projetoController.saveProjeto();
 

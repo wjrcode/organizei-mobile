@@ -1,19 +1,22 @@
 import 'package:flutter/material.dart';
-import 'package:organizei/Model/Projeto/ProjetoModel.dart';
-import 'package:organizei/Repository/ProjetoRepository.dart';
+import 'package:organizei/Model/Atividade/AtividadeModel.dart';
+import 'package:organizei/Repository/AtividadeRepository.dart';
 import 'package:organizei/components/botao.dart';
-import 'package:organizei/components/card_item.dart';
 import 'package:organizei/components/dialog_personalizado.dart';
-import 'package:organizei/components/dialogs/atividades/atividadeDialog.dart';
-import 'package:organizei/components/dialogs/projetos/projetoCadastroDialog.dart';
-import '../../../Controller/ProjetoController.dart';
+import 'package:organizei/components/dialogs/atividades/atividadeCadastroDialog.dart';
+import '../../../Controller/AtividadeController.dart';
 
-Future<dynamic> visualizarProjeto(BuildContext context,
-    {required ProjetoModel projeto, Function? fecharDialog = null}) {
-  late ProjetoController projetoController;
-  projetoController = ProjetoController(ProjetoRepository(), context);
+Future<dynamic> visualizarAtividade(
+  BuildContext context, {
+  required AtividadeModel atividade,
+  Function? fecharDialog = null,
+  Function? addAtividade,
+  Function? deleteAtividade,
+}) {
+  late AtividadeController atividadeController;
+  atividadeController = AtividadeController(AtividadeRepository(), context);
 
-  projetoController.projetoId(projeto.id);
+  atividadeController.atividadeId(atividade.id);
 
   return showDialog(
       barrierDismissible: false,
@@ -28,7 +31,7 @@ Future<dynamic> visualizarProjeto(BuildContext context,
               child: Material(
                 type: MaterialType.transparency,
                 child: Form(
-                  key: projetoController.formKey,
+                  key: atividadeController.formKey,
                   child: Padding(
                     padding: const EdgeInsets.only(top: 24.0),
                     child: ConstrainedBox(
@@ -36,10 +39,10 @@ Future<dynamic> visualizarProjeto(BuildContext context,
                         minHeight: MediaQuery.of(context).size.height,
                       ),
                       child: DialogPersonalizado(
-                        nome: projeto.nome ?? '',
-                        cor: projeto.cor ?? '',
+                        nome: atividade.nome ?? '',
+                        cor: atividade.cor ?? '',
                         child: <Widget>[
-                          Text(projeto.observacao ?? ''),
+                          Text(atividade.observacao ?? ''),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.start,
                             crossAxisAlignment: CrossAxisAlignment.center,
@@ -51,7 +54,7 @@ Future<dynamic> visualizarProjeto(BuildContext context,
                                   fontWeight: FontWeight.w700,
                                 ),
                               ),
-                              Text(projeto.dataInicial ?? ''),
+                              Text(atividade.dataInicial ?? ''),
                             ],
                           ),
                           Row(
@@ -65,7 +68,7 @@ Future<dynamic> visualizarProjeto(BuildContext context,
                                   fontWeight: FontWeight.w700,
                                 ),
                               ),
-                              Text(projeto.dataFinal ?? ''),
+                              Text(atividade.dataFinal ?? ''),
                             ],
                           ),
                           Row(
@@ -73,63 +76,23 @@ Future<dynamic> visualizarProjeto(BuildContext context,
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: <Widget>[
                               const Text(
-                                'progresso:  ',
+                                'prioridade:  ',
                                 style: TextStyle(
                                   color: Colors.black,
                                   fontWeight: FontWeight.w700,
                                 ),
                               ),
-                              Text(projeto.progresso ?? ''),
+                              Text(atividade.prioridade ?? ''),
                             ],
                           ),
-                          ListView.builder(
-                              primary: false,
-                              shrinkWrap: true,
-                              itemCount: projeto.atividades!.length,
-                              itemBuilder: (context, index) {
-                                if (projeto.atividades![index]!.concluido ==
-                                        false ||
-                                    projeto.atividades![index]!.concluido ==
-                                        null) {
-                                  return cardItem(
-                                      cor: Color(int.tryParse(
-                                              projeto.atividades![index]!.cor ??
-                                                  '0xFF6385C3') ??
-                                          0),
-                                      nome: projeto.atividades![index]!.nome ??
-                                          '',
-                                      horario: '',
-                                      abrirDialog: () {
-                                        return visualizarAtividade(
-                                          context,
-                                          atividade:
-                                              projeto.atividades![index]!,
-                                          addAtividade: (atividade) {
-                                            setState((() {
-                                              projeto.atividades![index] =
-                                                  atividade;
-                                            }));
-                                          },
-                                          deleteAtividade: () {
-                                            setState(() {
-                                              projeto.atividades!.remove(
-                                                  projeto.atividades![index]);
-                                            });
-                                          },
-                                          fecharDialog: fecharDialog,
-                                        );
-                                      });
-                                } else
-                                  return Text('');
-                              }),
                           Padding(
                             padding: const EdgeInsets.only(bottom: 16, top: 16),
                             child: Botao(
                               texto: 'Concluir',
                               cor: const Color(0xFF74C198),
                               clicar: () async {
-                                bool succes = await projetoController
-                                    .concluirProjeto(true);
+                                bool succes = await atividadeController
+                                    .concluirAtividade(true);
 
                                 if (succes == true) {
                                   Navigator.pop(context);
@@ -142,11 +105,11 @@ Future<dynamic> visualizarProjeto(BuildContext context,
                             texto: 'Editar',
                             cor: const Color(0xFF6385C3),
                             clicar: () async {
-                              criarProjeto(
-                                context,
-                                projeto: projeto,
-                                fecharDialog: fecharDialog,
-                              );
+                              //Navigator.pop(context);
+                              criarAtividade(context,
+                                  atividade: atividade,
+                                  addAtividade: addAtividade,
+                                  fecharDialog: fecharDialog);
                             },
                           ),
                           Padding(
@@ -155,10 +118,11 @@ Future<dynamic> visualizarProjeto(BuildContext context,
                               texto: 'Excluir',
                               cor: const Color(0xFFEF7E69),
                               clicar: () async {
-                                bool succes =
-                                    await projetoController.excluirProjeto();
+                                bool succes = await atividadeController
+                                    .excluirAtividade();
 
                                 if (succes == true) {
+                                  deleteAtividade!();
                                   Navigator.pop(context);
                                   fecharDialog!();
                                 }

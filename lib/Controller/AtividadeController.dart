@@ -2,42 +2,49 @@ import 'dart:ffi';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
-import 'package:organizei/Model/Tarefa/TarefaModel.dart';
+import 'package:organizei/Model/Atividade/AtividadeModel.dart';
 import 'package:organizei/Controller/Base/Base.dart';
-import 'package:organizei/Repository/TarefaRepository.dart';
+import 'package:organizei/Repository/AtividadeRepository.dart';
 import 'package:organizei/services/persistencia/login.configuracoes.dart';
 
-class TarefaController extends Base {
-  TarefaController(this.repository, this.context);
+class AtividadeController extends Base {
+  AtividadeController(this.repository, this.context);
 
   final BuildContext context;
-  final TarefaRepository repository;
+  final AtividadeRepository repository;
   final formKey = GlobalKey<FormState>();
-  var model = TarefaModel();
+  var model = AtividadeModel();
   //var loginConfiguracoes = LoginConfiguracoes();
 
-  tarefaId(int? value) => model.id = value;
-  tarefaNome(String? value) => model.nome = value.toString();
-  tarefaDataehora(String? value) => model.data = value.toString();
-  tarefaObservacao(String? value) => model.observacao = value.toString();
-  tarefaPrioridade(String? value) => model.prioridade = value.toString();
-  tarefaCor(String? value) => model.cor = value.toString();
+  atividadeId(int? value) => model.id = value;
+  atividadeNome(String? value) => model.nome = value.toString();
+  atividadeDataInical(String? value) => model.dataInicial = value.toString();
+  atividadeObservacao(String? value) => model.observacao = value.toString();
+  atividadeDataFinal(String? value) => model.dataFinal = value.toString();
+  atividadeCor(String? value) => model.cor = value.toString();
+  atividadePrioridade(String? value) => model.prioridade = value.toString();
 
   var controllerNome = TextEditingController();
   var controllerObservacao = TextEditingController();
+  var controllerPrioridade = TextEditingController();
   var controllerCor = TextEditingController();
-  var controllerDataehora = TextEditingController();
+  var controllerDataIncial = TextEditingController();
+  var controllerDataFinal = TextEditingController();
 
-  Future<bool> saveTarefa() async {
+  Future<bool> saveAtividade(Function? addAtividade) async {
     if (!formKey.currentState!.validate()) {
       return false;
     }
 
     formKey.currentState!.save();
 
+    if (addAtividade != null) {
+      addAtividade(model);
+    }
+
     try {
-      if (model.id == null) {
-        return await repository.addTarefa(model).then((value) async {
+      if (model.id != null) {
+        return await repository.updateAtividade(model).then((value) async {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
               elevation: 6.0,
@@ -68,36 +75,7 @@ class TarefaController extends Base {
           }
         });
       } else {
-        return await repository.updateTarefa(model).then((value) async {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              elevation: 6.0,
-              behavior: SnackBarBehavior.floating,
-              shape: RoundedRectangleBorder(
-                side: const BorderSide(color: Colors.black, width: 3),
-                borderRadius: BorderRadius.circular(16),
-              ),
-              content: Text(
-                value.msg!,
-                style: const TextStyle(
-                  color: Colors.black,
-                  fontWeight: FontWeight.w500,
-                ),
-              ),
-              backgroundColor: value.valido!
-                  ? const Color(0xFF74C198)
-                  : const Color(0xFFEF7E69),
-            ),
-          );
-
-          await Future.delayed(const Duration(milliseconds: 500));
-
-          if (value.valido!) {
-            return value.valido!;
-          } else {
-            return false;
-          }
-        });
+        return true;
       }
     } catch (e) {
       print(e);
@@ -105,18 +83,14 @@ class TarefaController extends Base {
     }
   }
 
-  Future<List<TarefaModel>?> getTarefas() async {
-    return await repository.getTarefas();
+  Future<Map<String, dynamic>> getAtividades() async {
+    return await repository.getAtividades();
   }
 
-  Future<Map<String, dynamic>> get() async {
-    return await repository.get();
-  }
-
-  Future<bool> concluirTarefa(bool concluido) async {
+  Future<bool> concluirAtividade(bool concluido) async {
     try {
       return await repository
-          .concluirTarefa(model, concluido)
+          .concluirAtividade(model, concluido)
           .then((value) async {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
@@ -153,9 +127,9 @@ class TarefaController extends Base {
     }
   }
 
-  Future<bool> excluirTarefa() async {
+  Future<bool> excluirAtividade() async {
     try {
-      return await repository.excluirTarefa(model).then((value) async {
+      return await repository.excluirAtividade(model).then((value) async {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             elevation: 6.0,

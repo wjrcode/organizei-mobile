@@ -88,8 +88,6 @@ Future<dynamic> criarLista(BuildContext context,
                                     excluir: true,
                                     funcao: () async {
                                       if (itens![index]!.id != null) {
-                                        print('entrei no if');
-                                        print(itens[index]!.id);
                                         itemController.itemId(itens[index]!.id);
                                         await itemController.excluirItem();
                                       }

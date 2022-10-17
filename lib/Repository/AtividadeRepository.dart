@@ -4,68 +4,70 @@ import 'package:organizei/Model/API/APIModel.dart';
 
 import 'package:http/http.dart' as http;
 import 'package:organizei/Model/API/ResponseAPIModel.dart';
-import 'package:organizei/Model/Projeto/ProjetoModel.dart';
+import 'package:organizei/Model/Atividade/AtividadeModel.dart';
 
-class ProjetoRepository {
-  Future<ResponseAPIModel> addProjeto(ProjetoModel model) async {
+class AtividadeRepository {
+  Future<ResponseAPIModel> addAtividade(AtividadeModel model) async {
     var json = {
       "nome": model.nome,
       "dataInicial": model.dataInicial,
       "observacao": model.observacao,
       "dataFinal": model.dataFinal,
       "cor": model.cor,
-      "atividades": model.atividades
+      "prioridade": model.prioridade,
     };
 
-    final response = await http.post(Uri.parse(ApiModel.ApiUrl + '/projetos'),
+    final response = await http.post(Uri.parse(ApiModel.ApiUrl + '/atividades'),
         headers: ApiModel.headers, body: jsonEncode(json));
 
     return ResponseAPIModel.fromJson(jsonDecode(response.body));
   }
 
-  Future<ResponseAPIModel> updateProjeto(ProjetoModel model) async {
+  Future<ResponseAPIModel> updateAtividade(AtividadeModel model) async {
     var json = {
       "nome": model.nome,
       "dataInicial": model.dataInicial,
       "observacao": model.observacao,
       "dataFinal": model.dataFinal,
       "cor": model.cor,
-      "atividades": model.atividades
+      "prioridade": model.prioridade,
     };
 
     final response = await http.put(
-        Uri.parse(ApiModel.ApiUrl + '/projetos/' + model.id.toString()),
+        Uri.parse(ApiModel.ApiUrl + '/atividades/' + model.id.toString()),
         headers: ApiModel.headers,
         body: jsonEncode(json));
 
     return ResponseAPIModel.fromJson(jsonDecode(response.body));
   }
 
-  Future<ResponseAPIModel> concluirProjeto(
-      ProjetoModel model, bool concluido) async {
+  Future<ResponseAPIModel> concluirAtividade(
+      AtividadeModel model, bool concluido) async {
     var json = {
       "concluido": concluido,
     };
 
     final response = await http.put(
-        Uri.parse(
-            ApiModel.ApiUrl + '/projetos/' + model.id.toString() + '/concluir'),
+        Uri.parse(ApiModel.ApiUrl +
+            '/atividades/' +
+            model.id.toString() +
+            '/concluir'),
         headers: ApiModel.headers,
         body: jsonEncode(json));
 
     return ResponseAPIModel.fromJson(jsonDecode(response.body));
   }
 
-  Future<ResponseAPIModel> excluirProjeto(ProjetoModel model) async {
+  Future<ResponseAPIModel> excluirAtividade(AtividadeModel model) async {
     final response = await http.delete(
-        Uri.parse(ApiModel.ApiUrl + '/projetos/' + model.id.toString()),
+        Uri.parse(ApiModel.ApiUrl + '/atividades/' + model.id.toString()),
         headers: ApiModel.headers);
 
     return ResponseAPIModel.fromJson(jsonDecode(response.body));
   }
 
-  Future<Map<String, dynamic>> getProjetos() async {
-    Uri url = Uri.parse(ApiModel.ApiUrl + '/projetos');
+  Future<Map<String, dynamic>> getAtividades() async {
+    Uri url = Uri.parse(ApiModel.ApiUrl + '/atividades');
 
     var _url = Uri.parse(url.toString());
     final response = await http.get(_url, headers: ApiModel.headers);
@@ -76,7 +78,7 @@ class ProjetoRepository {
   }
 
   Future<Map<String, dynamic>> get() async {
-    Uri url = Uri.parse(ApiModel.ApiUrl + '/projetos');
+    Uri url = Uri.parse(ApiModel.ApiUrl + '/atividades');
 
     var _url = Uri.parse(url.toString());
     final response = await http.get(_url, headers: ApiModel.headers);
