@@ -10,7 +10,7 @@ import 'package:organizei/components/selectPrioridade.dart';
 import '../../../Controller/TarefaController.dart';
 
 Future<dynamic> criarTarefa(BuildContext context,
-    {TarefaModel? tarefa = null, Function? fecharDialog = null}) {
+    {TarefaModel? tarefa, Function? fecharDialog}) {
   late TarefaController tarefaController;
 
   tarefaController = TarefaController(TarefaRepository(), context);

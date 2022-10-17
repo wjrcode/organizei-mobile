@@ -12,9 +12,9 @@ class ResponseAPIModel {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['valido'] = this.valido;
-    data['msg'] = this.msg;
-    data['statusCode'] = this.statusCode;
+    data['valido'] = valido;
+    data['msg'] = msg;
+    data['statusCode'] = statusCode;
 
     return data;
   }

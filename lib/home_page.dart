@@ -12,6 +12,8 @@ import 'package:intl/intl.dart';
 import 'package:organizei/components/dialogs/atividades/atividadeDialog.dart';
 import 'package:organizei/components/dialogs/habitos/habitoDialog.dart';
 import 'package:organizei/components/dialogs/lembretes/lembreteDialog.dart';
+import 'package:organizei/components/dialogs/login/entrarDialog.dart';
+import 'package:organizei/components/dialogs/login/sairDialog.dart';
 import 'package:organizei/components/dialogs/tarefas/tarefaDialog.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -114,18 +116,27 @@ class _HomePageState extends State<HomePage> {
                             mainAxisAlignment: MainAxisAlignment.end,
                             crossAxisAlignment: CrossAxisAlignment.end,
                             children: <Widget>[
-                              Container(
-                                width: 40,
-                                height: 40,
-                                decoration: BoxDecoration(
-                                    shape: BoxShape.circle,
-                                    color: Color(0xFFE9E9E9),
-                                    border: Border.all(
-                                      width: 3,
-                                      color: Colors.black,
-                                      style: BorderStyle.solid,
-                                    )),
+                              GestureDetector(
+                                child: Icon(
+                                  Icons.settings,
+                                  size: 32,
+                                ),
+                                onTap: () {
+                                  sair(context);
+                                },
                               )
+                              // Container(
+                              //   width: 40,
+                              //   height: 40,
+                              //   decoration: BoxDecoration(
+                              //       shape: BoxShape.circle,
+                              //       color: Color(0xFFE9E9E9),
+                              //       border: Border.all(
+                              //         width: 3,
+                              //         color: Colors.black,
+                              //         style: BorderStyle.solid,
+                              //       )),
+                              // )
                             ],
                           ),
                         ],

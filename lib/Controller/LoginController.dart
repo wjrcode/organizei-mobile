@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:http/retry.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:organizei/Controller/Base/Base.dart';
 import 'package:organizei/Controller/DeviceDetailsController.dart';
@@ -23,19 +24,15 @@ class LoginController extends Base {
   var controllerSenha = TextEditingController();
 
   Future<bool> autentica() async {
-    /* if (!formKey.currentState!.validate()) {
+    if (!formKey.currentState!.validate()) {
       return false;
-    }*/
+    }
 
     formKey.currentState!.save();
 
     SharedPreferences prefs = await SharedPreferences.getInstance();
 
     try {
-      //showReloadDialog(context, 'Realizando login, aguarde...');
-      //model.cpfcnpj = prefs.getString('EmpresaCpfcnpj');
-
-      //model.chaveCentralizador = prefs.getString('EmpresaChaveCentralizador');
       bool ret = await repository.autenticar(model);
 
       if (!ret) {
@@ -90,11 +87,13 @@ class LoginController extends Base {
     return loginConfiguracoes.getLogin();
   }
 
-  _limpaPreferencesLogin(LoginModel login) async {
+  limpaPreferencesLogin() async {
     var prefs = await SharedPreferences.getInstance();
 
     prefs.setString('usuario', '');
     prefs.setString('senha', '');
+    prefs.setString('apelido', '');
+    prefs.setString('token', '');
   }
 
   Future<String> getUsuarioLogado() async {
