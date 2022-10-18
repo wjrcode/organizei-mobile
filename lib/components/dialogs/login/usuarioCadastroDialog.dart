@@ -6,6 +6,7 @@ import 'package:organizei/components/botao.dart';
 import 'package:organizei/components/dialog_personalizado.dart';
 import 'package:organizei/components/dialogs/login/entrarDialog.dart';
 import 'package:organizei/components/input.dart';
+import 'package:organizei/home_page.dart';
 
 Future<dynamic> cadastrarUsuario(BuildContext context,
     {UsuarioModel? usuario, Function? fecharDialog}) {
@@ -14,8 +15,23 @@ Future<dynamic> cadastrarUsuario(BuildContext context,
 
   if (usuario != null) {
     usuarioController.controllerNome.text = usuario.nome ?? '';
-    usuarioController.controllerApelido.text = usuario.nome ?? '';
-    usuarioController.controllerSenha.text = usuario.apelido ?? '';
+    usuarioController.controllerApelido.text = usuario.apelido ?? '';
+    usuarioController.controllerEmail.text = usuario.email ?? '';
+    usuarioController.usuarioId(usuario.id);
+  }
+
+  Widget _buildNovaSenha() {
+    return usuario != null
+        ? Padding(
+            padding: const EdgeInsets.only(bottom: 16),
+            child: input(
+                onSaved: usuarioController.usuarioNovaSenha,
+                textController: usuarioController.controllerNovaSenha,
+                label: 'nova senha',
+                senha: true),
+            //child: Input(label: 'senha'),
+          )
+        : Container();
   }
 
   return showDialog(
@@ -71,10 +87,13 @@ Future<dynamic> cadastrarUsuario(BuildContext context,
                           child: input(
                               onSaved: usuarioController.usuarioSenha,
                               textController: usuarioController.controllerSenha,
-                              label: 'senha',
+                              label: (usuario != null && usuario.id != null)
+                                  ? 'senha atual'
+                                  : 'senha',
                               senha: true),
                           //child: Input(label: 'senha'),
                         ),
+                        _buildNovaSenha(),
                         Botao(
                           texto: 'salvar',
                           cor: const Color(0xFF6BC8E4),
@@ -82,8 +101,16 @@ Future<dynamic> cadastrarUsuario(BuildContext context,
                             bool succes = await usuarioController.saveUsuario();
 
                             if (succes == true) {
-                              Navigator.pop(context);
-                              entrar(context);
+                              if (usuario == null) {
+                                Navigator.pop(context);
+                                entrar(context);
+                              } else {
+                                Navigator.pushAndRemoveUntil(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (_) => const HomePage()),
+                                    (route) => false);
+                              }
                             }
                           },
                         ),

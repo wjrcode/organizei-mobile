@@ -17,8 +17,8 @@ class ProjetoRepository {
       "atividades": model.atividades
     };
 
-    final response = await http.post(Uri.parse(ApiModel.ApiUrl + '/projetos'),
-        headers: ApiModel.headers, body: jsonEncode(json));
+    final response = await http.post(Uri.parse(ApiModel().ApiUrl + '/projetos'),
+        headers: await ApiModel().getHeaders(), body: jsonEncode(json));
 
     return ResponseAPIModel.fromJson(jsonDecode(response.body));
   }
@@ -34,8 +34,8 @@ class ProjetoRepository {
     };
 
     final response = await http.put(
-        Uri.parse(ApiModel.ApiUrl + '/projetos/' + model.id.toString()),
-        headers: ApiModel.headers,
+        Uri.parse(ApiModel().ApiUrl + '/projetos/' + model.id.toString()),
+        headers: await ApiModel().getHeaders(),
         body: jsonEncode(json));
 
     return ResponseAPIModel.fromJson(jsonDecode(response.body));
@@ -48,9 +48,11 @@ class ProjetoRepository {
     };
 
     final response = await http.put(
-        Uri.parse(
-            ApiModel.ApiUrl + '/projetos/' + model.id.toString() + '/concluir'),
-        headers: ApiModel.headers,
+        Uri.parse(ApiModel().ApiUrl +
+            '/projetos/' +
+            model.id.toString() +
+            '/concluir'),
+        headers: await ApiModel().getHeaders(),
         body: jsonEncode(json));
 
     return ResponseAPIModel.fromJson(jsonDecode(response.body));
@@ -58,17 +60,18 @@ class ProjetoRepository {
 
   Future<ResponseAPIModel> excluirProjeto(ProjetoModel model) async {
     final response = await http.delete(
-        Uri.parse(ApiModel.ApiUrl + '/projetos/' + model.id.toString()),
-        headers: ApiModel.headers);
+        Uri.parse(ApiModel().ApiUrl + '/projetos/' + model.id.toString()),
+        headers: await ApiModel().getHeaders());
 
     return ResponseAPIModel.fromJson(jsonDecode(response.body));
   }
 
   Future<Map<String, dynamic>> getProjetos() async {
-    Uri url = Uri.parse(ApiModel.ApiUrl + '/projetos');
+    Uri url = Uri.parse(ApiModel().ApiUrl + '/projetos');
 
     var _url = Uri.parse(url.toString());
-    final response = await http.get(_url, headers: ApiModel.headers);
+    final response =
+        await http.get(_url, headers: await ApiModel().getHeaders());
 
     Map<String, dynamic> jsonMap = jsonDecode(response.body);
 
@@ -76,10 +79,11 @@ class ProjetoRepository {
   }
 
   Future<Map<String, dynamic>> get() async {
-    Uri url = Uri.parse(ApiModel.ApiUrl + '/projetos');
+    Uri url = Uri.parse(ApiModel().ApiUrl + '/projetos');
 
     var _url = Uri.parse(url.toString());
-    final response = await http.get(_url, headers: ApiModel.headers);
+    final response =
+        await http.get(_url, headers: await ApiModel().getHeaders());
 
     Map<String, dynamic> jsonMap = jsonDecode(response.body);
 

@@ -3,6 +3,7 @@ import 'package:organizei/Model/Usuario/UsuarioModel.dart';
 import 'package:organizei/Controller/Base/Base.dart';
 import 'package:organizei/Repository/UsuarioRepository.dart';
 import 'package:organizei/services/persistencia/login.configuracoes.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class UsuarioController extends Base {
   UsuarioController(this.repository, this.context);
@@ -13,20 +14,25 @@ class UsuarioController extends Base {
   var model = UsuarioModel();
   var loginConfiguracoes = LoginConfiguracoes();
 
+  usuarioId(int? value) => model.id = value;
   usuarioNome(String? value) => model.nome = value.toString();
   usuarioApelido(String? value) => model.apelido = value.toString();
   usuarioEmail(String? value) => model.email = value.toString();
   usuarioSenha(String? value) => model.senha = value.toString();
+  usuarioNovaSenha(String? value) => model.novaSenha = value.toString();
 
   var controllerNome = TextEditingController();
   var controllerApelido = TextEditingController();
   var controllerEmail = TextEditingController();
   var controllerSenha = TextEditingController();
+  var controllerNovaSenha = TextEditingController();
 
   Future<bool> saveUsuario() async {
     if (!formKey.currentState!.validate()) {
       return false;
     }
+
+    SharedPreferences prefs = await SharedPreferences.getInstance();
 
     formKey.currentState!.save();
 
@@ -57,14 +63,31 @@ class UsuarioController extends Base {
           }
         });
       } else {
-        /*return await repository.updateProduto(model).then((value) {
+        return await repository.updateUsuario(model).then((value) async {
           ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-            content: Text(value.msg),
-            backgroundColor: value.valido ? Colors.green : Colors.red,
+            elevation: 6.0,
+            behavior: SnackBarBehavior.floating,
+            shape: RoundedRectangleBorder(
+              side: const BorderSide(color: Colors.black, width: 3),
+              borderRadius: BorderRadius.circular(16),
+            ),
+            content: Text(value.msg!,
+                style: const TextStyle(
+                  color: Colors.black,
+                  fontWeight: FontWeight.w500,
+                )),
+            backgroundColor: value.valido!
+                ? const Color(0xFF74C198)
+                : const Color(0xFFEF7E69),
           ));
-          return value.valido;
-        });*/
-        return false;
+
+          if (value.valido! == true) {
+            prefs.setString('UsuarioApelido', model.apelido ?? '');
+            return value.valido!;
+          } else {
+            return false;
+          }
+        });
       }
     } catch (e) {
       print(e);

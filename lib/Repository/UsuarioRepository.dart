@@ -17,8 +17,25 @@ class UsuarioRepository {
       "senha": model.senha,
     };
 
-    final response = await http.post(Uri.parse(ApiModel.ApiUrl + '/usuarios'),
-        headers: ApiModel.headers, body: jsonEncode(json));
+    final response = await http.post(Uri.parse(ApiModel().ApiUrl + '/usuarios'),
+        headers: await ApiModel().getHeaders(), body: jsonEncode(json));
+
+    return ResponseAPIModel.fromJson(jsonDecode(response.body));
+  }
+
+  Future<ResponseAPIModel> updateUsuario(UsuarioModel model) async {
+    var json = {
+      "nome": model.nome,
+      "apelido": model.apelido,
+      "email": model.email,
+      "senha": model.senha,
+      "novaSenha": model.novaSenha
+    };
+
+    final response = await http.put(
+        Uri.parse(ApiModel().ApiUrl + '/usuarios/' + model.id.toString()),
+        headers: await ApiModel().getHeaders(),
+        body: jsonEncode(json));
 
     return ResponseAPIModel.fromJson(jsonDecode(response.body));
   }

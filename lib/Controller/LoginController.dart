@@ -104,16 +104,4 @@ class LoginController extends Base {
     prefs.setString('UsuarioApelido', '');
     prefs.setString('token', '');
   }
-
-  Future<String> getSenhaUsuarioLogado() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-
-    String? chaveCentralizador = prefs.getString('EmpresaChaveCentralizador');
-
-    LoginModel? login = await getLogin();
-
-    String senha = login!.senha.toString();
-
-    return '$senha';
-  }
 }

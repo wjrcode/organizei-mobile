@@ -6,6 +6,7 @@ class UsuarioModel {
   String? apelido;
   String? email;
   String? senha;
+  String? novaSenha;
   ResponseAPIModel? responseAPIModel;
 
   UsuarioModel({
@@ -14,6 +15,7 @@ class UsuarioModel {
     this.apelido,
     this.email,
     this.senha,
+    this.novaSenha,
   });
 
   UsuarioModel.fromJson(Map<String, dynamic> json) {
@@ -26,11 +28,12 @@ class UsuarioModel {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['nome'] = this.nome;
-    data['apelido'] = this.apelido;
-    data['email'] = this.email;
-    data['senha'] = this.senha;
+    data['id'] = id;
+    data['nome'] = nome;
+    data['apelido'] = apelido;
+    data['email'] = email;
+    data['senha'] = senha;
+    data['novaSenha'] = novaSenha;
 
     return data;
   }

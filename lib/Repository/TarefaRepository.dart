@@ -16,8 +16,8 @@ class TarefaRepository {
       "cor": model.cor,
     };
 
-    final response = await http.post(Uri.parse(ApiModel.ApiUrl + '/tarefas'),
-        headers: ApiModel.headers, body: jsonEncode(json));
+    final response = await http.post(Uri.parse(ApiModel().ApiUrl + '/tarefas'),
+        headers: await ApiModel().getHeaders(), body: jsonEncode(json));
 
     return ResponseAPIModel.fromJson(jsonDecode(response.body));
   }
@@ -32,8 +32,8 @@ class TarefaRepository {
     };
 
     final response = await http.put(
-        Uri.parse(ApiModel.ApiUrl + '/tarefas/' + model.id.toString()),
-        headers: ApiModel.headers,
+        Uri.parse(ApiModel().ApiUrl + '/tarefas/' + model.id.toString()),
+        headers: await ApiModel().getHeaders(),
         body: jsonEncode(json));
 
     return ResponseAPIModel.fromJson(jsonDecode(response.body));
@@ -46,9 +46,11 @@ class TarefaRepository {
     };
 
     final response = await http.put(
-        Uri.parse(
-            ApiModel.ApiUrl + '/tarefas/' + model.id.toString() + '/concluir'),
-        headers: ApiModel.headers,
+        Uri.parse(ApiModel().ApiUrl +
+            '/tarefas/' +
+            model.id.toString() +
+            '/concluir'),
+        headers: await ApiModel().getHeaders(),
         body: jsonEncode(json));
 
     return ResponseAPIModel.fromJson(jsonDecode(response.body));
@@ -56,17 +58,18 @@ class TarefaRepository {
 
   Future<ResponseAPIModel> excluirTarefa(TarefaModel model) async {
     final response = await http.delete(
-        Uri.parse(ApiModel.ApiUrl + '/tarefas/' + model.id.toString()),
-        headers: ApiModel.headers);
+        Uri.parse(ApiModel().ApiUrl + '/tarefas/' + model.id.toString()),
+        headers: await ApiModel().getHeaders());
 
     return ResponseAPIModel.fromJson(jsonDecode(response.body));
   }
 
   Future<List<TarefaModel>> getTarefas() async {
-    Uri url = Uri.parse(ApiModel.ApiUrl + '/tarefas');
+    Uri url = Uri.parse(ApiModel().ApiUrl + '/tarefas');
 
     var _url = Uri.parse(url.toString());
-    final response = await http.get(_url, headers: ApiModel.headers);
+    final response =
+        await http.get(_url, headers: await ApiModel().getHeaders());
 
     Map<String, dynamic> jsonMap = jsonDecode(response.body);
     List<TarefaModel> listaTarefas = (jsonMap['tarefas'] as List)
@@ -77,10 +80,11 @@ class TarefaRepository {
   }
 
   Future<Map<String, dynamic>> get() async {
-    Uri url = Uri.parse(ApiModel.ApiUrl + '/tarefas');
+    Uri url = Uri.parse(ApiModel().ApiUrl + '/tarefas');
 
     var _url = Uri.parse(url.toString());
-    final response = await http.get(_url, headers: ApiModel.headers);
+    final response =
+        await http.get(_url, headers: await ApiModel().getHeaders());
 
     Map<String, dynamic> jsonMap = jsonDecode(response.body);
 

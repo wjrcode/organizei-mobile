@@ -16,8 +16,8 @@ class HabitoRepository {
       "dataFinal": model.dataFinal,
     };
 
-    final response = await http.post(Uri.parse(ApiModel.ApiUrl + '/habitos'),
-        headers: ApiModel.headers, body: jsonEncode(json));
+    final response = await http.post(Uri.parse(ApiModel().ApiUrl + '/habitos'),
+        headers: await ApiModel().getHeaders(), body: jsonEncode(json));
 
     return ResponseAPIModel.fromJson(jsonDecode(response.body));
   }
@@ -32,8 +32,8 @@ class HabitoRepository {
     };
 
     final response = await http.put(
-        Uri.parse(ApiModel.ApiUrl + '/habitos/' + model.id.toString()),
-        headers: ApiModel.headers,
+        Uri.parse(ApiModel().ApiUrl + '/habitos/' + model.id.toString()),
+        headers: await ApiModel().getHeaders(),
         body: jsonEncode(json));
 
     return ResponseAPIModel.fromJson(jsonDecode(response.body));
@@ -46,11 +46,11 @@ class HabitoRepository {
     };
 
     final response = await http.put(
-        Uri.parse(ApiModel.ApiUrl +
+        Uri.parse(ApiModel().ApiUrl +
             '/habitos/' +
             model.idRotina.toString() +
             '/concluir'),
-        headers: ApiModel.headers,
+        headers: await ApiModel().getHeaders(),
         body: jsonEncode(json));
 
     return ResponseAPIModel.fromJson(jsonDecode(response.body));
@@ -58,17 +58,18 @@ class HabitoRepository {
 
   Future<ResponseAPIModel> excluirHabito(HabitoModel model) async {
     final response = await http.delete(
-        Uri.parse(ApiModel.ApiUrl + '/habitos/' + model.id.toString()),
-        headers: ApiModel.headers);
+        Uri.parse(ApiModel().ApiUrl + '/habitos/' + model.id.toString()),
+        headers: await ApiModel().getHeaders());
 
     return ResponseAPIModel.fromJson(jsonDecode(response.body));
   }
 
   Future<List<HabitoModel>> getHabitos() async {
-    Uri url = Uri.parse(ApiModel.ApiUrl + '/habitos');
+    Uri url = Uri.parse(ApiModel().ApiUrl + '/habitos');
 
     var _url = Uri.parse(url.toString());
-    final response = await http.get(_url, headers: ApiModel.headers);
+    final response =
+        await http.get(_url, headers: await ApiModel().getHeaders());
 
     Map<String, dynamic> jsonMap = jsonDecode(response.body);
     List<HabitoModel> listaHabitos = (jsonMap['habitos'] as List)

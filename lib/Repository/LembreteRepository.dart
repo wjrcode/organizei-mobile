@@ -15,8 +15,10 @@ class LembreteRepository {
       "cor": model.cor,
     };
 
-    final response = await http.post(Uri.parse(ApiModel.ApiUrl + '/lembretes'),
-        headers: ApiModel.headers, body: jsonEncode(json));
+    final response = await http.post(
+        Uri.parse(ApiModel().ApiUrl + '/lembretes'),
+        headers: await ApiModel().getHeaders(),
+        body: jsonEncode(json));
 
     return ResponseAPIModel.fromJson(jsonDecode(response.body));
   }
@@ -30,8 +32,8 @@ class LembreteRepository {
     };
 
     final response = await http.put(
-        Uri.parse(ApiModel.ApiUrl + '/lembretes/' + model.id.toString()),
-        headers: ApiModel.headers,
+        Uri.parse(ApiModel().ApiUrl + '/lembretes/' + model.id.toString()),
+        headers: await ApiModel().getHeaders(),
         body: jsonEncode(json));
 
     return ResponseAPIModel.fromJson(jsonDecode(response.body));
@@ -39,17 +41,18 @@ class LembreteRepository {
 
   Future<ResponseAPIModel> excluirLembrete(LembreteModel model) async {
     final response = await http.delete(
-        Uri.parse(ApiModel.ApiUrl + '/lembretes/' + model.id.toString()),
-        headers: ApiModel.headers);
+        Uri.parse(ApiModel().ApiUrl + '/lembretes/' + model.id.toString()),
+        headers: await ApiModel().getHeaders());
 
     return ResponseAPIModel.fromJson(jsonDecode(response.body));
   }
 
   Future<List<LembreteModel>> getLembretes() async {
-    Uri url = Uri.parse(ApiModel.ApiUrl + '/lembretes');
+    Uri url = Uri.parse(ApiModel().ApiUrl + '/lembretes');
 
     var _url = Uri.parse(url.toString());
-    final response = await http.get(_url, headers: ApiModel.headers);
+    final response =
+        await http.get(_url, headers: await ApiModel().getHeaders());
 
     Map<String, dynamic> jsonMap = jsonDecode(response.body);
     List<LembreteModel> listaLembretes = (jsonMap['lembretes'] as List)
@@ -66,21 +69,22 @@ class LembreteRepository {
     };
 
     final response = await http.put(
-        Uri.parse(ApiModel.ApiUrl +
+        Uri.parse(ApiModel().ApiUrl +
             '/lembretes/' +
             model.id.toString() +
             '/concluir'),
-        headers: ApiModel.headers,
+        headers: await ApiModel().getHeaders(),
         body: jsonEncode(json));
 
     return ResponseAPIModel.fromJson(jsonDecode(response.body));
   }
 
   Future<Map<String, dynamic>> get() async {
-    Uri url = Uri.parse(ApiModel.ApiUrl + '/lembretes');
+    Uri url = Uri.parse(ApiModel().ApiUrl + '/lembretes');
 
     var _url = Uri.parse(url.toString());
-    final response = await http.get(_url, headers: ApiModel.headers);
+    final response =
+        await http.get(_url, headers: await ApiModel().getHeaders());
 
     Map<String, dynamic> jsonMap = jsonDecode(response.body);
 

@@ -14,8 +14,8 @@ class ItemRepository {
 
     final response = await http.put(
         Uri.parse(
-            ApiModel.ApiUrl + '/item/' + model.id.toString() + '/concluir'),
-        headers: ApiModel.headers,
+            ApiModel().ApiUrl + '/item/' + model.id.toString() + '/concluir'),
+        headers: await ApiModel().getHeaders(),
         body: jsonEncode(json));
 
     return ResponseAPIModel.fromJson(jsonDecode(response.body));
@@ -23,8 +23,8 @@ class ItemRepository {
 
   Future<ResponseAPIModel> excluirItem(ItemModel model) async {
     final response = await http.delete(
-      Uri.parse(ApiModel.ApiUrl + '/item/' + model.id.toString()),
-      headers: ApiModel.headers,
+      Uri.parse(ApiModel().ApiUrl + '/item/' + model.id.toString()),
+      headers: await ApiModel().getHeaders(),
     );
 
     return ResponseAPIModel.fromJson(jsonDecode(response.body));
