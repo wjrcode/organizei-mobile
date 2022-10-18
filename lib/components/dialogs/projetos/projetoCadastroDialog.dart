@@ -102,7 +102,7 @@ Future<dynamic> criarProjeto(
                                             atividades![index]!.cor ??
                                                 '0xFF6385C3') ??
                                         0),
-                                    nome: atividades[index]!.nome ?? 'a',
+                                    nome: atividades[index]!.nome ?? '',
                                     horario: '',
                                     abrirDialog: () {
                                       return visualizarAtividade(
