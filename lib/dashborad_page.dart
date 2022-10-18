@@ -59,7 +59,9 @@ class _HomePageState extends State<DashboardPage> {
                             builder: (context, AsyncSnapshot snapshot) {
                               if (!snapshot.hasData) {
                                 return const Center(
-                                    child: CircularProgressIndicator());
+                                    child: CircularProgressIndicator(
+                                  color: Colors.black,
+                                ));
                               }
 
                               if (snapshot.hasError) {

@@ -177,7 +177,9 @@ class _HomePageState extends State<HomePage> {
                               builder: (context, AsyncSnapshot snapshot) {
                                 if (!snapshot.hasData) {
                                   return const Center(
-                                      child: CircularProgressIndicator());
+                                      child: CircularProgressIndicator(
+                                    color: Colors.black,
+                                  ));
                                 }
 
                                 if (snapshot.hasError) {
@@ -186,7 +188,7 @@ class _HomePageState extends State<HomePage> {
                                   );
                                 }
 
-                                if (snapshot.data.length == 0) {
+                                if (snapshot.data['tarefas'].length == 0) {
                                   return const Center(
                                     child: Padding(
                                       padding: EdgeInsets.only(top: 32.0),

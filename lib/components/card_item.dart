@@ -66,7 +66,7 @@ class cardItem extends StatelessWidget {
                           width: 90,
                           child: Center(
                             child: TextoContornado(
-                                texto: dash, tamanho: 32, cor: cor),
+                                texto: dash, tamanho: 28, cor: cor),
                           )),
                   nome != null
                       ? Expanded(

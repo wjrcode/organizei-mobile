@@ -24,7 +24,9 @@ class Base {
     var alert = AlertDialog(
       content: Row(
         children: [
-          CircularProgressIndicator(),
+          CircularProgressIndicator(
+            color: Colors.black,
+          ),
           Container(
             margin: EdgeInsets.fromLTRB(13, 0, 0, 0),
             child: Text(msg, style: textAlert()),
