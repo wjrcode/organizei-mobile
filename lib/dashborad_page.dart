@@ -52,7 +52,7 @@ class _HomePageState extends State<DashboardPage> {
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.fromLTRB(16.0, 0, 16.0, 0),
+                      padding: const EdgeInsets.fromLTRB(16.0, 0, 16.0, 110),
                       child: Column(children: <Widget>[
                         FutureBuilder(
                             future: dashboardController.getDashboard(),

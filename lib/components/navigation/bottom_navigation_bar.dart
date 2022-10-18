@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:organizei/components/navigation/menu.dart';
+import 'package:organizei/dashborad_page.dart';
 import 'package:organizei/home_page.dart';
 import 'package:organizei/listas_page.dart';
 import 'package:organizei/projetos_page.dart';
@@ -98,6 +99,11 @@ class _ButtonNavigatorBarState extends State<ButtonNavigatorBar>
                         setState(() {
                           widget.iconSelected = 'dashboard';
                         });
+                        Navigator.of(context).push<void>(
+                          MaterialPageRoute<void>(
+                            builder: (BuildContext context) => DashboardPage(),
+                          ),
+                        );
                       },
                     ),
                     Container(

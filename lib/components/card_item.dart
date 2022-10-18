@@ -6,18 +6,27 @@ class cardItem extends StatelessWidget {
   final Color? cor;
   final String? horario;
   final String? nome;
+  final String? dash;
   final Function? abrirDialog;
 
   const cardItem(
-      {Key? key, this.cor, this.horario, this.nome, this.abrirDialog})
+      {Key? key,
+      this.cor,
+      this.horario,
+      this.nome,
+      this.abrirDialog,
+      this.dash})
       : super(key: key);
 
   String formatarNome() {
-    if (this.nome!.length > 17) {
-      String nomeAbreviado = this.nome!.substring(0, 17);
+    if (nome != null && nome!.length > 17) {
+      String nomeAbreviado = nome!.substring(0, 17);
       return nomeAbreviado + '...';
-    } else
-      return this.nome!;
+    } else if (nome == null) {
+      return '';
+    } else {
+      return nome!;
+    }
   }
 
   @override
@@ -36,35 +45,51 @@ class cardItem extends StatelessWidget {
             ),
           ),
           child: ClipRRect(
-            borderRadius: BorderRadius.all(Radius.circular(21)),
+            borderRadius: const BorderRadius.all(Radius.circular(21)),
             child: GestureDetector(
               onTap: () {
-                abrirDialog!();
+                if (abrirDialog != null) abrirDialog!();
               },
               child: Row(
                 children: [
-                  Container(
-                    width: 90,
-                    //height: 90,
-                    height: double.infinity,
-                    decoration: BoxDecoration(
-                      //borderRadius: BorderRadius.all(Radius.circular(16)),
-                      color: cor,
-                    ),
-                  ),
-                  Expanded(
-                    child: ListTile(
-                      title: TextoContornado(
-                        texto: formatarNome(),
-                        tamanho: 24,
-                        cor: cor,
-                      ),
-                      subtitle: Text(
-                        horario!,
-                        style: TextStyle(fontSize: 16.0),
-                      ),
-                    ),
-                  ),
+                  dash == null
+                      ? Container(
+                          width: 90,
+                          //height: 90,
+                          height: double.infinity,
+                          decoration: BoxDecoration(
+                            //borderRadius: BorderRadius.all(Radius.circular(16)),
+                            color: cor,
+                          ),
+                        )
+                      : Container(
+                          width: 90,
+                          child: Center(
+                            child: TextoContornado(
+                                texto: dash, tamanho: 32, cor: cor),
+                          )),
+                  nome != null
+                      ? Expanded(
+                          child: ListTile(
+                            title: TextoContornado(
+                              texto: formatarNome(),
+                              tamanho: 24,
+                              cor: cor,
+                            ),
+                            subtitle: Text(
+                              horario!,
+                              style: const TextStyle(fontSize: 16.0),
+                            ),
+                          ),
+                        )
+                      : Expanded(
+                          child: ListTile(
+                            subtitle: Text(
+                              horario!,
+                              style: const TextStyle(fontSize: 16.0),
+                            ),
+                          ),
+                        ),
                   // Row(
                   //   children: <Widget>[
                   //     GestureDetector(

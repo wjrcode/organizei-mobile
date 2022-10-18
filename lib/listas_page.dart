@@ -30,88 +30,92 @@ class _HomePageState extends State<ListasPage> {
         body: SingleChildScrollView(
           scrollDirection: Axis.vertical,
           child: Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Column(
-                  children: <Widget>[
-                    Padding(
-                      padding: const EdgeInsets.fromLTRB(24.0, 80.0, 24.0, 0),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: <Widget>[
-                          Column(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: <Widget>[
-                              TextoContornado(
-                                texto: 'Listas',
-                                tamanho: 32,
-                                cor: const Color(0xFF6385C3),
-                              )
-                            ],
-                          ),
-                        ],
+            child: Padding(
+              padding: const EdgeInsets.only(bottom: 110.0),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Column(
+                    children: <Widget>[
+                      Padding(
+                        padding:
+                            const EdgeInsets.fromLTRB(24.0, 80.0, 24.0, 110),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: <Widget>[
+                            Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: <Widget>[
+                                TextoContornado(
+                                  texto: 'Listas',
+                                  tamanho: 32,
+                                  cor: const Color(0xFF6385C3),
+                                )
+                              ],
+                            ),
+                          ],
+                        ),
                       ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.fromLTRB(16.0, 0, 16.0, 0.0),
-                      child: Column(children: <Widget>[
-                        FutureBuilder(
-                            future: listaController.getListas(),
-                            builder: (context, AsyncSnapshot snapshot) {
-                              if (!snapshot.hasData) {
-                                return const Center(
-                                    child: CircularProgressIndicator());
-                              }
+                      Padding(
+                        padding: const EdgeInsets.fromLTRB(16.0, 0, 16.0, 0.0),
+                        child: Column(children: <Widget>[
+                          FutureBuilder(
+                              future: listaController.getListas(),
+                              builder: (context, AsyncSnapshot snapshot) {
+                                if (!snapshot.hasData) {
+                                  return const Center(
+                                      child: CircularProgressIndicator());
+                                }
 
-                              if (snapshot.hasError) {
-                                return const Center(
-                                  child: Text('Ocorreu um erro!'),
-                                );
-                              }
+                                if (snapshot.hasError) {
+                                  return const Center(
+                                    child: Text('Ocorreu um erro!'),
+                                  );
+                                }
 
-                              if (snapshot.data['listas'].length == 0) {
-                                return const Center(
-                                  child: Padding(
-                                    padding: EdgeInsets.only(top: 32.0),
-                                    child: Text("Você não tem listas!"),
-                                  ),
-                                );
-                              }
+                                if (snapshot.data['listas'].length == 0) {
+                                  return const Center(
+                                    child: Padding(
+                                      padding: EdgeInsets.only(top: 32.0),
+                                      child: Text("Você não tem listas!"),
+                                    ),
+                                  );
+                                }
 
-                              return ListView.builder(
-                                  primary: false,
-                                  shrinkWrap: true,
-                                  itemCount: snapshot.data['listas'].length,
-                                  itemBuilder: (context, index) {
-                                    var item = ListaModel.fromJson(
-                                      snapshot.data['listas'][index],
-                                    );
+                                return ListView.builder(
+                                    primary: false,
+                                    shrinkWrap: true,
+                                    itemCount: snapshot.data['listas'].length,
+                                    itemBuilder: (context, index) {
+                                      var item = ListaModel.fromJson(
+                                        snapshot.data['listas'][index],
+                                      );
 
-                                    return cardItem(
-                                        cor: Color(int.tryParse(
-                                                item.cor ?? '0xFF6385C3') ??
-                                            0),
-                                        nome: item.nome,
-                                        horario: '',
-                                        abrirDialog: () {
-                                          return visualizarLista(
-                                            context,
-                                            lista: item,
-                                            fecharDialog: () {
-                                              setState(() {});
-                                            },
-                                          );
-                                        });
-                                  });
-                            }),
-                      ]),
-                    )
-                  ],
-                ),
-              ],
+                                      return cardItem(
+                                          cor: Color(int.tryParse(
+                                                  item.cor ?? '0xFF6385C3') ??
+                                              0),
+                                          nome: item.nome,
+                                          horario: '',
+                                          abrirDialog: () {
+                                            return visualizarLista(
+                                              context,
+                                              lista: item,
+                                              fecharDialog: () {
+                                                setState(() {});
+                                              },
+                                            );
+                                          });
+                                    });
+                              }),
+                        ]),
+                      )
+                    ],
+                  ),
+                ],
+              ),
             ),
           ),
         ),

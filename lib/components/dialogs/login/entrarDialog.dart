@@ -65,7 +65,6 @@ Future<dynamic> entrar(BuildContext context) {
                                       await loginController.autentica();
 
                                   if (succes) {
-                                    print('fkfjkl');
                                     Navigator.of(context).push<void>(
                                       MaterialPageRoute<void>(
                                         builder: (BuildContext context) =>
