@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:organizei/Controller/SplashController.dart';
+import 'package:organizei/home_page.dart';
+import 'package:organizei/services/notificacao/notification_api.dart';
 
 class SplashView extends StatefulWidget {
   const SplashView({Key? key}) : super(key: key);
@@ -10,6 +12,18 @@ class SplashView extends StatefulWidget {
 
 class _SplashViewState extends State<SplashView> {
   var controller = SplashController();
+
+  @override
+  void initState() {
+    //super.initState();
+    NotificationApi.init();
+    listenNotifications();
+  }
+
+  void listenNotifications() =>
+      NotificationApi.onNotifications.stream.listen(onClickedNotification);
+  void onClickedNotification(String? payload) => Navigator.of(context)
+      .push(MaterialPageRoute(builder: (context) => HomePage()));
 
   @override
   Widget build(BuildContext context) {

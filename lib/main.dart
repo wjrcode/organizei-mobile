@@ -6,10 +6,12 @@ import 'package:intl/intl.dart';
 import 'package:organizei/start_page.dart';
 
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:timezone/data/latest.dart' as tz;
 
 //import 'home_page.dart';
 
-void main() {
+void main() async {
+  tz.initializeTimeZones();
   runApp(MyApp());
 }
 

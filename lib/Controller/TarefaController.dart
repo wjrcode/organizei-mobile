@@ -1,10 +1,14 @@
 import 'dart:ffi';
+import 'dart:io';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
+import 'package:intl/intl.dart';
 import 'package:organizei/Model/Tarefa/TarefaModel.dart';
 import 'package:organizei/Controller/Base/Base.dart';
 import 'package:organizei/Repository/TarefaRepository.dart';
+import 'package:organizei/services/notificacao/notification_api.dart';
 import 'package:organizei/services/persistencia/login.configuracoes.dart';
 
 class TarefaController extends Base {
@@ -62,6 +66,11 @@ class TarefaController extends Base {
           await Future.delayed(const Duration(milliseconds: 500));
 
           if (value.valido!) {
+            await NotificationApi.showScheduledNotification(
+                id: value.id!,
+                title: 'Oiê! tá na hora tá na hora de ' + model.nome!,
+                body: '',
+                scheduledDate: model.data);
             return value.valido!;
           } else {
             return false;
@@ -93,6 +102,11 @@ class TarefaController extends Base {
           await Future.delayed(const Duration(milliseconds: 500));
 
           if (value.valido!) {
+            await NotificationApi.showScheduledNotification(
+                id: model.id ?? 0,
+                title: 'Oiê! tá na hora tá na hora de ' + model.nome!,
+                body: '',
+                scheduledDate: model.data);
             return value.valido!;
           } else {
             return false;
@@ -142,6 +156,7 @@ class TarefaController extends Base {
         await Future.delayed(const Duration(milliseconds: 500));
 
         if (value.valido!) {
+          NotificationApi.cancelScheduleNotification(model.id ?? 0);
           return value.valido!;
         } else {
           return false;
@@ -180,6 +195,7 @@ class TarefaController extends Base {
         await Future.delayed(const Duration(milliseconds: 500));
 
         if (value.valido!) {
+          NotificationApi.cancelScheduleNotification(model.id ?? 0);
           return value.valido!;
         } else {
           return false;

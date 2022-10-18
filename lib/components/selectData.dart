@@ -86,11 +86,13 @@ class _SelectDataState extends State<SelectData> {
 
                       widget.onSaved(newDate.toString());
 
+                      DateTime hora = new DateTime.now();
+
                       if (widget.tipo != 'data') {
                         final time = await showTimePicker(
                             context: context,
                             initialTime:
-                                TimeOfDay(hour: date.hour, minute: date.minute),
+                                TimeOfDay(hour: hora.hour, minute: hora.minute),
                             builder: (BuildContext context, child) {
                               return Theme(
                                 data: ThemeData.light().copyWith(
