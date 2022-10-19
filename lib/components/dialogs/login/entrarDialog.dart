@@ -12,6 +12,8 @@ Future<dynamic> entrar(BuildContext context) {
 
   loginController = LoginController(LoginRepository(), context);
 
+  print('chmei');
+
   return showDialog(
       barrierDismissible: false,
       barrierColor: Colors.white.withOpacity(0),
@@ -58,9 +60,11 @@ Future<dynamic> entrar(BuildContext context) {
                             Padding(
                               padding: const EdgeInsets.fromLTRB(0, 0, 0, 16.0),
                               child: Botao(
+                                key: Key("BB"),
                                 texto: 'Entrar',
                                 cor: const Color(0xFF6BC8E4),
                                 clicar: () async {
+                                  print('over');
                                   bool succes =
                                       await loginController.autentica();
 

@@ -38,6 +38,7 @@ class UsuarioController extends Base {
 
     try {
       if (model.id == null) {
+        print('a');
         return await repository.addUsuario(model).then((value) {
           ScaffoldMessenger.of(context).showSnackBar(SnackBar(
             elevation: 6.0,

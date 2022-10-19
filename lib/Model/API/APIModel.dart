@@ -7,11 +7,11 @@ class ApiModel {
   Future<Map<String, String>> getHeaders() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
 
-    String? token = prefs.getString('UsuarioToken');
+    String token = prefs.getString('UsuarioToken') ?? '';
 
     Map<String, String> headers = {
       "Content-Type": "application/json",
-      "Authorization": "Bearer " + token!
+      "Authorization": "Bearer " + token
     };
     return headers;
   }
