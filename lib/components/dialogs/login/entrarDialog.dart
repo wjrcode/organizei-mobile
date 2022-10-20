@@ -42,6 +42,7 @@ Future<dynamic> entrar(BuildContext context) {
                             Padding(
                               padding: EdgeInsets.only(bottom: 16),
                               child: input(
+                                key: Key("keyTextEmail"),
                                 onSaved: loginController.loginUsuario,
                                 textController:
                                     loginController.controllerUsuario,
@@ -51,6 +52,7 @@ Future<dynamic> entrar(BuildContext context) {
                             Padding(
                               padding: EdgeInsets.only(bottom: 16),
                               child: input(
+                                  key: Key("keyTextSenha"),
                                   onSaved: loginController.loginSenha,
                                   textController:
                                       loginController.controllerSenha,
@@ -60,7 +62,7 @@ Future<dynamic> entrar(BuildContext context) {
                             Padding(
                               padding: const EdgeInsets.fromLTRB(0, 0, 0, 16.0),
                               child: Botao(
-                                key: Key("BB"),
+                                key: Key("keyEntrarButton"),
                                 texto: 'Entrar',
                                 cor: const Color(0xFF6BC8E4),
                                 clicar: () async {
