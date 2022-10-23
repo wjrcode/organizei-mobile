@@ -78,6 +78,7 @@ Future<dynamic> criarHabito(BuildContext context,
                               corAtual: habito?.cor ?? ''),
                           Botao(
                             texto: 'Salvar',
+                            key: Key("keySalvarButton"),
                             cor: const Color(0xFF6385C3),
                             clicar: () async {
                               bool succes = await habitoController.saveHabito();

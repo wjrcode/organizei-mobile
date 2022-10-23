@@ -95,6 +95,7 @@ Future<dynamic> cadastrarUsuario(BuildContext context,
                         ),
                         _buildNovaSenha(),
                         Botao(
+                          key: Key("keySalvarButton"),
                           texto: 'salvar',
                           cor: const Color(0xFF6BC8E4),
                           clicar: () async {

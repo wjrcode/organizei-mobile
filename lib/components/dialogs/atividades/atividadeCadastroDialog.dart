@@ -92,6 +92,7 @@ Future<dynamic> criarAtividade(BuildContext context,
                             corAtual: atividade?.cor ?? '',
                           ),
                           Botao(
+                            key: Key("keySalvarButton"),
                             texto: 'Salvar',
                             cor: const Color(0xFF6385C3),
                             clicar: () async {
