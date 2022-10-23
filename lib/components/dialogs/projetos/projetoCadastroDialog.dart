@@ -59,6 +59,7 @@ Future<dynamic> criarProjeto(
                       child: DialogPersonalizado(
                         nome: 'Projeto',
                         child: <Widget>[
+                          const Text('*Todos os campos são obrigatórios'),
                           Padding(
                             padding: const EdgeInsets.only(bottom: 16),
                             child: input(

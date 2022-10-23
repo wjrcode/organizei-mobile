@@ -39,8 +39,7 @@ class _HomePageState extends State<ListasPage> {
                   Column(
                     children: <Widget>[
                       Padding(
-                        padding:
-                            const EdgeInsets.fromLTRB(24.0, 80.0, 24.0, 110),
+                        padding: const EdgeInsets.fromLTRB(24.0, 80.0, 24.0, 0),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: <Widget>[

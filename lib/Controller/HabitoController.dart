@@ -62,7 +62,7 @@ class HabitoController extends Base {
             ),
           );
 
-          await Future.delayed(const Duration(milliseconds: 500));
+          await Future.delayed(const Duration(seconds: 1));
 
           if (value.valido!) {
             return value.valido!;
@@ -93,7 +93,7 @@ class HabitoController extends Base {
             ),
           );
 
-          await Future.delayed(const Duration(milliseconds: 500));
+          await Future.delayed(const Duration(seconds: 1));
 
           if (value.valido!) {
             return value.valido!;
@@ -138,7 +138,7 @@ class HabitoController extends Base {
           ),
         );
 
-        await Future.delayed(const Duration(milliseconds: 500));
+        await Future.delayed(const Duration(seconds: 1));
 
         if (value.valido!) {
           return value.valido!;
@@ -176,7 +176,7 @@ class HabitoController extends Base {
           ),
         );
 
-        await Future.delayed(const Duration(milliseconds: 500));
+        await Future.delayed(const Duration(seconds: 1));
 
         if (value.valido!) {
           return value.valido!;

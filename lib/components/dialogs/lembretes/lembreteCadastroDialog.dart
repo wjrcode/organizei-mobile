@@ -49,6 +49,7 @@ Future<dynamic> criarLembrete(BuildContext context,
                       child: DialogPersonalizado(
                         nome: 'Lembrete',
                         child: <Widget>[
+                          const Text('*Todos os campos são obrigatórios'),
                           Padding(
                             padding: const EdgeInsets.only(bottom: 16),
                             child: input(

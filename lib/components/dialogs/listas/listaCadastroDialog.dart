@@ -63,6 +63,7 @@ Future<dynamic> criarLista(BuildContext context,
                       child: DialogPersonalizado(
                         nome: 'Lista',
                         child: <Widget>[
+                          const Text('*Todos os campos são obrigatórios'),
                           Padding(
                             padding: const EdgeInsets.only(bottom: 16),
                             child: input(

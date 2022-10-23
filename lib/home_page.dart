@@ -233,6 +233,9 @@ class _HomePageState extends State<HomePage> {
                                                   item.cor ?? '0xFF6385C3') ??
                                               0),
                                           nome: item.nome,
+                                          prioridade: snapshot.data['tarefas']
+                                                  [index]['prioridade'] ??
+                                              "",
                                           horario: snapshot.data['tarefas']
                                               [index]['dataFormatada'],
                                           abrirDialog: () {

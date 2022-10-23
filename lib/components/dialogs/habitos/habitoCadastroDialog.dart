@@ -48,6 +48,7 @@ Future<dynamic> criarHabito(BuildContext context,
                       child: DialogPersonalizado(
                         nome: 'Hábito',
                         child: <Widget>[
+                          const Text('*Todos os campos são obrigatórios'),
                           Padding(
                             padding: const EdgeInsets.only(bottom: 16),
                             child: input(

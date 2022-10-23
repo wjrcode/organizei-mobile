@@ -63,7 +63,7 @@ class TarefaController extends Base {
             ),
           );
 
-          await Future.delayed(const Duration(milliseconds: 500));
+          await Future.delayed(const Duration(seconds: 1));
 
           if (value.valido!) {
             await NotificationApi.showScheduledNotification(
@@ -99,7 +99,7 @@ class TarefaController extends Base {
             ),
           );
 
-          await Future.delayed(const Duration(milliseconds: 500));
+          await Future.delayed(const Duration(seconds: 1));
 
           if (value.valido!) {
             await NotificationApi.showScheduledNotification(
@@ -153,7 +153,7 @@ class TarefaController extends Base {
           ),
         );
 
-        await Future.delayed(const Duration(milliseconds: 500));
+        await Future.delayed(const Duration(seconds: 1));
 
         if (value.valido!) {
           NotificationApi.cancelScheduleNotification(model.id ?? 0);
@@ -192,7 +192,7 @@ class TarefaController extends Base {
           ),
         );
 
-        await Future.delayed(const Duration(milliseconds: 500));
+        await Future.delayed(const Duration(seconds: 1));
 
         if (value.valido!) {
           NotificationApi.cancelScheduleNotification(model.id ?? 0);

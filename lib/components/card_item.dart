@@ -8,6 +8,7 @@ class cardItem extends StatelessWidget {
   final String? nome;
   final String? dash;
   final Function? abrirDialog;
+  final String? prioridade;
 
   const cardItem(
       {Key? key,
@@ -15,7 +16,8 @@ class cardItem extends StatelessWidget {
       this.horario,
       this.nome,
       this.abrirDialog,
-      this.dash})
+      this.dash,
+      this.prioridade})
       : super(key: key);
 
   String formatarNome() {
@@ -61,6 +63,13 @@ class cardItem extends StatelessWidget {
                             //borderRadius: BorderRadius.all(Radius.circular(16)),
                             color: cor,
                           ),
+                          child: Center(
+                              child: Text(
+                            prioridade ?? "",
+                            style: TextStyle(
+                              color: Colors.white,
+                            ),
+                          )),
                         )
                       : Container(
                           width: 90,

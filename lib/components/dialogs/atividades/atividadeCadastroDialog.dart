@@ -51,6 +51,7 @@ Future<dynamic> criarAtividade(BuildContext context,
                       child: DialogPersonalizado(
                         nome: 'Atividade',
                         child: <Widget>[
+                          const Text('*Todos os campos são obrigatórios'),
                           Padding(
                             padding: const EdgeInsets.only(bottom: 16),
                             child: input(

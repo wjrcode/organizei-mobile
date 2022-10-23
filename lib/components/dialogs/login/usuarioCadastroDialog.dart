@@ -57,6 +57,7 @@ Future<dynamic> cadastrarUsuario(BuildContext context,
                       nome: 'Cadastro',
                       //minHeight: MediaQuery.of(context).size.height * 0.8,
                       child: <Widget>[
+                        const Text('*Todos os campos são obrigatórios'),
                         Padding(
                           padding: const EdgeInsets.only(bottom: 16),
                           child: input(
