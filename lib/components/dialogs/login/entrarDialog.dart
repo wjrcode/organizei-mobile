@@ -66,7 +66,6 @@ Future<dynamic> entrar(BuildContext context) {
                                 texto: 'Entrar',
                                 cor: const Color(0xFF6BC8E4),
                                 clicar: () async {
-                                  print('over');
                                   bool succes =
                                       await loginController.autentica();
 
