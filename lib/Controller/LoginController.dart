@@ -70,6 +70,60 @@ class LoginController extends Base {
     }
   }
 
+  Future<bool> redefinirSenha() async {
+    if (!formKey.currentState!.validate()) {
+      return false;
+    }
+
+    formKey.currentState!.save();
+
+    try {
+      bool ret = await repository.redefinirSenha(model);
+
+      if (!ret) {
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          elevation: 6.0,
+          behavior: SnackBarBehavior.floating,
+          shape: RoundedRectangleBorder(
+            side: const BorderSide(color: Colors.black, width: 3),
+            borderRadius: BorderRadius.circular(16),
+          ),
+          content: const Text(
+            'Informe seu e-mail!',
+            style: TextStyle(
+              color: Colors.black,
+              fontWeight: FontWeight.w400,
+            ),
+          ),
+          backgroundColor: const Color(0xFFEF7E69),
+        ));
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          elevation: 6.0,
+          behavior: SnackBarBehavior.floating,
+          shape: RoundedRectangleBorder(
+            side: const BorderSide(color: Colors.black, width: 3),
+            borderRadius: BorderRadius.circular(16),
+          ),
+          content: const Text(
+            'Enviamos uma nova senha no seu e-mail!',
+            style: TextStyle(
+              color: Colors.black,
+              fontWeight: FontWeight.w400,
+            ),
+          ),
+          backgroundColor: const Color(0xFF74C198),
+        ));
+      }
+
+      return ret;
+    } catch (e) {
+      return false;
+    } finally {
+      //closeAlertDialog(context);
+    }
+  }
+
   Future<UsuarioModel> getUsuarioLogado() async {
     return repository.getUsuarioLogado();
   }

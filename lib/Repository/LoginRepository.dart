@@ -34,6 +34,26 @@ class LoginRepository {
     return false;
   }
 
+  Future<bool> redefinirSenha(LoginModel model) async {
+    var _url = Uri.parse(ApiModel().ApiUrl + '/esquecisenha');
+    var json = {
+      "email": model.usuario.toString().toLowerCase(),
+    };
+
+    Map<String, String> headers = {
+      "Content-Type": "application/json",
+    };
+
+    final response =
+        await http.post(_url, headers: headers, body: jsonEncode(json));
+
+    if (response.statusCode == 201) {
+      return true;
+    }
+
+    return false;
+  }
+
   Future<UsuarioModel> getUsuarioLogado() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
 

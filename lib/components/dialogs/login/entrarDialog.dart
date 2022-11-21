@@ -80,6 +80,18 @@ Future<dynamic> entrar(BuildContext context) {
                                   ;
                                 },
                               ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.fromLTRB(0, 0, 0, 16.0),
+                              child: Botao(
+                                key: Key("keyEntrarButton"),
+                                texto: 'Esqueci senha',
+                                cor: const Color(0xFFEF7E69),
+                                clicar: () async {
+                                  bool succes =
+                                      await loginController.redefinirSenha();
+                                },
+                              ),
                             )
                           ],
                         ),
